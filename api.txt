@@ -1,0 +1,125 @@
+
+Lucky Block API
+===============
+
+Please make sure that lucky_block appears in the depends.txt file of your mod.
+
+
+USAGE: (check blocks.lua for many examples)
+
+lucky_block:add_block({line})
+
+
+LINE COMMANDS:
+
+
+-= Place Node
+
+{"nod", "node name", position, chest items}
+
+e.g.
+
+Replace Lucky Block with Dirt Block
+	{"nod", "default:dirt", 0}
+
+Place Fire at player position
+	{"nod", "fire:basic_flame", 1}
+
+Replace Lucky Block with chest containing random items from default list
+	{"nod", "default:chest", 0}
+
+Replace Lucky Block with chest containing random items PLUS a few extra
+{"nod", "default:chest", 0, {{name="flowers:rose", max=5}, {name="default:goldblock", max=2}}}
+
+
+-= Drop Item(s)
+
+{"dro", {"item names"}, number to drop, random colour}
+
+e.g.
+
+Drop 5x Torches
+	{"dro", {"default:torch"}, 5}
+
+Drop 10x randomly Coloured Wool (colour name added to end of item string)
+	{"dro", {"wool:"}, 10, true}
+
+Drop 5x random Tools from list
+	{"dro", {"default:pick_mese", "default:shovel_steel", "default:axe_diamond"}, 5}
+
+
+-= Place Schematic
+
+{"sch", "filename / schematic table", position, {schematic xyz offset}, force placement}
+
+e.g.
+
+Replace Lucky Block with Tree
+{"sch", minetest.get_modpath("default").."/schematics/apple_tree.mts", 0, {x=1, y=0, z=1}, false}
+
+Place 2x Lava at player position
+{"sch", {
+	size = {x = 1, y = 2, z = 1},
+	data = {
+		{name="default:lava_source", param1=255}, {name="default:lava_source", param1=255},
+	}, 1, {x=0, y=0, z=0}, true}
+
+
+-= Spawn Entity(s)
+
+{"spw", "entity name", number to spawn, tamed, owned}
+
+e.g.
+
+Spawn 2x Dirt Monsters
+	{"spw", "mobs:dirt_monster", 2}
+
+Spawn 5x randomly coloured Sheep (random colour only works with sheep)
+	{"spw", "mobs:sheep", 5}
+
+Spawn NPC who is tamed and owned by player
+	{"spw", "mobs:npc", 1, true, true}
+
+
+-= Falling Blocks
+
+{"fal", {node list}, position}
+
+e.g.
+
+Remove Lucky Block and Drop 2x Sand topped with 1x Gold Block
+
+	{"fal", {"default:sand", "default:sand", "default:goldblock"}, 0}
+
+Drop 2x Obsidian onto player
+	{"fal", {"default:obsidian", "default:obsidian"}, 1}
+
+
+-= Troll Block
+
+{"tro", "node name", "sound", explosion},
+
+e.g.
+
+Add diamond block then after 2 seconds remove with explosion
+
+	{"tro", "default:diamondblock", nil, true}
+
+Add gold block with wood sound, then after 2 seconds remove with pop
+
+	{"tro", "default:goldblock", "default_wood_footstep", nil}
+
+
+-= Explosion (no settings, Lucky Block explodes and deals damage to all nearby)
+
+{"exp"}
+
+
+-= Teleport (no settings, player teleports +/- 10 blocks in any direction)
+
+{"tel"}
+
+
+-= Lightning Strike (no settings, Lucky Block is hit by lightning and deals damage)
+
+{"lig"}
