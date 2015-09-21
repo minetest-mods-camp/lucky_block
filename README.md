@@ -9,7 +9,7 @@ The api.txt document shows how to add your own blocks to the list by using
 one of the 9 commands included and the blocks.lua file gives you many examples
 by using some of the popular mods available.
 
-https://forum.minetest.net/viewtopic.php?f=11&t=9376
+https://forum.minetest.net/viewtopic.php?f=9&t=13284
 
 Released under WTFPL
 
