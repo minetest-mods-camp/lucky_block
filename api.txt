@@ -123,3 +123,28 @@ Add gold block with wood sound, then after 2 seconds remove with pop
 -= Lightning Strike (no settings, Lucky Block is hit by lightning and deals damage)
 
 {"lig"}
+
+
+Additional Commands thanks to blert2112
+
+lucky_block:purge_block_list()
+
+This removes all pre-defined lucky blocks and leaves the super lucky block.
+
+
+lucky_block:purge_chest_items()
+
+This removes all pre-defined chest_stuff items and leaves it empty.
+
+
+lucky_block:add_chest_items(list)
+
+This command adds items to the chest_stuff list for use inside of lucky chests:
+
+lucky_block:add_chest_items({
+	{name = "default:apple", max = 3},
+	{name = "default:steel_ingot", max = 2},
+	{name = "default:gold_ingot", max = 2},
+	{name = "default:diamond", max = 1},
+	{name = "default:pick_steel", max = 1}
+})

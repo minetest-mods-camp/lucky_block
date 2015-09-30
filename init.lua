@@ -14,7 +14,12 @@ function lucky_block:add_blocks(list)
 	end
 end
 
--- import blocks
+-- call to purge the block list
+function lucky_block:purge_block_list()
+	lucky_list = {{"nod", "lucky_block:super_lucky_block", 0}}
+end
+
+-- import default blocks
 dofile(minetest.get_modpath("lucky_block").."/blocks.lua")
 
 -- for random colour selection
@@ -31,6 +36,18 @@ local chest_stuff = {
 	{name = "default:diamond", max = 1},
 	{name = "default:pick_steel", max = 1}
 }
+
+-- call to purge the chest items list
+function lucky_block:purge_chest_items()
+	chest_stuff = {}
+end
+
+-- ability to add chest items
+function lucky_block:add_chest_items(list)
+	for s = 1, #list do
+		table.insert(chest_stuff, list[s])
+	end
+end
 
 -- particle effects
 function effect(pos, amount, texture, max_size)
@@ -82,7 +99,6 @@ end
 
 -- explosion
 function explosion(pos, radius)
-
 	local pos = vector.round(pos)
 	local vm = VoxelManip()
 	local minp, maxp = vm:read_from_map(vector.subtract(pos, radius), vector.add(pos, radius))
@@ -148,7 +164,6 @@ function explosion(pos, radius)
 end
 
 function fill_chest(pos, items)
-
 	local stacks = items or {}
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()

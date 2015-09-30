@@ -14,3 +14,4 @@ https://forum.minetest.net/viewtopic.php?f=9&t=13284
 Released under WTFPL
 
 0.1 - Initial release
+0.2 - New api commands added thanks to blert2112
