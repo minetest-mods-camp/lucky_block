@@ -116,12 +116,14 @@ lucky_block:add_blocks({
 	{"nod", "default:diamondblock", 0},
 	{"nod", "default:steelblock", 0},
 	{"nod", "default:dirt", 0},
+	{"dro", {"dye:"}, 10, true},
 	{"dro", {"default:sword_steel"}, 1},
 	{"dro", {"default:pick_steel"}, 1},
 	{"dro", {"default:shovel_steel"}, 1},
 	{"dro", {"default:coal_lump"}, 3},
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
+	{"exp"},
 	{"nod", "default:wood", 0},
 	{"dro", {"default:pick_bronze"}, 1},
 	{"dro", {"default:shovel_bronze"}, 1},
@@ -162,6 +164,7 @@ if minetest.get_modpath("mobs") then
 		{"spw", "mobs:tree_monster", 3},
 		{"spw", "mobs:oerkki", 3},
 		{"dro", {"mobs:rat_cooked"}, 5},
+		{"exp"},
 	})
 if mobs.mod and mobs.mod == "redo" then
 	lucky_block:add_blocks({
@@ -188,6 +191,9 @@ end
 if minetest.get_modpath("homedecor") then
 	lucky_block:add_blocks({
 		{"nod", "homedecor:toilet", 0},
+		{"nod", "homedecor:table", 0},
+		{"nod", "homedecor:chair", 0},
+		{"nod", "homedecor:table_lamp_off", 0},
 	})
 end
 
@@ -236,6 +242,7 @@ lucky_block:add_blocks({
 	{"dro", {"ethereal:fish_raw"}, 1},
 	{"dro", {"ethereal:shovel_crystal"}, 1},
 	{"dro", {"ethereal:fishing_rod_baited"}, 1},
+	{"exp"},
 })
 end
 
@@ -247,6 +254,7 @@ lucky_block:add_blocks({
 	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold", "shields:shield_gold"}, 3},
 	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus", "shields:shield_cactus"}, 3},
 	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze", "shields:shield_bronze"}, 3},
+	{"lig"},
 })
 end
 
@@ -266,13 +274,45 @@ lucky_block:add_blocks({
 	{"nod", "pie:rvel_0", 0},
 	{"nod", "pie:scsk_0", 0},
 	{"nod", "pie:meat_0", 0},
+	{"lig"},
 })
 end
 
 -- Bakedclay mod
 if minetest.get_modpath("bakedclay") then
+local p = "bakedclay:"
 lucky_block:add_blocks({
-	{"dro", {"bakedclay:"}, 10, true}
+	{"dro", {"bakedclay:"}, 10, true},
+	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green", p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange", p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0},
+})
+end
+
+-- Coloured Blocks mod
+if minetest.get_modpath("cblocks") then
+lucky_block:add_blocks({
+	{"dro", {"cblocks:wood_"}, 10, true},
+	{"dro", {"carpet:stonebrick_"}, 10, true},
+	{"dro", {"carpet:glass_"}, 10, true},
+})
+end
+
+-- More Ore's mod
+if minetest.get_modpath("moreores") then
+lucky_block:add_blocks({
+	{"nod", "moreores:tin_block", 0},
+	{"nod", "moreores:silver_block", 0},
+	{"fal", {"default:sand", "default:sand", "default:sand", "default:sand", "default:sand", "default:sand", "moreores:mithril_block"}, 0},
+	{"dro", {"moreores:pick_silver"}, 1},
+	{"dro", {"moreores:pick_mithril"}, 1},
+	{"tro", "moreores:silver_block"},
+	{"dro", {"moreores:shovel_silver"}, 1},
+	{"dro", {"moreores:shovel_mithril"}, 1},
+	{"dro", {"moreores:axe_silver"}, 1},
+	{"dro", {"moreores:axe_mithril"}, 1},
+	{"tro", "moreores:mithril_block"},
+	{"dro", {"moreores:hoe_silver"}, 1},
+	{"dro", {"moreores:hoe_mithril"}, 1},
+	{"lig"},
 })
 end
 

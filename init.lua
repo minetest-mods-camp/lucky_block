@@ -137,7 +137,8 @@ function explosion(pos, radius)
 			local n = minetest.get_node(p).name
 			if minetest.get_item_group(n, "unbreakable") ~= 1 then
 				-- if chest then drop items inside
-				if n == "default:chest" then
+				if n == "default:chest"
+				or n == "3dchest:chest" then
 					local meta = minetest.get_meta(p)
 					local inv  = meta:get_inventory()
 					for i = 1, 32 do
@@ -183,7 +184,7 @@ end
 
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
-	local luck = math.random(1, #lucky_list) ;  --luck = 1
+	local luck = math.random(1, #lucky_list) ; --luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
