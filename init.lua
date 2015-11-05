@@ -5,6 +5,7 @@ local lucky_list = {
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
 	{"nod", "lucky_block:super_lucky_block", 0},
+	{"exp"},
 }
 
 -- ability to add new blocks to list
@@ -68,49 +69,55 @@ function effect(pos, amount, texture, max_size)
 	})
 end
 
--- from TNT mod
-function calc_velocity(pos1, pos2, old_vel, power)
-	local vel = vector.direction(pos1, pos2)
-	vel = vector.normalize(vel)
-	vel = vector.multiply(vel, power)
-	local dist = vector.distance(pos1, pos2)
-	dist = math.max(dist, 1)
-	vel = vector.divide(vel, dist)
-	vel = vector.add(vel, old_vel)
-	return vel
-end
-
 -- modified from TNT mod
 function entity_physics(pos, radius)
+
 	radius = radius * 2
+
 	local objs = minetest.get_objects_inside_radius(pos, radius)
-	local obj_pos, obj_vel, dist
+	local obj_pos, dist
+
 	for _, obj in pairs(objs) do
+
 		obj_pos = obj:getpos()
-		obj_vel = obj:getvelocity()
 		dist = math.max(1, vector.distance(pos, obj_pos))
-		if obj_vel ~= nil then
-			obj:setvelocity(calc_velocity(pos, obj_pos, obj_vel, radius * 10))
-		end
-		local damage = (4 / dist) * radius
+
+		local damage = math.floor((4 / dist) * radius)
 		obj:set_hp(obj:get_hp() - damage)
 	end
 end
 
+-- get node but use fallback for nil or unknown
+function node_ok(pos, fallback)
+
+	fallback = fallback or "default:dirt"
+
+	local node = minetest.get_node_or_nil(pos)
+
+	if not node then
+		return minetest.registered_nodes[fallback]
+	end
+
+	local nodef = minetest.registered_nodes[node.name]
+
+	if nodef then
+		return node
+	end
+
+	return minetest.registered_nodes[fallback]
+end
+
+-- set content id's
+local c_air = minetest.get_content_id("air")
+local c_ignore = minetest.get_content_id("ignore")
+local c_obsidian = minetest.get_content_id("default:obsidian")
+local c_brick = minetest.get_content_id("default:obsidianbrick")
+local c_chest = minetest.get_content_id("default:chest_locked")
+
 -- explosion
 function explosion(pos, radius)
-	local pos = vector.round(pos)
-	local vm = VoxelManip()
-	local minp, maxp = vm:read_from_map(vector.subtract(pos, radius), vector.add(pos, radius))
-	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
-	local data = vm:get_data()
-	local p = {}
-	local c_air = minetest.get_content_id("air")
-	local c_ignore = minetest.get_content_id("ignore")
-	local c_obsidian = minetest.get_content_id("default:obsidian")
-	local c_brick = minetest.get_content_id("default:obsidianbrick")
-	local c_chest = minetest.get_content_id("default:chest_locked")
 
+	-- play explosion sound
 	minetest.sound_play("tnt_explode", {
 		pos = pos,
 		gain = 1.0,
@@ -122,28 +129,45 @@ function explosion(pos, radius)
 		return
 	end
 
+	--local pos = vector.round(pos)
+	local vm = VoxelManip()
+	local minp, maxp = vm:read_from_map(vector.subtract(pos, radius), vector.add(pos, radius))
+	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+	local data = vm:get_data()
+	local p = {}
+
 	for z = -radius, radius do
 	for y = -radius, radius do
 	local vi = a:index(pos.x + (-radius), pos.y + y, pos.z + z)
 	for x = -radius, radius do
+
 		p.x = pos.x + x
 		p.y = pos.y + y
 		p.z = pos.z + z
+
 		if data[vi] ~= c_air
 		and data[vi] ~= c_ignore
 		and data[vi] ~= c_obsidian
 		and data[vi] ~= c_brick
 		and data[vi] ~= c_chest then
-			local n = minetest.get_node(p).name
+
+			local n = node_ok(p).name
+
 			if minetest.get_item_group(n, "unbreakable") ~= 1 then
+
 				-- if chest then drop items inside
 				if n == "default:chest"
-				or n == "3dchest:chest" then
+				or n == "3dchest:chest"
+				or n == "bones:bones" then
+
 					local meta = minetest.get_meta(p)
 					local inv  = meta:get_inventory()
-					for i = 1, 32 do
+
+					for i = 1, inv:get_size("main") do
+
 						local m_stack = inv:get_stack("main", i)
 						local obj = minetest.add_item(p, m_stack)
+
 						if obj then
 							obj:setvelocity({
 								x = math.random(-2, 2),
@@ -165,9 +189,11 @@ function explosion(pos, radius)
 end
 
 function fill_chest(pos, items)
+
 	local stacks = items or {}
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
+
 	inv:set_size("main", 8 * 4)
 
 	for i = 0, 2, 1 do
@@ -184,6 +210,7 @@ end
 
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
+
 	local luck = math.random(1, #lucky_list) ; --luck = 1
 	local action = lucky_list[luck][1]
 	local schem
@@ -192,13 +219,16 @@ local lucky_block = function(pos, digger)
 
 	-- place schematic
 	if action == "sch" then
+
 		local offset = lucky_list[luck][4]
 		local switch = lucky_list[luck][3]
 		local schem = lucky_list[luck][2]
 		local force = lucky_list[luck][5] or false
+
 		if switch == 1 then
 			pos = digger:getpos()
 		end
+
 		minetest.place_schematic(
 			{
 				x = pos.x - offset.x,
@@ -209,47 +239,60 @@ local lucky_block = function(pos, digger)
 
 	-- place node (if chest then fill chest)
 	elseif action == "nod" then
+
 		local nod = lucky_list[luck][2]
 		local switch = lucky_list[luck][3]
 		local items = lucky_list[luck][4]
+
 		if switch == 1 then
 			pos = digger:getpos()
 		end
+
 		if not minetest.registered_nodes[nod] then
 			print (nod)
 			nod = "default:goldblock"
 		end
+
 		effect(pos, 25, "tnt_smoke.png", 8)
 		minetest.set_node(pos, {name = nod})
+
 		if nod == "default:chest" then
 			fill_chest(pos, items)
 		end
 
 	-- place entity
 	elseif action == "spw" then
+
 		local pos2 = {}
-		local num = lucky_list[luck][3]
+		local num = lucky_list[luck][3] or 1
 		local tame = lucky_list[luck][4]
 		local own = lucky_list[luck][5]
+
 		for i = 1, num do
+
 			pos2.x = pos.x + math.random(-5, 5)
 			pos2.y = pos.y + 1
 			pos2.z = pos.z + math.random(-5, 5)
-			local nod = minetest.get_node_or_nil(pos2)
-			if nod and nod.name == "air" then
+
+			local nod = node_ok(pos2).name
+
+			if nod == "air" then
+
 				local entity = lucky_list[luck][2]
+
 				-- coloured sheep
 				if entity == "mobs:sheep" then
 					local colour = "_" .. all_colours[math.random(#all_colours)]
-					--if colour == "_white" then colour = "" end
 					entity = "mobs:sheep" .. colour
 				end
 
 				local mob = minetest.add_entity(pos2, entity)
 				local ent = mob:get_luaentity()
+
 				if tame then
 					ent.tamed = true
 				end
+
 				if own then
 					ent.owner = digger:get_player_name()
 				end
@@ -258,28 +301,37 @@ local lucky_block = function(pos, digger)
 
 	-- explosion
 	elseif action == "exp" then
+
 		explosion(pos, 2)
 		entity_physics(pos, 2)
 
 	-- teleport
 	elseif action == "tel" then
+
 		--pos = digger:getpos()
 		pos.x = pos.x + math.random(-10, 10)
 		pos.x = pos.y + math.random(-5, 20)
 		pos.x = pos.z + math.random(-10, 10)
+
 		digger:moveto(pos, false)
 
 	-- drop items
 	elseif action == "dro" then
+
 		local num = lucky_list[luck][3]
 		local colours = lucky_list[luck][4]
 		local items = #lucky_list[luck][2]
+
 		for i = 1, num do
+
 			local item = lucky_list[luck][2][math.random(1, items)]
+
 			if colours then
 				item = item .. all_colours[math.random(#all_colours)]
 			end
+
 			local obj = core.add_item(pos, item)
+
 			if obj then
 				obj:setvelocity({
 					x = math.random(-1.5, 1.5),
@@ -291,8 +343,11 @@ local lucky_block = function(pos, digger)
 
 	-- lightning strike
 	elseif action == "lig" then
+
 		pos = digger:getpos()
+
 		minetest.set_node(pos, {name = "fire:basic_flame"})
+
 		minetest.add_particlespawner({
 			amount = 1,
 			time = 1,
@@ -308,7 +363,9 @@ local lucky_block = function(pos, digger)
 			maxsize = 150,
 			texture = "lucky_lightning.png",
 		})
+
 		entity_physics(pos, 2)
+
 		minetest.sound_play("lightning", {
 			pos = pos,
 			gain = 1.0,
@@ -317,27 +374,38 @@ local lucky_block = function(pos, digger)
 	
 	-- falling nodes
 	elseif action == "fal" then
+
 		local nods = lucky_list[luck][2]
 		local switch = lucky_list[luck][3]
+
 		if switch == 1 then
 			pos = digger:getpos()
 		end
+
 		pos.y = pos.y + #nods
+
+		minetest.remove_node(pos)
+
 		for s = 1, #nods do
+
 			minetest.after(0.5 * s, function()
+
 				local n = minetest.registered_nodes[nods[s]]
-				core.remove_node(pos)
 				local obj = core.add_entity(pos, "__builtin:falling_node")
+
 				obj:get_luaentity():set_node(n)
 			end)
 		end
 
 	-- troll block, disappears or explodes after 2 seconds
 	elseif action == "tro" then
+
 		local nod = lucky_list[luck][2]
 		local snd = lucky_list[luck][3]
 		local exp = lucky_list[luck][4]
+
 		minetest.set_node(pos, {name = nod})
+
 		if snd then
 			minetest.sound_play(snd, {
 				pos = pos,
@@ -345,12 +413,17 @@ local lucky_block = function(pos, digger)
 				max_hear_distance = 10
 			})
 		end
+
 		minetest.after(2.0, function()
+
 			if exp then
+
 				explosion(pos, 2)
 				entity_physics(pos, 2)
 			else
+
 				minetest.set_node(pos, {name = "air"})
+
 				minetest.sound_play("default_hard_footstep", {
 					pos = pos,
 					gain = 1.0,
@@ -374,6 +447,7 @@ minetest.register_node('lucky_block:lucky_block', {
 	light_source = 3,
 	groups = {oddly_breakable_by_hand = 3},
 	sounds = default.node_sound_wood_defaults(),
+
 	on_dig = function(pos, node, digger)
 		minetest.set_node(pos, {name = "air"})
 		lucky_block(pos, digger)
@@ -400,13 +474,18 @@ minetest.register_node('lucky_block:super_lucky_block', {
 	paramtype = 'light',
 	groups = {cracky = 1, level = 2},
 	sounds = default.node_sound_stone_defaults(),
+
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Super Lucky Block")
 	end,
+
 	on_dig = function(pos)
+
 		minetest.set_node(pos, {name = "air"})
+
 		effect(pos, 25, "tnt_smoke.png", 8)
+
 		minetest.sound_play("fart1", {
 			pos = pos,
 			gain = 1.0,
