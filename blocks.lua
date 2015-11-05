@@ -136,6 +136,7 @@ if minetest.get_modpath("farming") then
 	lucky_block:add_blocks({
 		{"dro", {"farming:bread"}, 5},
 		{"sch", insta_farm, 0, {x = 2, y = 2, z = 1}, true},
+		{"nod", "default:water_source", 1},
 	})
 
 if farming.mod and farming.mod == "redo" then
@@ -144,6 +145,9 @@ if farming.mod and farming.mod == "redo" then
 		{"dro", {"farming:coffee_cup_hot"}, 1},
 		{"dro", {"farming:bread"}, 5},
 		{"nod", "farming:jackolantern", 0},
+		{"tro", "farming:jackolantern"},
+		{"nod", "default:river_water_source", 1},
+		{"dro", {"farming:trellis", "farming:grapes"}, 5},
 		{"dro", {"farming:bottle_ethanol"}, 1},
 		{"nod", "farming:melon", 0},
 		{"dro", {"farming:donut", "farming:donut_chocolate", "farming:donut_apple"}, 5},
@@ -201,6 +205,32 @@ end
 if minetest.get_modpath("teleport_potion") then
 	lucky_block:add_blocks({
 		{"dro", {"teleport_potion:potion"}, 1},
+		{"tel"},
+	})
+end
+
+-- Boats mod
+if minetest.get_modpath("boats") then
+	lucky_block:add_blocks({
+		{"dro", {"boats:boat"}, 1},
+	})
+end
+
+-- Carts mod
+if minetest.get_modpath("carts")
+or minetest.get_modpath("boost_cart") then
+	lucky_block:add_blocks({
+		{"dro", {"boats:boat"}, 1},
+		{"dro", {"default:rail"}, 10},
+		{"dro", {"carts:powerrail"}, 5},
+	})
+end
+
+-- Hopper mod
+if minetest.get_modpath("hopper") then
+	lucky_block:add_blocks({
+		{"dro", {"hopper:hopper"}, 3},
+		{"nod", "default:lava_source", 1},
 	})
 end
 
@@ -271,6 +301,7 @@ lucky_block:add_blocks({
 	{"nod", "pie:pie_0", 0},
 	{"nod", "pie:choc_0", 0},
 	{"nod", "pie:coff_0", 0},
+	{"tro", "pie:pie_0"},
 	{"nod", "pie:rvel_0", 0},
 	{"nod", "pie:scsk_0", 0},
 	{"nod", "pie:meat_0", 0},
@@ -327,9 +358,15 @@ lucky_block:add_blocks({
 		{name = "xanadu:pizza", max = 2}}},
 	{"dro", {"paintings:"}, 10, true},
 	{"spw", "mobs:greensmall", 4},
+	{"lig"},
 	{"dro", {"carpet:"}, 10, true},
+	{"dro", {"xanadu:bone"}, 2},
+	{"spw", "mobs:bat", 3},
+	{"dro", {"xanadu:bacon"}, 8},
+	{"dro", {"3d_armor:boots_bunny"}, 1},
 	{"dro", {"carpet:wallpaper_"}, 10, true},
 	{"nod", "default:chest", 0, {
-		{name = "mobs:mese_monster_wing", max = 1}}}
+		{name = "mobs:mese_monster_wing", max = 1}}},
+	{"exp"},
 })
 end
