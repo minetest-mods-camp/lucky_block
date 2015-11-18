@@ -129,7 +129,6 @@ function explosion(pos, radius)
 		return
 	end
 
-	--local pos = vector.round(pos)
 	local vm = VoxelManip()
 	local minp, maxp = vm:read_from_map(vector.subtract(pos, radius), vector.add(pos, radius))
 	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
