@@ -1,6 +1,6 @@
 lucky_block = {}
 
--- default block
+-- default blocks
 local lucky_list = {
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
@@ -17,7 +17,9 @@ end
 
 -- call to purge the block list
 function lucky_block:purge_block_list()
-	lucky_list = {{"nod", "lucky_block:super_lucky_block", 0}}
+	lucky_list = {
+		{"nod", "lucky_block:super_lucky_block", 0}
+	}
 end
 
 -- import default blocks
@@ -210,7 +212,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 1
+	local luck = math.random(1, #lucky_list) ; --luck = 5
 	local action = lucky_list[luck][1]
 	local schem
 

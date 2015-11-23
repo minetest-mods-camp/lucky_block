@@ -10,6 +10,36 @@ local v = "default:water_source"
 local c = "farming:cotton_8"
 local h = "farming:wheat_8"
 local o = "default:obsidian_glass"
+local t = "default:sandstone"
+local b = "default:sandstonebrick"
+local x = "lucky_block:lucky_block"
+
+local platform = {
+	size = {x = 5, y = 3, z = 5},
+	data = {
+		-- left slice, middle slice, right slice (bottom to top)
+		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
+		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
+		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
+
+		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
+		{name=b, param1=255}, {name=x, param1=255}, {name=a, param1=255}, {name=x, param1=255}, {name=b, param1=255},
+		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
+
+		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
+		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
+		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
+
+		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
+		{name=b, param1=255}, {name=x, param1=255}, {name=a, param1=255}, {name=x, param1=255}, {name=b, param1=255},
+		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
+
+		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
+		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
+		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
+
+	},
+}
 
 local insta_farm = {
 	size = {x = 5, y = 3, z = 3},
@@ -124,6 +154,7 @@ lucky_block:add_blocks({
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
 	{"exp"},
+	{"sch", platform, 1, {x = 2, y = 1, z = 2}, true},
 	{"nod", "default:wood", 0},
 	{"dro", {"default:pick_bronze"}, 1},
 	{"dro", {"default:shovel_bronze"}, 1},
