@@ -307,17 +307,47 @@ lucky_block:add_blocks({
 	{"dro", {"ethereal:fishing_rod_baited"}, 1},
 	{"exp"},
 })
+
+if minetest.get_modpath("3d_armor") then
+lucky_block:add_blocks({
+	{"dro", {"3d_armor:helmet_crystal"}, 1},
+	{"dro", {"3d_armor:chestplate_crystal"}, 1},
+	{"dro", {"3d_armor:leggings_crystal"}, 1},
+	{"dro", {"3d_armor:boots_crystal"}, 1},
+	{"lig"},
+})
+end
+
+if minetest.get_modpath("shields") then
+lucky_block:add_blocks({
+	{"dro", {"shields:shield_crystal"}, 1},
+	{"exp"},
+})
+end
+
 end
 
 -- 3D Armor mod
 if minetest.get_modpath("3d_armor") then
 lucky_block:add_blocks({
-	{"dro", {"3d_armor:boots_wood", "3d_armor:leggings_wood", "3d_armor:chestplate_wood", "3d_armor:helmet_wood", "shields:shield_wood"}, 3},
-	{"dro", {"3d_armor:boots_steel", "3d_armor:leggings_steel", "3d_armor:chestplate_steel", "3d_armor:helmet_steel", "shields:shield_steel"}, 3},
-	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold", "shields:shield_gold"}, 3},
-	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus", "shields:shield_cactus"}, 3},
-	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze", "shields:shield_bronze"}, 3},
+	{"dro", {"3d_armor:boots_wood", "3d_armor:leggings_wood", "3d_armor:chestplate_wood", "3d_armor:helmet_wood"}, 2},
+	{"dro", {"3d_armor:boots_steel", "3d_armor:leggings_steel", "3d_armor:chestplate_steel", "3d_armor:helmet_steel"}, 2},
+	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold"}, 2},
+	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus"}, 2},
+	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze"}, 2},
 	{"lig"},
+})
+end
+
+-- 3D Armor's Shields mod
+if minetest.get_modpath("shields") then
+lucky_block:add_blocks({
+	{"dro", {"shields:shield_wood"}, 1},
+	{"dro", {"shields:shield_steel"}, 1},
+	{"dro", {"shields:shield_gold"}, 1},
+	{"dro", {"shields:shield_cactus"}, 1},
+	{"dro", {"shields:shield_bronze"}, 1},
+	{"exp"},
 })
 end
 
@@ -378,6 +408,22 @@ lucky_block:add_blocks({
 	{"dro", {"moreores:hoe_mithril"}, 1},
 	{"lig"},
 })
+
+if minetest.get_modpath("3d_armor") then
+lucky_block:add_blocks({
+	{"dro", {"3d_armor:helmet_mithril"}, 1},
+	{"dro", {"3d_armor:chestplate_mithril"}, 1},
+	{"dro", {"3d_armor:leggings_mithril"}, 1},
+	{"dro", {"3d_armor:boots_mithril"}, 1},
+})
+end
+
+if minetest.get_modpath("shields") then
+lucky_block:add_blocks({
+	{"dro", {"shields:shield_mithril"}, 1},
+})
+end
+
 end
 
 -- Xanadu Server specific
