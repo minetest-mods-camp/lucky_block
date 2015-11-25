@@ -439,7 +439,11 @@ end
 -- lucky block itself
 minetest.register_node('lucky_block:lucky_block', {
 	description = "Lucky Block",
-	tiles = {"lucky_block.png"},
+	--tiles = {"lucky_block.png"},
+	tiles = {{
+		name="lucky_block_animated.png",
+		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},
+	}},
 	inventory_image = minetest.inventorycube("lucky_block.png"),
 	sunlight_propagates = false,
 	is_ground_content = false,
@@ -466,7 +470,11 @@ minetest.register_craft({
 -- super lucky block
 minetest.register_node('lucky_block:super_lucky_block', {
 	description = "Super Lucky Block (use Pick)",
-	tiles = {"lucky_block_super.png"},
+	--tiles = {"lucky_block_super.png"},
+	tiles = {{
+		name="lucky_block_super_animated.png",
+		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},
+	}},
 	inventory_image = minetest.inventorycube("lucky_block_super.png"),
 	sunlight_propagates = false,
 	is_ground_content = false,
