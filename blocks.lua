@@ -270,7 +270,7 @@ if minetest.get_modpath("protector") then
 	lucky_block:add_blocks({
 		{"dro", {"protector:protect"}, 3},
 	})
-if protector.mod and protector.mod == "redo" then
+if protector and protector.mod and protector.mod == "redo" then
 	lucky_block:add_blocks({
 		{"dro", {"protector:protect2"}, 3},
 		{"dro", {"protector:door_wood"}, 1},

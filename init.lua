@@ -439,7 +439,6 @@ end
 -- lucky block itself
 minetest.register_node('lucky_block:lucky_block', {
 	description = "Lucky Block",
-	drawtype = "nodebox",
 	tiles = {"lucky_block.png"},
 	inventory_image = minetest.inventorycube("lucky_block.png"),
 	sunlight_propagates = false,
@@ -467,7 +466,6 @@ minetest.register_craft({
 -- super lucky block
 minetest.register_node('lucky_block:super_lucky_block', {
 	description = "Super Lucky Block (use Pick)",
-	drawtype = "nodebox",
 	tiles = {"lucky_block_super.png"},
 	inventory_image = minetest.inventorycube("lucky_block_super.png"),
 	sunlight_propagates = false,
