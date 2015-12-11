@@ -48,7 +48,21 @@ Drop 5x random Tools from list
 	{"dro", {"default:pick_mese", "default:shovel_steel", "default:axe_diamond"}, 5}
 
 
--= Place Schematic (schematics must be added using lucky_block:add_schematics() before this can be used)
+-= Place Schematic
+
+Add schematic file to main list before adding lucky block:
+
+lucky_block:add_schematics({
+	{"name", schematic filename or definition, {offset}},
+end
+
+e.g.
+
+lucky_block:add_schematics({
+	{"platform", platform, {x = 2, y = 0, z = 2}},
+})
+
+then you can add the lucky block containing the schematic:
 
 {"sch", "schematic name", position, force placement}
 
