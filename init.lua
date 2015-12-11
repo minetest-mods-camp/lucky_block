@@ -1,5 +1,7 @@
 lucky_block = {}
 
+lucky_block.seed = PseudoRandom(os.time())
+
 -- default blocks
 local lucky_list = {
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
@@ -71,7 +73,7 @@ function effect(pos, amount, texture, max_size)
 	})
 end
 
--- modified from TNT mod
+-- modified from TNT mod to deal entity damage only
 function entity_physics(pos, radius)
 
 	radius = radius * 2
@@ -212,7 +214,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 5
+	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -268,16 +270,15 @@ local lucky_block = function(pos, digger)
 		local num = lucky_list[luck][3] or 1
 		local tame = lucky_list[luck][4]
 		local own = lucky_list[luck][5]
+		local range = lucky_list[luck][6] or 5
 
 		for i = 1, num do
 
-			pos2.x = pos.x + math.random(-5, 5)
+			pos2.x = pos.x + lucky_block.seed:next(-range, range)
 			pos2.y = pos.y + 1
-			pos2.z = pos.z + math.random(-5, 5)
+			pos2.z = pos.z + lucky_block.seed:next(-range, range)
 
-			local nod = node_ok(pos2).name
-
-			if nod == "air" then
+			if minetest.registered_nodes[node_ok(pos2).name].walkable == false then
 
 				local entity = lucky_list[luck][2]
 
@@ -288,14 +289,21 @@ local lucky_block = function(pos, digger)
 				end
 
 				local mob = minetest.add_entity(pos2, entity)
-				local ent = mob:get_luaentity()
 
-				if tame then
-					ent.tamed = true
-				end
+				if mob == false then
 
-				if own then
-					ent.owner = digger:get_player_name()
+					local ent = mob:get_luaentity()
+
+					if tame then
+						ent.tamed = true
+					end
+
+					if own then
+						ent.owner = digger:get_player_name()
+					end
+				else
+					mob:remove()
+					print ("[lucky_block] " .. entity .. " could not be spawned")
 				end
 			end
 		end
@@ -309,17 +317,21 @@ local lucky_block = function(pos, digger)
 	-- teleport
 	elseif action == "tel" then
 
-		--pos = digger:getpos()
-		pos.x = pos.x + math.random(-10, 10)
-		pos.x = pos.y + math.random(-5, 20)
-		pos.x = pos.z + math.random(-10, 10)
+		local xz_range = lucky_list[luck][2] or 10
+		local y_range = lucky_list[luck][3] or 5
+
+		pos.x = pos.x + lucky_block.seed:next(-xz_range, xz_range)
+		pos.x = pos.y + lucky_block.seed:next(-y_range, y_range)
+		pos.x = pos.z + lucky_block.seed:next(-xz_range, xz_range)
+
+		effect(pos, 25, "tnt_smoke.png", 8)
 
 		digger:moveto(pos, false)
 
 	-- drop items
 	elseif action == "dro" then
 
-		local num = lucky_list[luck][3]
+		local num = lucky_list[luck][3] or 1
 		local colours = lucky_list[luck][4]
 		local items = #lucky_list[luck][2]
 
@@ -331,7 +343,7 @@ local lucky_block = function(pos, digger)
 				item = item .. all_colours[math.random(#all_colours)]
 			end
 
-			local obj = core.add_item(pos, item)
+			local obj = minetest.add_item(pos, item)
 
 			if obj then
 				obj:setvelocity({
@@ -345,9 +357,18 @@ local lucky_block = function(pos, digger)
 	-- lightning strike
 	elseif action == "lig" then
 
+		local nod = lucky_list[luck][2]
+
+		if nod and not minetest.registered_nodes[nod] then
+			print (nod)
+			nod = "fire:basic_flame"
+		end
+
 		pos = digger:getpos()
 
-		minetest.set_node(pos, {name = "fire:basic_flame"})
+		if nod then
+			minetest.set_node(pos, {name = nod})
+		end
 
 		minetest.add_particlespawner({
 			amount = 1,
@@ -378,21 +399,34 @@ local lucky_block = function(pos, digger)
 
 		local nods = lucky_list[luck][2]
 		local switch = lucky_list[luck][3]
+		local spread = lucky_list[luck][4]
+		local range = lucky_list[luck][5] or 5
 
 		if switch == 1 then
 			pos = digger:getpos()
 		end
 
-		pos.y = pos.y + #nods
+		if spread then
+			pos.y = pos.y + 10
+		else
+			pos.y = pos.y + #nods
+		end
 
 		minetest.remove_node(pos)
+
+		local pos2 = pos
 
 		for s = 1, #nods do
 
 			minetest.after(0.5 * s, function()
 
+				if spread then
+					pos2.x = pos.x + lucky_block.seed:next(-range, range)
+					pos2.z = pos.z + lucky_block.seed:next(-range, range)
+				end
+
 				local n = minetest.registered_nodes[nods[s]]
-				local obj = core.add_entity(pos, "__builtin:falling_node")
+				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
 
 				obj:get_luaentity():set_node(n)
 			end)
@@ -439,7 +473,6 @@ end
 -- lucky block itself
 minetest.register_node('lucky_block:lucky_block', {
 	description = "Lucky Block",
-	--tiles = {"lucky_block.png"},
 	tiles = {{
 		name="lucky_block_animated.png",
 		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},
@@ -470,7 +503,6 @@ minetest.register_craft({
 -- super lucky block
 minetest.register_node('lucky_block:super_lucky_block', {
 	description = "Super Lucky Block (use Pick)",
-	--tiles = {"lucky_block_super.png"},
 	tiles = {{
 		name="lucky_block_super_animated.png",
 		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},

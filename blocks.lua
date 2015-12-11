@@ -306,6 +306,7 @@ lucky_block:add_blocks({
 	{"dro", {"ethereal:shovel_crystal"}, 1},
 	{"dro", {"ethereal:fishing_rod_baited"}, 1},
 	{"exp"},
+	{"dro", {"ethereal:fire_dust"}, 2},
 })
 
 if minetest.get_modpath("3d_armor") then
@@ -447,5 +448,8 @@ lucky_block:add_blocks({
 	{"nod", "default:chest", 0, {
 		{name = "mobs:mese_monster_wing", max = 1}}},
 	{"exp"},
+	{"dro", {"more_chests:giftbox_red", "more_chests:giftbox_green"}, 1},
+	{"dro", {"xanadu:taco"}, 2},
+	{"dro", {"xanadu:gingerbread_man"}, 2},
 })
 end

@@ -67,12 +67,12 @@ Place 2x Lava at player position
 
 -= Spawn Entity(s)
 
-{"spw", "entity name", number to spawn, tamed, owned}
+{"spw", "entity name", number to spawn, tamed, owned, range}
 
 e.g.
 
-Spawn 2x Dirt Monsters
-	{"spw", "mobs:dirt_monster", 2}
+Spawn 2x Dirt Monsters over a radius of 10 blocks
+	{"spw", "mobs:dirt_monster", 2, nil, nil, 10}
 
 Spawn 5x randomly coloured Sheep (random colour only works with sheep)
 	{"spw", "mobs:sheep", 5}
@@ -83,13 +83,13 @@ Spawn NPC who is tamed and owned by player
 
 -= Falling Blocks
 
-{"fal", {node list}, position}
+{"fal", {node list}, position, spread, range}
 
 e.g.
 
-Remove Lucky Block and Drop 2x Sand topped with 1x Gold Block
+Drop 2x Sand and 1x Gold Block and spread over range of 5 blocks
 
-	{"fal", {"default:sand", "default:sand", "default:goldblock"}, 0}
+	{"fal", {"default:sand", "default:sand", "default:goldblock"}, 0, true, 5}
 
 Drop 2x Obsidian onto player
 	{"fal", {"default:obsidian", "default:obsidian"}, 1}
@@ -117,12 +117,28 @@ Add gold block with wood sound, then after 2 seconds remove with pop
 
 -= Teleport (no settings, player teleports +/- 10 blocks in any direction)
 
-{"tel"}
+{"tel", horizontal range, vertical range}
+
+e.g.
+
+Teleport player to random position 10 blocks left/right and 5 blocks up/under
+
+	{"tel", 10, 5}
 
 
--= Lightning Strike (no settings, Lucky Block is hit by lightning and deals damage)
+-= Lightning Strike (Player is hit by lightning and deals damage with fire)
 
-{"lig"}
+{"lig", "fire node"}
+
+e.g.
+
+Lightning strike with temporary fire
+
+	{"lig", "fire:basic_flame"}
+
+Lightning strike with permanent fire
+
+	{"lig", "fire:permanent_flame"}
 
 
 Additional Commands thanks to blert2112
