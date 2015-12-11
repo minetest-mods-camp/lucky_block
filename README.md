@@ -15,4 +15,4 @@ Released under WTFPL
 
 0.1 - Initial release
 0.2 - New api commands added thanks to blert2112
-0.3 - New blocks added, some error checking and some new options
+0.3 - New blocks added, also error checking, new options and schematic rehaul

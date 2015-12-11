@@ -48,21 +48,17 @@ Drop 5x random Tools from list
 	{"dro", {"default:pick_mese", "default:shovel_steel", "default:axe_diamond"}, 5}
 
 
--= Place Schematic
+-= Place Schematic (schematics must be added using lucky_block:add_schematics() before this can be used)
 
-{"sch", "filename / schematic table", position, {schematic xyz offset}, force placement}
+{"sch", "schematic name", position, force placement}
 
 e.g.
 
-Replace Lucky Block with Tree
-{"sch", minetest.get_modpath("default").."/schematics/apple_tree.mts", 0, {x=1, y=0, z=1}, false}
+Remove lucky block and build lucky platform in it's place
+{"sch", "platform", 0, true}
 
-Place 2x Lava at player position
-{"sch", {
-	size = {x = 1, y = 2, z = 1},
-	data = {
-		{name="default:lava_source", param1=255}, {name="default:lava_source", param1=255},
-	}, 1, {x=0, y=0, z=0}, true}
+Place apple tree at player position
+{"sch", "appletree", 1, false}
 
 
 -= Spawn Entity(s)
@@ -164,3 +160,9 @@ lucky_block:add_chest_items({
 	{name = "default:diamond", max = 1},
 	{name = "default:pick_steel", max = 1}
 })
+
+
+lucky_block:add_schematics({line})
+
+This adds a schematic to the main list before adding the actual lucky block
+that contains the schematic reference name (see schems.lua for examples).

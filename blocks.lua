@@ -1,134 +1,7 @@
 
--- Generate schematics
-
-local a = "air"
-local l = "default:lava_source"
-local s = "default:sand"
-local d = "default:dirt"
-local w = "farming:soil_wet"
-local v = "default:water_source"
-local c = "farming:cotton_8"
-local h = "farming:wheat_8"
-local o = "default:obsidian_glass"
-local t = "default:sandstone"
-local b = "default:sandstonebrick"
-local x = "lucky_block:lucky_block"
-
-local platform = {
-	size = {x = 5, y = 3, z = 5},
-	data = {
-		-- left slice, middle slice, right slice (bottom to top)
-		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
-		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
-		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
-
-		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
-		{name=b, param1=255}, {name=x, param1=255}, {name=a, param1=255}, {name=x, param1=255}, {name=b, param1=255},
-		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
-
-		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
-		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
-		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
-
-		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
-		{name=b, param1=255}, {name=x, param1=255}, {name=a, param1=255}, {name=x, param1=255}, {name=b, param1=255},
-		{name=b, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=b, param1=255},
-
-		{name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255}, {name=t, param1=255},
-		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
-		{name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255}, {name=b, param1=255},
-
-	},
-}
-
-local insta_farm = {
-	size = {x = 5, y = 3, z = 3},
-	data = {
-		-- left slice, middle slice, right slice (bottom to top)
-		{name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255},
-		{name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255},
-		{name=c, param1=255}, {name=c, param1=255}, {name=c, param1=255}, {name=c, param1=255}, {name=c, param1=255},
-
-		{name=w, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=w, param1=255},
-		{name=w, param1=255}, {name=v, param1=255}, {name=v, param1=255}, {name=v, param1=255}, {name=w, param1=255},
-		{name=c, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255}, {name=h, param1=255},
-
-		{name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=d, param1=255}, {name=s, param1=255},
-		{name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255}, {name=w, param1=255},
-		{name=h, param1=255}, {name=h, param1=255}, {name=h, param1=255}, {name=h, param1=255}, {name=h, param1=255},
-
-	},
-}
-
-local lava_trap = {
-	size = {x = 3, y = 6, z = 3},
-	data = {
-		-- left slice, middle slice, right slice (bottom to top)
-		{name=l, param1=255}, {name=l, param1=255}, {name=l, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-
-		{name=l, param1=255}, {name=l, param1=255}, {name=l, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-
-		{name=l, param1=255}, {name=l, param1=255}, {name=l, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-		{name=a, param1=255}, {name=a, param1=255}, {name=a, param1=255},
-
-	},
-}
-
-local sand_trap = {
-	size = {x = 3, y = 3, z = 3},
-	data = {
-		-- left slice, middle slice, right slice (bottom to top)
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-		{name=s, param1=255}, {name=s, param1=255}, {name=s, param1=255},
-
-	},
-}
-
-local water_trap = {
-	size = {x = 3, y = 3, z = 3},
-	data = {
-		-- left slice, middle slice, right slice (bottom to top)
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=v, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-		{name=o, param1=255}, {name=o, param1=255}, {name=o, param1=255},
-
-	},
-}
-
 -- Default blocks
 lucky_block:add_blocks({
-	{"sch", water_trap, 1, {x = 1, y = 0, z = 1}, true},
+	{"sch", "watertrap", 1, true},
 	{"tel"},
 	{"dro", {"wool:"}, 10, true},
 	{"dro", {"default:apple"}, 10},
@@ -138,9 +11,9 @@ lucky_block:add_blocks({
 		{name = "default:wood", max = 3},
 		{name = "default:pick_diamond", max = 1},
 		{name = "default:coal_lump", max = 3}}},
-	{"sch", sand_trap, 1, {x = 1, y = 0, z = 1}, true},
+	{"sch", "sandtrap", 1, true},
 	{"nod", "flowers:rose", 0},
-	{"sch", lava_trap, 1, {x = 1, y = 5, z = 1}, true},
+	{"sch", "lava_trap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
 	{"exp"},
 	{"nod", "default:diamondblock", 0},
@@ -154,7 +27,7 @@ lucky_block:add_blocks({
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
 	{"exp"},
-	{"sch", platform, 1, {x = 2, y = 1, z = 2}, true},
+	{"sch", "platform", 1, true},
 	{"nod", "default:wood", 0},
 	{"dro", {"default:pick_bronze"}, 1},
 	{"dro", {"default:shovel_bronze"}, 1},
@@ -166,7 +39,7 @@ lucky_block:add_blocks({
 if minetest.get_modpath("farming") then
 	lucky_block:add_blocks({
 		{"dro", {"farming:bread"}, 5},
-		{"sch", insta_farm, 0, {x = 2, y = 2, z = 1}, true},
+		{"sch", insta_farm, 0, true},
 		{"nod", "default:water_source", 1},
 	})
 
@@ -282,26 +155,38 @@ end
 
 -- Ethereal mod
 if minetest.get_modpath("ethereal") then
+
 local epath = minetest.get_modpath("ethereal") .. "/schematics/"
+
+lucky_block:add_schematics({
+	{"pinetree", epath .. "pinetree.mts", {x = 3, y = 0, z = 3}},
+	{"acaciatree", epath .. "acaciatree.mts", {x = 5, y = 0, z = 5}},
+	{"palmtree", epath .. "palmtree.mts", {x = 4, y = 0, z = 4}},
+	{"appletree", ethereal.appletree, {x = 1, y = 0, z = 1}},
+	{"bananatree", ethereal.bananatree, {x = 3, y = 0, z = 3}},
+	{"orangetree", ethereal.orangetree, {x = 1, y = 0, z = 1}},
+	{"birchtree", ethereal.birchtree, {x = 2, y = 0, z = 2}},
+})
+
 lucky_block:add_blocks({
 	{"nod", "ethereal:crystal_spike", 1},
-	{"sch", epath .. "pinetree.mts", 0, {x = 3, y = 0, z = 3}},
+	{"sch", "pinetree", 0, false},
 	{"dro", {"ethereal:orange"}, 10},
-	{"sch", ethereal.appletree, 0, {x = 1, y = 0, z = 1}},
+	{"sch", "appletree", 0, false},
 	{"dro", {"ethereal:strawberry"}, 10},
-	{"sch", ethereal.bananatree, 0, {x = 3, y = 0, z = 3}},
-	{"sch", ethereal.orangetree, 0, {x = 1, y = 0, z = 1}},
+	{"sch", "bananatree", 0, false},
+	{"sch", "orangetree", 0, false},
 	{"dro", {"ethereal:banana"}, 10},
-	{"sch", epath .. "acaciatree.mts", 0, {x = 5, y = 0, z = 5}},
+	{"sch", "acaciatree", 0, false},
 	{"dro", {"ethereal:golden_apple"}, 3},
-	{"sch", epath .. "palmtree.mts", 0, {x = 4, y = 0, z = 4}},
+	{"sch", "palmtree", 0, false},
 	{"dro", {"ethereal:tree_sapling", "ethereal:orange_tree_sapling", "ethereal:banana_tree_sapling"}, 10},
 	{"dro", {"ethereal:green_dirt", "ethereal:prairie_dirt", "ethereal:grove_dirt", "ethereal:cold_dirt"}, 10},
 	{"dro", {"ethereal:axe_crystal"}, 1},
 	{"nod", "ethereal:fire_flower", 1},
 	{"dro", {"ethereal:sword_crystal"}, 1},
 	{"dro", {"ethereal:pick_crystal"}, 1},
-	{"sch", ethereal.birchtree, 0, {x = 2, y = 0, z = 2}},
+	{"sch", "birchtree", 0, false},
 	{"dro", {"ethereal:fish_raw"}, 1},
 	{"dro", {"ethereal:shovel_crystal"}, 1},
 	{"dro", {"ethereal:fishing_rod_baited"}, 1},

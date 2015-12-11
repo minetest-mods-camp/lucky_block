@@ -1,4 +1,5 @@
 lucky_block = {}
+lucky_schems = {}
 
 lucky_block.seed = PseudoRandom(os.time())
 
@@ -24,8 +25,16 @@ function lucky_block:purge_block_list()
 	}
 end
 
--- import default blocks
+-- add schematics to global list
+function lucky_block:add_schematics(list)
+	for s = 1, #list do
+		table.insert(lucky_schems, list[s])
+	end
+end
+
+-- import default blocks and schematics
 dofile(minetest.get_modpath("lucky_block").."/blocks.lua")
+dofile(minetest.get_modpath("lucky_block").."/schems.lua")
 
 -- for random colour selection
 local all_colours = {
@@ -223,22 +232,30 @@ local lucky_block = function(pos, digger)
 	-- place schematic
 	if action == "sch" then
 
-		local offset = lucky_list[luck][4]
-		local switch = lucky_list[luck][3]
+		if #lucky_schems == 0 then
+			print ("[lucky block] No schematics")
+			return
+		end
+
 		local schem = lucky_list[luck][2]
-		local force = lucky_list[luck][5] or false
+		local switch = lucky_list[luck][3] or false
+		local force = lucky_list[luck][4] or true
 
 		if switch == 1 then
 			pos = digger:getpos()
 		end
 
-		minetest.place_schematic(
-			{
-				x = pos.x - offset.x,
-				y = pos.y - offset.y,
-				z = pos.z - offset.z
-			},
-			schem, "", {}, force)
+		for i = 1, #lucky_schems do
+
+			if schem == lucky_schems[i][1] then
+
+				local p1 = vector.subtract(pos, lucky_schems[i][3]) 
+
+				minetest.place_schematic(p1, lucky_schems[i][2], "", {}, force)
+
+				break
+			end
+		end
 
 	-- place node (if chest then fill chest)
 	elseif action == "nod" then
