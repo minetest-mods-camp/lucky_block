@@ -223,7 +223,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 1
+	local luck = math.random(1, #lucky_list) ;  --luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -238,8 +238,8 @@ local lucky_block = function(pos, digger)
 		end
 
 		local schem = lucky_list[luck][2]
-		local switch = lucky_list[luck][3] or false
-		local force = lucky_list[luck][4] or true
+		local switch = lucky_list[luck][3] or 0
+		local force = lucky_list[luck][4]
 
 		if switch == 1 then
 			pos = digger:getpos()
