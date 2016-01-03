@@ -223,7 +223,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ;  --luck = 1
+	local luck = math.random(1, #lucky_list) ; --luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -288,6 +288,7 @@ local lucky_block = function(pos, digger)
 		local tame = lucky_list[luck][4]
 		local own = lucky_list[luck][5]
 		local range = lucky_list[luck][6] or 5
+		local name = lucky_list[luck][7]
 
 		for i = 1, num do
 
@@ -307,7 +308,7 @@ local lucky_block = function(pos, digger)
 
 				local mob = minetest.add_entity(pos2, entity)
 
-				if mob == false then
+				if mob and mob:get_luaentity() then
 
 					local ent = mob:get_luaentity()
 
@@ -317,6 +318,14 @@ local lucky_block = function(pos, digger)
 
 					if own then
 						ent.owner = digger:get_player_name()
+					end
+
+					if name then
+						ent.nametag = name
+						ent.object:set_properties({
+							nametag = name,
+							nametag_color = "#FFFF00"
+						})
 					end
 				else
 					mob:remove()
