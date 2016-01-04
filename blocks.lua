@@ -63,9 +63,9 @@ end
 if minetest.get_modpath("mobs") then
 	lucky_block:add_blocks({
 		{"spw", "mobs:sheep", 5},
-		{"spw", "mobs:dungeon_master", 1},
+		{"spw", "mobs:dungeon_master", 1, nil, nil, 3, "Billy"},
 		{"spw", "mobs:sand_monster", 3},
-		{"spw", "mobs:stone_monster", 3},
+		{"spw", "mobs:stone_monster", 3, nil, nil, 3, "Bob"},
 		{"dro", {"mobs:meat_raw"}, 5},
 		{"spw", "mobs:rat", 5},
 		{"spw", "mobs:dirt_monster", 3},
@@ -316,7 +316,7 @@ end
 if minetest.get_modpath("xanadu") then
 lucky_block:add_blocks({
 	{"dro", {"xanadu:cupcake"}, 8},
-	{"spw", "mobs:creeper", 1},
+	{"spw", "mobs:creeper", 1, nil, nil, 5, "Mr. Boombastic"},
 	{"spw", "mobs:npc", 1, true, true},
 	{"nod", "default:chest", 0, {
 		{name = "xanadu:axe_super", max = 1},
