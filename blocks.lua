@@ -39,7 +39,7 @@ lucky_block:add_blocks({
 if minetest.get_modpath("farming") then
 	lucky_block:add_blocks({
 		{"dro", {"farming:bread"}, 5},
-		{"sch", insta_farm, 0, true},
+		{"sch", "insta_farm", 0, true},
 		{"nod", "default:water_source", 1},
 	})
 
