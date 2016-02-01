@@ -32,9 +32,9 @@ function lucky_block:add_schematics(list)
 	end
 end
 
--- import default blocks and schematics
-dofile(minetest.get_modpath("lucky_block").."/blocks.lua")
+-- import schematics and default blocks
 dofile(minetest.get_modpath("lucky_block").."/schems.lua")
+dofile(minetest.get_modpath("lucky_block").."/blocks.lua")
 
 -- for random colour selection
 local all_colours = {

@@ -13,7 +13,7 @@ lucky_block:add_blocks({
 		{name = "default:coal_lump", max = 3}}},
 	{"sch", "sandtrap", 1, true},
 	{"nod", "flowers:rose", 0},
-	{"sch", "lava_trap", 1, true},
+	{"sch", "lavatrap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
 	{"exp"},
 	{"nod", "default:diamondblock", 0},
@@ -39,7 +39,7 @@ lucky_block:add_blocks({
 if minetest.get_modpath("farming") then
 	lucky_block:add_blocks({
 		{"dro", {"farming:bread"}, 5},
-		{"sch", "insta_farm", 0, true},
+		{"sch", "instafarm", 0, true},
 		{"nod", "default:water_source", 1},
 	})
 
