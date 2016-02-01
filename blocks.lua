@@ -253,6 +253,7 @@ lucky_block:add_blocks({
 	{"tro", "pie:pie_0"},
 	{"nod", "pie:rvel_0", 0},
 	{"nod", "pie:scsk_0", 0},
+	{"nod", "pie:bana_0", 0},
 	{"nod", "pie:meat_0", 0},
 	{"lig"},
 })
