@@ -278,7 +278,12 @@ if minetest.get_modpath("bakedclay") then
 local p = "bakedclay:"
 lucky_block:add_blocks({
 	{"dro", {"bakedclay:"}, 10, true},
-	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green", p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange", p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0},
+	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green",
+		p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange",
+		p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0},
+	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green",
+		p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange",
+		p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0, true},
 })
 end
 
@@ -342,6 +347,7 @@ lucky_block:add_blocks({
 	{"dro", {"carpet:"}, 10, true},
 	{"dro", {"xanadu:bone"}, 2},
 	{"spw", "mobs:bat", 3},
+	{"dro", {"xanadu:cupcake_chocolate"}, 8},
 	{"dro", {"xanadu:bacon"}, 8},
 	{"dro", {"3d_armor:boots_bunny"}, 1},
 	{"dro", {"carpet:wallpaper_"}, 10, true},
