@@ -147,6 +147,7 @@ function explosion(pos, radius)
 	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
 	local data = vm:get_data()
 	local p = {}
+	local pr = PseudoRandom(os.time())
 
 	for z = -radius, radius do
 	for y = -radius, radius do
@@ -157,7 +158,8 @@ function explosion(pos, radius)
 		p.y = pos.y + y
 		p.z = pos.z + z
 
-		if data[vi] ~= c_air
+		if (x * x) + (y * y) + (z * z) <= (radius * radius) + pr:next(-radius, radius)
+		and data[vi] ~= c_air
 		and data[vi] ~= c_ignore
 		and data[vi] ~= c_obsidian
 		and data[vi] ~= c_brick

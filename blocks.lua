@@ -1,10 +1,22 @@
 
+-- Default tree schematics
+local dpath = minetest.get_modpath("default") .. "/schematics/"
+
+lucky_block:add_schematics({
+	{"appletree", dpath .. "apple_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+	{"jungletree", dpath .. "jungle_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+	{"defpinetree", dpath .. "pine_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+	{"acaciatree", dpath .. "acacia_tree_from_sapling.mts", {x = 4, y = 1, z = 4}},
+	{"aspentree", dpath .. "aspen_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+})
+
 -- Default blocks
 lucky_block:add_blocks({
 	{"sch", "watertrap", 1, true},
 	{"tel"},
 	{"dro", {"wool:"}, 10, true},
 	{"dro", {"default:apple"}, 10},
+	{"sch", "appletree", 0, false},
 	{"dro", {"default:snow"}, 10},
 	{"nod", "default:chest", 0, {
 		{name = "bucket:bucket_water", max = 1},
@@ -13,6 +25,7 @@ lucky_block:add_blocks({
 		{name = "default:coal_lump", max = 3}}},
 	{"sch", "sandtrap", 1, true},
 	{"nod", "flowers:rose", 0},
+	{"sch", "defpinetree", 0, false},
 	{"sch", "lavatrap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
 	{"exp"},
@@ -21,15 +34,18 @@ lucky_block:add_blocks({
 	{"nod", "default:dirt", 0},
 	{"dro", {"dye:"}, 10, true},
 	{"dro", {"default:sword_steel"}, 1},
+	{"sch", "jungletree", 0, false},
 	{"dro", {"default:pick_steel"}, 1},
 	{"dro", {"default:shovel_steel"}, 1},
 	{"dro", {"default:coal_lump"}, 3},
+	{"sch", "acaciatree", 0, false},
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
 	{"exp"},
 	{"sch", "platform", 1, true},
 	{"nod", "default:wood", 0},
 	{"dro", {"default:pick_bronze"}, 1},
+	{"sch", "aspentree", 0, false},
 	{"dro", {"default:shovel_bronze"}, 1},
 	{"nod", "default:gravel", 0},
 	{"dro", {"default:axe_bronze"}, 1},
@@ -160,9 +176,7 @@ local epath = minetest.get_modpath("ethereal") .. "/schematics/"
 
 lucky_block:add_schematics({
 	{"pinetree", epath .. "pinetree.mts", {x = 3, y = 0, z = 3}},
-	{"acaciatree", epath .. "acaciatree.mts", {x = 5, y = 0, z = 5}},
 	{"palmtree", epath .. "palmtree.mts", {x = 4, y = 0, z = 4}},
-	{"appletree", ethereal.appletree, {x = 1, y = 0, z = 1}},
 	{"bananatree", ethereal.bananatree, {x = 3, y = 0, z = 3}},
 	{"orangetree", ethereal.orangetree, {x = 1, y = 0, z = 1}},
 	{"birchtree", ethereal.birchtree, {x = 2, y = 0, z = 2}},
