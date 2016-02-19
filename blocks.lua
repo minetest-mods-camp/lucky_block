@@ -287,6 +287,15 @@ lucky_block:add_blocks({
 })
 end
 
+-- TNT mod
+if minetest.get_modpath("tnt") then
+local p = "tnt:tnt_burning"
+lucky_block:add_blocks({
+	{"dro", {"tnt:gunpowder"}, 5, true},
+	{"fal", {p, p, p, p, p, p, p}, 1, true, 4},
+})
+end
+
 -- Coloured Blocks mod
 if minetest.get_modpath("cblocks") then
 lucky_block:add_blocks({
