@@ -166,6 +166,12 @@ function explosion(pos, radius)
 		and data[vi] ~= c_chest then
 
 			local n = node_ok(p).name
+			local on_blast = minetest.registered_nodes[n].on_blast
+
+			if on_blast then
+				return on_blast(p)
+			end
+
 
 			if minetest.get_item_group(n, "unbreakable") ~= 1 then
 
