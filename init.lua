@@ -1,3 +1,4 @@
+
 lucky_block = {}
 lucky_schems = {}
 
@@ -93,10 +94,24 @@ function entity_physics(pos, radius)
 	for _, obj in pairs(objs) do
 
 		obj_pos = obj:getpos()
+
 		dist = math.max(1, vector.distance(pos, obj_pos))
 
 		local damage = math.floor((4 / dist) * radius)
-		obj:set_hp(obj:get_hp() - damage)
+		local ent = obj:get_luaentity()
+
+		if obj:is_player() then
+			obj:set_hp(obj:get_hp() - damage)
+
+		else --if ent.health then
+
+			obj:punch(obj, 1.0, {
+				full_punch_interval = 1.0,
+				damage_groups = {fleshy = damage},
+			}, nil)
+
+		end
+
 	end
 end
 
@@ -170,38 +185,13 @@ function explosion(pos, radius)
 
 			if on_blast then
 				return on_blast(p)
-			end
-
-
-			if minetest.get_item_group(n, "unbreakable") ~= 1 then
-
-				-- if chest then drop items inside
-				if n == "default:chest"
-				or n == "3dchest:chest"
-				or n == "bones:bones" then
-
-					local meta = minetest.get_meta(p)
-					local inv  = meta:get_inventory()
-
-					for i = 1, inv:get_size("main") do
-
-						local m_stack = inv:get_stack("main", i)
-						local obj = minetest.add_item(p, m_stack)
-
-						if obj then
-							obj:setvelocity({
-								x = math.random(-2, 2),
-								y = 7,
-								z = math.random(-2, 2)
-							})
-						end
-					end
-				end
-
+			else
 				minetest.set_node(p, {name = "air"})
+
 				effect(p, 2, "tnt_smoke.png", 5)
 			end
 		end
+
 		vi = vi + 1
 	end
 	end
@@ -231,7 +221,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 1
+	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -360,7 +350,7 @@ local lucky_block = function(pos, digger)
 
 		effect(pos, 25, "tnt_smoke.png", 8)
 
-		digger:moveto(pos, false)
+		digger:setpos(pos, false)
 
 	-- drop items
 	elseif action == "dro" then
@@ -382,7 +372,7 @@ local lucky_block = function(pos, digger)
 			if obj then
 				obj:setvelocity({
 					x = math.random(-1.5, 1.5),
-					y = 6,
+					y = 5,
 					z = math.random(-1.5, 1.5)
 				})
 			end
@@ -448,7 +438,7 @@ local lucky_block = function(pos, digger)
 
 		minetest.remove_node(pos)
 
-		local pos2 = pos
+		local pos2 = {x = pos.x, y = pos.y, z = pos.z}
 
 		for s = 1, #nods do
 
@@ -565,6 +555,44 @@ minetest.register_node('lucky_block:super_lucky_block', {
 			max_hear_distance = 10
 		})
 	end,
+})
+
+-- used to drop items inside a chest or container
+local drop_items = function(pos, invstring)
+
+	local meta = minetest.get_meta(pos)
+	local inv  = meta:get_inventory()
+
+	for i = 1, inv:get_size(invstring) do
+
+		local m_stack = inv:get_stack(invstring, i)
+		local obj = minetest.add_item(pos, m_stack)
+
+		if obj then
+
+			obj:setvelocity({
+				x = math.random(-10, 10) / 9,
+				y = 3,
+				z = math.random(-10, 10) / 9
+			})
+		end
+	end
+
+end
+
+-- override chest node so it drops items on explode
+minetest.override_item("default:chest", {
+
+	on_blast = function(p)
+
+		minetest.after(0, function()
+
+			drop_items(p, "main")
+
+			minetest.remove_node(p)
+		end)
+	end,
+
 })
 
 print ("[MOD] Lucky Blocks loaded ("..#lucky_list.." in total)")
