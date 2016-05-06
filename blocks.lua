@@ -341,6 +341,19 @@ end
 
 end
 
+-- Bows mod
+if minetest.get_modpath("bows") then
+lucky_block:add_blocks({
+	{"dro", {"bows:bow_wood"}, 1},
+	{"dro", {"bows:bow_steel"}, 1},
+	{"dro", {"bows:bow_bronze"}, 1},
+	{"dro", {"bows:arrow"}, 5},
+	{"dro", {"bows:arrow_steel"}, 5},
+	{"dro", {"bows:arrow_mese"}, 5},
+	{"dro", {"bows:arrow_diamond"}, 5},
+})
+end
+
 -- Xanadu Server specific
 if minetest.get_modpath("xanadu") then
 lucky_block:add_blocks({
