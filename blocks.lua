@@ -379,5 +379,6 @@ lucky_block:add_blocks({
 	{"dro", {"more_chests:giftbox_red", "more_chests:giftbox_green"}, 1},
 	{"dro", {"xanadu:taco"}, 2},
 	{"dro", {"xanadu:gingerbread_man"}, 2},
+	{"spw", "mobs:evil_bonny", 1},
 })
 end

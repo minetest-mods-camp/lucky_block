@@ -1,7 +1,6 @@
 
 lucky_block = {}
 lucky_schems = {}
-
 lucky_block.seed = PseudoRandom(os.time())
 
 -- default blocks
@@ -14,6 +13,7 @@ local lucky_list = {
 
 -- ability to add new blocks to list
 function lucky_block:add_blocks(list)
+
 	for s = 1, #list do
 		table.insert(lucky_list, list[s])
 	end
@@ -28,14 +28,15 @@ end
 
 -- add schematics to global list
 function lucky_block:add_schematics(list)
+
 	for s = 1, #list do
 		table.insert(lucky_schems, list[s])
 	end
 end
 
 -- import schematics and default blocks
-dofile(minetest.get_modpath("lucky_block").."/schems.lua")
-dofile(minetest.get_modpath("lucky_block").."/blocks.lua")
+dofile(minetest.get_modpath("lucky_block") .. "/schems.lua")
+dofile(minetest.get_modpath("lucky_block") .. "/blocks.lua")
 
 -- for random colour selection
 local all_colours = {
@@ -59,6 +60,7 @@ end
 
 -- ability to add chest items
 function lucky_block:add_chest_items(list)
+
 	for s = 1, #list do
 		table.insert(chest_stuff, list[s])
 	end
@@ -66,6 +68,7 @@ end
 
 -- particle effects
 function effect(pos, amount, texture, max_size)
+
 	minetest.add_particlespawner({
 		amount = amount,
 		time = 0.5,
@@ -91,21 +94,22 @@ function entity_physics(pos, radius)
 	local objs = minetest.get_objects_inside_radius(pos, radius)
 	local obj_pos, dist
 
-	for _, obj in pairs(objs) do
+	for n = 1, #objs do
 
-		obj_pos = obj:getpos()
+		obj_pos = objs[n]:getpos()
 
-		dist = math.max(1, vector.distance(pos, obj_pos))
+		dist = vector.distance(pos, obj_pos)
+		if dist < 1 then dist = 1 end
 
 		local damage = math.floor((4 / dist) * radius)
-		local ent = obj:get_luaentity()
+		local ent = objs[n]:get_luaentity()
 
-		if obj:is_player() then
-			obj:set_hp(obj:get_hp() - damage)
+		if objs[n]:is_player() then
+			objs[n]:set_hp(objs[n]:get_hp() - damage)
 
 		else --if ent.health then
 
-			obj:punch(obj, 1.0, {
+			objs[n]:punch(objs[n], 1.0, {
 				full_punch_interval = 1.0,
 				damage_groups = {fleshy = damage},
 			}, nil)
@@ -201,8 +205,7 @@ end
 function fill_chest(pos, items)
 
 	local stacks = items or {}
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
+	local inv = minetest.get_meta(pos):get_inventory()
 
 	inv:set_size("main", 8 * 4)
 
@@ -221,7 +224,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 1
+	local luck = math.random(1, #lucky_list) ; --luck = 4
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -272,6 +275,7 @@ local lucky_block = function(pos, digger)
 		end
 
 		effect(pos, 25, "tnt_smoke.png", 8)
+
 		minetest.set_node(pos, {name = nod})
 
 		if nod == "default:chest" then
@@ -371,9 +375,9 @@ local lucky_block = function(pos, digger)
 
 			if obj then
 				obj:setvelocity({
-					x = math.random(-1.5, 1.5),
+					x = math.random(-10, 10) / 9,
 					y = 5,
-					z = math.random(-1.5, 1.5)
+					z = math.random(-10, 10) / 9,
 				})
 			end
 		end
@@ -452,7 +456,11 @@ local lucky_block = function(pos, digger)
 				local n = minetest.registered_nodes[nods[s]]
 				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
 
-				obj:get_luaentity():set_node(n)
+				if obj then
+					obj:get_luaentity():set_node(n)
+				else
+					obj:remove()
+				end
 			end)
 		end
 
@@ -498,13 +506,18 @@ end
 minetest.register_node('lucky_block:lucky_block', {
 	description = "Lucky Block",
 	tiles = {{
-		name="lucky_block_animated.png",
-		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},
+		name = "lucky_block_animated.png",
+		animation = {
+			type = "vertical_frames",
+			aspect_w = 16,
+			aspect_h = 16,
+			length = 1
+		},
 	}},
 	inventory_image = minetest.inventorycube("lucky_block.png"),
 	sunlight_propagates = false,
 	is_ground_content = false,
-	paramtype = 'light',
+	paramtype = "light",
 	light_source = 3,
 	groups = {oddly_breakable_by_hand = 3},
 	sounds = default.node_sound_wood_defaults(),
@@ -529,12 +542,17 @@ minetest.register_node('lucky_block:super_lucky_block', {
 	description = "Super Lucky Block (use Pick)",
 	tiles = {{
 		name="lucky_block_super_animated.png",
-		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=1},
+		animation = {
+			type = "vertical_frames",
+			aspect_w = 16,
+			aspect_h = 16,
+			length = 1
+		},
 	}},
 	inventory_image = minetest.inventorycube("lucky_block_super.png"),
 	sunlight_propagates = false,
 	is_ground_content = false,
-	paramtype = 'light',
+	paramtype = "light",
 	groups = {cracky = 1, level = 2},
 	sounds = default.node_sound_stone_defaults(),
 
@@ -545,22 +563,27 @@ minetest.register_node('lucky_block:super_lucky_block', {
 
 	on_dig = function(pos)
 
-		minetest.set_node(pos, {name = "air"})
+		if math.random(1, 10) < 8 then
 
-		effect(pos, 25, "tnt_smoke.png", 8)
+			minetest.set_node(pos, {name = "air"})
 
-		minetest.sound_play("fart1", {
-			pos = pos,
-			gain = 1.0,
-			max_hear_distance = 10
-		})
+			effect(pos, 25, "tnt_smoke.png", 8)
+
+			minetest.sound_play("fart1", {
+				pos = pos,
+				gain = 1.0,
+				max_hear_distance = 10
+			})
+		else
+			minetest.set_node(pos, {name = "lucky_block:lucky_block"})
+		end
 	end,
 })
 
 -- used to drop items inside a chest or container
 local drop_items = function(pos, invstring)
 
-	local meta = minetest.get_meta(pos)
+	local meta = minetest.get_meta(pos) ; if not meta then return end
 	local inv  = meta:get_inventory()
 
 	for i = 1, inv:get_size(invstring) do
@@ -589,10 +612,10 @@ minetest.override_item("default:chest", {
 
 			drop_items(p, "main")
 
-			minetest.remove_node(p)
+			minetest.set_node(p, {name = "air"})
 		end)
 	end,
 
 })
 
-print ("[MOD] Lucky Blocks loaded ("..#lucky_list.." in total)")
+print ("[MOD] Lucky Blocks loaded (" .. #lucky_list .. " in total)")
