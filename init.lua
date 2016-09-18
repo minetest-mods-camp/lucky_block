@@ -224,7 +224,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 4
+	local luck = math.random(1, #lucky_list) ; --luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -243,7 +243,7 @@ local lucky_block = function(pos, digger)
 		local force = lucky_list[luck][4]
 
 		if switch == 1 then
-			pos = digger:getpos()
+			pos = vector.round( digger:getpos() )
 		end
 
 		for i = 1, #lucky_schems do
@@ -256,6 +256,10 @@ local lucky_block = function(pos, digger)
 
 				break
 			end
+		end
+
+		if switch == 1 then
+			digger:setpos(pos, false)
 		end
 
 	-- place node (if chest then fill chest)
