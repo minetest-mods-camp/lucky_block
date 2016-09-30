@@ -65,7 +65,7 @@ if farming.mod and farming.mod == "redo" then
 		{"dro", {"farming:coffee_cup_hot"}, 1},
 		{"dro", {"farming:bread"}, 5},
 		{"nod", "farming:jackolantern", 0},
-		{"tro", "farming:jackolantern"},
+		{"tro", "farming:jackolantern_on"},
 		{"nod", "default:river_water_source", 1},
 		{"dro", {"farming:trellis", "farming:grapes"}, 5},
 		{"dro", {"farming:bottle_ethanol"}, 1},
@@ -73,7 +73,8 @@ if farming.mod and farming.mod == "redo" then
 		{"dro", {"farming:donut", "farming:donut_chocolate", "farming:donut_apple"}, 5},
 	})
 end
-end
+
+end -- END farming mod
 
 -- Mobs mod
 if minetest.get_modpath("mobs") then
@@ -109,7 +110,8 @@ if mobs.mod and mobs.mod == "redo" then
 			{name = "mobs:lava_orb", max = 1}}},
 	})
 end
-end
+
+end -- END mobs mod
 
 -- Home Decor mod
 if minetest.get_modpath("homedecor") then
@@ -225,16 +227,16 @@ lucky_block:add_blocks({
 })
 end
 
-end
+end -- END Ethereal mod
 
 -- 3D Armor mod
 if minetest.get_modpath("3d_armor") then
 lucky_block:add_blocks({
-	{"dro", {"3d_armor:boots_wood", "3d_armor:leggings_wood", "3d_armor:chestplate_wood", "3d_armor:helmet_wood"}, 2},
-	{"dro", {"3d_armor:boots_steel", "3d_armor:leggings_steel", "3d_armor:chestplate_steel", "3d_armor:helmet_steel"}, 2},
-	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold"}, 2},
-	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus"}, 2},
-	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze"}, 2},
+	{"dro", {"3d_armor:boots_wood", "3d_armor:leggings_wood", "3d_armor:chestplate_wood", "3d_armor:helmet_wood"}, 1},
+	{"dro", {"3d_armor:boots_steel", "3d_armor:leggings_steel", "3d_armor:chestplate_steel", "3d_armor:helmet_steel"}, 1},
+	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold"}, 1},
+	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus"}, 1},
+	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze"}, 1},
 	{"lig"},
 })
 end
@@ -254,7 +256,9 @@ end
 -- Fire mod
 if minetest.get_modpath("fire") then
 lucky_block:add_blocks({
+	{"dro", {"fire:flint_and_steel"}, 1},
 	{"nod", "fire:basic_flame", 1},
+	{"nod", "fire:permanent_flame", 1},
 })
 end
 
@@ -300,8 +304,8 @@ end
 if minetest.get_modpath("cblocks") then
 lucky_block:add_blocks({
 	{"dro", {"cblocks:wood_"}, 10, true},
-	{"dro", {"carpet:stonebrick_"}, 10, true},
-	{"dro", {"carpet:glass_"}, 10, true},
+	{"dro", {"cblocks:stonebrick_"}, 10, true},
+	{"dro", {"cblocks:glass_"}, 10, true},
 })
 end
 
