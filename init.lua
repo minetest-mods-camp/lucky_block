@@ -3,8 +3,17 @@ lucky_block = {}
 lucky_schems = {}
 lucky_block.seed = PseudoRandom(os.time())
 
+-- example custom function (punches player with 5 damage)
+local function punchy(pos, player)
+	player:punch(player, 1.0, {
+		full_punch_interval = 1.0,
+		damage_groups = {fleshy = 5}
+	}, nil)
+end
+
 -- default blocks
 local lucky_list = {
+	{"cus", punchy},
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
 	{"nod", "lucky_block:super_lucky_block", 0},
@@ -503,6 +512,12 @@ local lucky_block = function(pos, digger)
 			end
 		end)
 
+	-- custom function
+	elseif action == "cus" then
+
+		local func = lucky_list[luck][2]
+
+		func(pos, digger)
 	end
 end
 

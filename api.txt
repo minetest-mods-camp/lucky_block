@@ -263,6 +263,28 @@ Strike player and place permanent flame
 	{"lig", "fire:permanent_flame"}
 
 
+Custom Function
+---------------
+
+This allows mod makers to use there own functions when opening lucky blocks and
+passes the block position and player opening it.
+
+{"cus", myfunction}
+
+e.g.
+
+Punch player and deal 5 damage points (function first then line to add l.block)
+
+local function punchy(pos, player)
+	player:punch(player, 1.0, {
+		full_punch_interval = 1.0,
+		damage_groups = {fleshy = 5}
+	}, nil)
+end
+
+	{"cus", punchy}
+
+
 Final Words
 ===========
 
