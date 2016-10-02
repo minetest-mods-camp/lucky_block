@@ -469,7 +469,7 @@ local lucky_block = function(pos, digger)
 				local n = minetest.registered_nodes[nods[s]]
 				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
 
-				if obj then
+				if obj and n then
 					obj:get_luaentity():set_node(n)
 				else
 					obj:remove()
