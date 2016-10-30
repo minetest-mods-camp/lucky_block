@@ -384,6 +384,12 @@ local lucky_block = function(pos, digger)
 				item = item .. all_colours[math.random(#all_colours)]
 			end
 
+			if not minetest.registered_nodes[item]
+			and not minetest.registered_craftitems[item]
+			and not minetest.registered_tools[item] then
+				item = "default:coal_lump"
+			end
+
 			local obj = minetest.add_item(pos, item)
 
 			if obj then
@@ -492,6 +498,11 @@ local lucky_block = function(pos, digger)
 				gain = 1.0,
 				max_hear_distance = 10
 			})
+		end
+
+		if not minetest.registered_nodes[nod] then
+			print (nod)
+			nod = "default:goldblock"
 		end
 
 		minetest.after(2.0, function()
