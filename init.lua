@@ -648,4 +648,7 @@ minetest.override_item("default:chest", {
 
 })
 
-print ("[MOD] Lucky Blocks loaded (" .. #lucky_list .. " in total)")
+minetest.after(0, function()
+	print ("[MOD] Lucky Blocks loaded (" .. #lucky_list .. " in total)")
+end)
+

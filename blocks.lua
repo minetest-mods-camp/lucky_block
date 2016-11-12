@@ -51,28 +51,13 @@ lucky_block:add_blocks({
 	{"dro", {"default:axe_bronze"}, 1},
 })
 
--- Farming mod
+-- Farming mod (default)
 if minetest.get_modpath("farming") then
 	lucky_block:add_blocks({
 		{"dro", {"farming:bread"}, 5},
 		{"sch", "instafarm", 0, true},
 		{"nod", "default:water_source", 1},
 	})
-
-if farming.mod and farming.mod == "redo" then
-	lucky_block:add_blocks({
-		{"dro", {"farming:corn"}, 5},
-		{"dro", {"farming:coffee_cup_hot"}, 1},
-		{"dro", {"farming:bread"}, 5},
-		{"nod", "farming:jackolantern", 0},
-		{"tro", "farming:jackolantern_on"},
-		{"nod", "default:river_water_source", 1},
-		{"dro", {"farming:trellis", "farming:grapes"}, 5},
-		{"dro", {"farming:bottle_ethanol"}, 1},
-		{"nod", "farming:melon", 0},
-		{"dro", {"farming:donut", "farming:donut_chocolate", "farming:donut_apple"}, 5},
-	})
-end
 
 end -- END farming mod
 
@@ -123,14 +108,6 @@ if minetest.get_modpath("homedecor") then
 	})
 end
 
--- Teleport Potion mod
-if minetest.get_modpath("teleport_potion") then
-	lucky_block:add_blocks({
-		{"dro", {"teleport_potion:potion"}, 1},
-		{"tel"},
-	})
-end
-
 -- Boats mod
 if minetest.get_modpath("boats") then
 	lucky_block:add_blocks({
@@ -147,87 +124,6 @@ or minetest.get_modpath("boost_cart") then
 		{"dro", {"carts:powerrail"}, 5},
 	})
 end
-
--- Hopper mod
-if minetest.get_modpath("hopper") then
-	lucky_block:add_blocks({
-		{"dro", {"hopper:hopper"}, 3},
-		{"nod", "default:lava_source", 1},
-	})
-end
-
--- Protector mod
-if minetest.get_modpath("protector") then
-	lucky_block:add_blocks({
-		{"dro", {"protector:protect"}, 3},
-	})
-if protector and protector.mod and protector.mod == "redo" then
-	lucky_block:add_blocks({
-		{"dro", {"protector:protect2"}, 3},
-		{"dro", {"protector:door_wood"}, 1},
-		{"dro", {"protector:door_steel"}, 1},
-		{"dro", {"protector:chest"}, 1},
-	})
-end
-end
-
--- Ethereal mod
-if minetest.get_modpath("ethereal") then
-
-local epath = minetest.get_modpath("ethereal") .. "/schematics/"
-
-lucky_block:add_schematics({
-	{"pinetree", epath .. "pinetree.mts", {x = 3, y = 0, z = 3}},
-	{"palmtree", epath .. "palmtree.mts", {x = 4, y = 0, z = 4}},
-	{"bananatree", ethereal.bananatree, {x = 3, y = 0, z = 3}},
-	{"orangetree", ethereal.orangetree, {x = 1, y = 0, z = 1}},
-	{"birchtree", ethereal.birchtree, {x = 2, y = 0, z = 2}},
-})
-
-lucky_block:add_blocks({
-	{"nod", "ethereal:crystal_spike", 1},
-	{"sch", "pinetree", 0, false},
-	{"dro", {"ethereal:orange"}, 10},
-	{"sch", "appletree", 0, false},
-	{"dro", {"ethereal:strawberry"}, 10},
-	{"sch", "bananatree", 0, false},
-	{"sch", "orangetree", 0, false},
-	{"dro", {"ethereal:banana"}, 10},
-	{"sch", "acaciatree", 0, false},
-	{"dro", {"ethereal:golden_apple"}, 3},
-	{"sch", "palmtree", 0, false},
-	{"dro", {"ethereal:tree_sapling", "ethereal:orange_tree_sapling", "ethereal:banana_tree_sapling"}, 10},
-	{"dro", {"ethereal:green_dirt", "ethereal:prairie_dirt", "ethereal:grove_dirt", "ethereal:cold_dirt"}, 10},
-	{"dro", {"ethereal:axe_crystal"}, 1},
-	{"nod", "ethereal:fire_flower", 1},
-	{"dro", {"ethereal:sword_crystal"}, 1},
-	{"dro", {"ethereal:pick_crystal"}, 1},
-	{"sch", "birchtree", 0, false},
-	{"dro", {"ethereal:fish_raw"}, 1},
-	{"dro", {"ethereal:shovel_crystal"}, 1},
-	{"dro", {"ethereal:fishing_rod_baited"}, 1},
-	{"exp"},
-	{"dro", {"ethereal:fire_dust"}, 2},
-})
-
-if minetest.get_modpath("3d_armor") then
-lucky_block:add_blocks({
-	{"dro", {"3d_armor:helmet_crystal"}, 1},
-	{"dro", {"3d_armor:chestplate_crystal"}, 1},
-	{"dro", {"3d_armor:leggings_crystal"}, 1},
-	{"dro", {"3d_armor:boots_crystal"}, 1},
-	{"lig"},
-})
-end
-
-if minetest.get_modpath("shields") then
-lucky_block:add_blocks({
-	{"dro", {"shields:shield_crystal"}, 1},
-	{"exp"},
-})
-end
-
-end -- END Ethereal mod
 
 -- 3D Armor mod
 if minetest.get_modpath("3d_armor") then
@@ -262,50 +158,12 @@ lucky_block:add_blocks({
 })
 end
 
--- Pie mod
-if minetest.get_modpath("pie") then
-lucky_block:add_blocks({
-	{"nod", "pie:pie_0", 0},
-	{"nod", "pie:choc_0", 0},
-	{"nod", "pie:coff_0", 0},
-	{"tro", "pie:pie_0"},
-	{"nod", "pie:rvel_0", 0},
-	{"nod", "pie:scsk_0", 0},
-	{"nod", "pie:bana_0", 0},
-	{"nod", "pie:meat_0", 0},
-	{"lig"},
-})
-end
-
--- Bakedclay mod
-if minetest.get_modpath("bakedclay") then
-local p = "bakedclay:"
-lucky_block:add_blocks({
-	{"dro", {"bakedclay:"}, 10, true},
-	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green",
-		p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange",
-		p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0},
-	{"fal", {p.."black", p.."blue", p.."brown", p.."cyan", p.."dark_green",
-		p.."dark_grey", p.."green", p.."grey", p.."magenta", p.."orange",
-		p.."pink", p.."red", p.."violet", p.."white", p.."yellow"}, 0, true},
-})
-end
-
 -- TNT mod
 if minetest.get_modpath("tnt") then
 local p = "tnt:tnt_burning"
 lucky_block:add_blocks({
 	{"dro", {"tnt:gunpowder"}, 5, true},
 	{"fal", {p, p, p, p, p}, 1, true, 4},
-})
-end
-
--- Coloured Blocks mod
-if minetest.get_modpath("cblocks") then
-lucky_block:add_blocks({
-	{"dro", {"cblocks:wood_"}, 10, true},
-	{"dro", {"cblocks:stonebrick_"}, 10, true},
-	{"dro", {"cblocks:glass_"}, 10, true},
 })
 end
 
