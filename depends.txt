@@ -1,5 +1,1 @@
 default
-mobs?
-paintings?
-carpet?
-3d_armor?

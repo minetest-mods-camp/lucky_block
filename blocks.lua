@@ -61,43 +61,6 @@ if minetest.get_modpath("farming") then
 
 end -- END farming mod
 
--- Mobs mod
-if minetest.get_modpath("mobs") then
-	lucky_block:add_blocks({
-		{"spw", "mobs:sheep", 5},
-		{"spw", "mobs:dungeon_master", 1, nil, nil, 3, "Billy"},
-		{"spw", "mobs:sand_monster", 3},
-		{"spw", "mobs:stone_monster", 3, nil, nil, 3, "Bob"},
-		{"dro", {"mobs:meat_raw"}, 5},
-		{"spw", "mobs:rat", 5},
-		{"spw", "mobs:dirt_monster", 3},
-		{"spw", "mobs:tree_monster", 3},
-		{"spw", "mobs:oerkki", 3},
-		{"dro", {"mobs:rat_cooked"}, 5},
-		{"exp"},
-	})
-if mobs.mod and mobs.mod == "redo" then
-	lucky_block:add_blocks({
-		{"spw", "mobs:bunny", 3},
-		{"spw", "mobs:spider", 5},
-		{"nod", "mobs:honey_block", 0},
-		{"spw", "mobs:pumba", 5},
-		{"spw", "mobs:mese_monster", 2},
-		{"nod", "mobs:cheeseblock", 0},
-		{"spw", "mobs:chicken", 5},
-		{"dro", {"mobs:egg"}, 5},
-		{"spw", "mobs:lava_flan", 3},
-		{"spw", "mobs:cow", 5},
-		{"dro", {"mobs:bucket_milk"}, 10},
-		{"spw", "mobs:kitten", 2},
-		{"tro", "default:nyancat", "mobs_kitten", true},
-		{"nod", "default:chest", 0, {
-			{name = "mobs:lava_orb", max = 1}}},
-	})
-end
-
-end -- END mobs mod
-
 -- Home Decor mod
 if minetest.get_modpath("homedecor") then
 	lucky_block:add_blocks({
@@ -221,7 +184,6 @@ if minetest.get_modpath("xanadu") then
 lucky_block:add_blocks({
 	{"dro", {"xanadu:cupcake"}, 8},
 	{"spw", "mobs:creeper", 1, nil, nil, 5, "Mr. Boombastic"},
-	{"spw", "mobs:npc", 1, true, true},
 	{"nod", "default:chest", 0, {
 		{name = "xanadu:axe_super", max = 1},
 		{name = "xanadu:pizza", max = 2}}},
