@@ -9,10 +9,33 @@ local function punchy(pos, player)
 		full_punch_interval = 1.0,
 		damage_groups = {fleshy = 5}
 	}, nil)
+	minetest.chat_send_player(player:get_player_name(), "Stop hitting yourself!")
+end
+
+local function drop(pos, itemstack)
+	local obj = minetest.add_item(pos, itemstack:take_item(itemstack:get_count()))
+	if obj then
+		obj:setvelocity({
+			x = math.random(-10, 10) / 9,
+			y = 5,
+			z = math.random(-10, 10) / 9,
+		})
+	end
+end
+
+-- custom function to drop player inventory and replace with dry shrubs
+local function bushy(pos, player)
+	local player_inv = player:get_inventory()
+	for i = 1, player_inv:get_size("main") do
+		drop(pos, player_inv:get_stack("main", i))
+		player_inv:set_stack("main", i, "default:dry_shrub")
+	end
+	minetest.chat_send_player(player:get_player_name(), "Dry Shrub Takeover!")
 end
 
 -- default blocks
 local lucky_list = {
+	{"cus", bushy},
 	{"cus", punchy},
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
@@ -233,7 +256,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 1
+	local luck = math.random(1, #lucky_list) ; --luck = 2
 	local action = lucky_list[luck][1]
 	local schem
 
