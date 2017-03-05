@@ -178,31 +178,3 @@ lucky_block:add_blocks({
 	{"dro", {"bows:arrow_diamond"}, 5},
 })
 end
-
--- Xanadu Server specific
-if minetest.get_modpath("xanadu") then
-lucky_block:add_blocks({
-	{"dro", {"xanadu:cupcake"}, 8},
-	{"spw", "mobs:creeper", 1, nil, nil, 5, "Mr. Boombastic"},
-	{"nod", "default:chest", 0, {
-		{name = "xanadu:axe_super", max = 1},
-		{name = "xanadu:pizza", max = 2}}},
-	{"dro", {"paintings:"}, 10, true},
-	{"spw", "mobs:greensmall", 4},
-	{"lig"},
-	{"dro", {"carpet:"}, 10, true},
-	{"dro", {"xanadu:bone"}, 2},
-	{"spw", "mobs:bat", 3},
-	{"dro", {"xanadu:cupcake_chocolate"}, 8},
-	{"dro", {"xanadu:bacon"}, 8},
-	{"dro", {"3d_armor:boots_bunny"}, 1},
-	{"dro", {"carpet:wallpaper_"}, 10, true},
-	{"nod", "default:chest", 0, {
-		{name = "mobs:mese_monster_wing", max = 1}}},
-	{"exp"},
-	{"dro", {"more_chests:giftbox_red", "more_chests:giftbox_green"}, 1},
-	{"dro", {"xanadu:taco"}, 2},
-	{"dro", {"xanadu:gingerbread_man"}, 2},
-	{"spw", "mobs:evil_bonny", 1},
-})
-end
