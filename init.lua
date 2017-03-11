@@ -256,7 +256,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; --luck = 2
+	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -440,20 +440,15 @@ local lucky_block = function(pos, digger)
 			minetest.set_node(pos, {name = nod})
 		end
 
-		minetest.add_particlespawner({
-			amount = 1,
-			time = 1,
-			minpos = {x = pos.x, y = pos.y , z = pos.z},
-			maxpos = {x = pos.x, y = pos.y, z = pos.z},
-			minvel = {x = 0, y = 0, z = 0},
-			maxvel = {x = 0, y = 0, z = 0},
-			minacc = {x = 0, y = 0, z = 0},
-			maxacc = {x = 0, y = 0, z = 0},
-			minexptime = 1,
-			maxexptime = 3,
-			minsize = 100,
-			maxsize = 150,
+		minetest.add_particle({
+			pos = pos,
+			velocity = {x = 0, y = 0, z = 0},
+			acceleration = {x = 0, y = 0, z = 0},
+			expirationtime = 1.0,
+			collisiondetection = false,
 			texture = "lucky_lightning.png",
+			size = math.random(100, 150),
+			glow = 15,
 		})
 
 		entity_physics(pos, 2)
