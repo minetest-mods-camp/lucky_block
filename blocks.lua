@@ -8,6 +8,7 @@ lucky_block:add_schematics({
 	{"defpinetree", dpath .. "pine_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
 	{"acaciatree", dpath .. "acacia_tree_from_sapling.mts", {x = 4, y = 1, z = 4}},
 	{"aspentree", dpath .. "aspen_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+	{"corals", dpath .. "corals.mts", {x = 2, y = 1, z = 2}},
 })
 
 -- Default blocks
@@ -28,7 +29,7 @@ lucky_block:add_blocks({
 	{"sch", "defpinetree", 0, false},
 	{"sch", "lavatrap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
-	{"exp"},
+	{"exp", 2, true},
 	{"nod", "default:diamondblock", 0},
 	{"nod", "default:steelblock", 0},
 	{"nod", "default:dirt", 0},
@@ -41,7 +42,7 @@ lucky_block:add_blocks({
 	{"sch", "acaciatree", 0, false},
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
-	{"exp"},
+	{"exp", 3},
 	{"sch", "platform", 1, true},
 	{"nod", "default:wood", 0},
 	{"dro", {"default:pick_bronze"}, 1},
@@ -49,7 +50,51 @@ lucky_block:add_blocks({
 	{"dro", {"default:shovel_bronze"}, 1},
 	{"nod", "default:gravel", 0},
 	{"dro", {"default:axe_bronze"}, 1},
+	{"dro", {"default:bookshelf", "default:book", "default:paper"}, 5},
+	{"dro", {"default:fence_wood", "default:fence_acacia_wood", "default:fence_aspen_wood",
+		"default:fence_junglewood", "default:fence_pine_wood"}, 15},
 })
+
+-- default dev blocks
+if minetest.registered_nodes["default:coral_brown"] then
+	lucky_block:add_blocks({
+		{"dro", {"default:coral_brown", "default:coral_orange", "default:coral_skeleton"}, 5},
+		{"sch", "corals", 0, true},
+	})
+end
+
+if minetest.registered_nodes["default:mese_post_light"] then
+	lucky_block:add_blocks({
+		{"dro", {"default:mese_post_light", "default:fence_wood"}, 5},
+		{"nod", "default:mese_post_light"},
+		{"dro", {"default:silver_sand", "default:sand", "default:desert_sand"}, 25},
+	})
+end
+
+-- doors mod
+if minetest.get_modpath("doors") then
+	lucky_block:add_blocks({
+		{"dro", {"doors:door_wood", "doors:door_steel", "doors:door_glass",
+			"doors:door_obsidian_glass", "doors:trapdoor", "doors:trapdoor_steel"}, 1},
+		{"dro", {"doors:gate_acacia_wood_closed", "doors:gate_aspen_wood_closed", "doors:gate_wood_closed",
+			"doors:gate_pine_wood_closed", "doors:gate_junglewood_closed"}, 5},
+	})
+end
+
+-- screwdriver mod
+if minetest.get_modpath("screwdriver") then
+	lucky_block:add_blocks({
+		{"dro", {"screwdriver:screwdriver"}, 1},
+	})
+end
+
+-- vessels mod
+if minetest.get_modpath("vessels") then
+	lucky_block:add_blocks({
+		{"dro", {"vessels:shelf", "vessels:drinking_glass", "vessels:glass_bottle",
+			"vessels:steel_bottle", "vessels:glass_fragments"}, 5},
+	})
+end
 
 -- Farming mod (default)
 if minetest.get_modpath("farming") then
@@ -108,14 +153,14 @@ lucky_block:add_blocks({
 	{"dro", {"shields:shield_gold"}, 1},
 	{"dro", {"shields:shield_cactus"}, 1},
 	{"dro", {"shields:shield_bronze"}, 1},
-	{"exp"},
+	{"exp", 2},
 })
 end
 
 -- Fire mod
 if minetest.get_modpath("fire") then
 lucky_block:add_blocks({
-	{"dro", {"fire:flint_and_steel"}, 1},
+	{"dro", {"fire:flint_and_steel", "default:flint"}, 1},
 	{"nod", "fire:basic_flame", 1},
 	{"nod", "fire:permanent_flame", 1},
 })

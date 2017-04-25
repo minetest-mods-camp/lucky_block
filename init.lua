@@ -40,7 +40,7 @@ local lucky_list = {
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
 	{"nod", "lucky_block:super_lucky_block", 0},
-	{"exp"},
+	{"exp", 2, true},
 }
 
 -- ability to add new blocks to list
@@ -179,7 +179,7 @@ local c_brick = minetest.get_content_id("default:obsidianbrick")
 local c_chest = minetest.get_content_id("default:chest_locked")
 
 -- explosion
-function explosion(pos, radius)
+function explosion(pos, radius, fire)
 
 	-- play explosion sound
 	minetest.sound_play("tnt_explode", {
@@ -222,9 +222,13 @@ function explosion(pos, radius)
 			if on_blast then
 				return on_blast(p)
 			else
-				minetest.set_node(p, {name = "air"})
+				if fire and minetest.registered_nodes[n].groups.flammable then
+					minetest.set_node(p, {name = "fire:basic_flame"})
+				else
+					minetest.set_node(p, {name = "air"})
+				end
 
-				effect(p, 2, "tnt_smoke.png", 5)
+				effect(p, 5, "tnt_smoke.png", 5)
 			end
 		end
 
@@ -256,7 +260,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 1
+	local luck = math.random(1, #lucky_list) ;  -- luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -375,8 +379,11 @@ local lucky_block = function(pos, digger)
 	-- explosion
 	elseif action == "exp" then
 
-		explosion(pos, 2)
-		entity_physics(pos, 2)
+		local rad = lucky_list[luck][2] or 2
+		local fire = lucky_list[luck][3]
+
+		explosion(pos, rad, fire)
+		entity_physics(pos, rad)
 
 	-- teleport
 	elseif action == "tel" then
@@ -391,6 +398,8 @@ local lucky_block = function(pos, digger)
 		effect(pos, 25, "tnt_smoke.png", 8)
 
 		digger:setpos(pos, false)
+
+		minetest.chat_send_player(digger:get_player_name(), "Random Teleport!")
 
 	-- drop items
 	elseif action == "dro" then

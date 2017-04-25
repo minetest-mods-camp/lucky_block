@@ -17,3 +17,4 @@ Changelog:
 - 0.2 - New api commands added thanks to blert2112
 - 0.3 - New blocks added, also error checking, new options and schematic rehaul
 - 0.4 - Added ability to add custom functions within lucky blocks
+- 0.5 - Explosions now have radius and fire setting, also added new blocks
