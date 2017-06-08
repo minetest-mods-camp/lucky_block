@@ -55,7 +55,7 @@ lucky_block:add_blocks({
 		"default:fence_junglewood", "default:fence_pine_wood"}, 15},
 })
 
--- default dev blocks
+-- default coral blocks
 if minetest.registered_nodes["default:coral_brown"] then
 	lucky_block:add_blocks({
 		{"dro", {"default:coral_brown", "default:coral_orange", "default:coral_skeleton"}, 5},
@@ -63,6 +63,7 @@ if minetest.registered_nodes["default:coral_brown"] then
 	})
 end
 
+-- default mese post light or sands
 if minetest.registered_nodes["default:mese_post_light"] then
 	lucky_block:add_blocks({
 		{"dro", {"default:mese_post_light", "default:fence_wood"}, 5},
@@ -104,7 +105,7 @@ if minetest.get_modpath("farming") then
 		{"nod", "default:water_source", 1},
 	})
 
-end -- END farming mod
+end
 
 -- Home Decor mod
 if minetest.get_modpath("homedecor") then
@@ -209,7 +210,7 @@ lucky_block:add_blocks({
 })
 end
 
-end
+end -- END moreores
 
 -- Bows mod
 if minetest.get_modpath("bows") then
@@ -221,5 +222,19 @@ lucky_block:add_blocks({
 	{"dro", {"bows:arrow_steel"}, 5},
 	{"dro", {"bows:arrow_mese"}, 5},
 	{"dro", {"bows:arrow_diamond"}, 5},
+})
+end
+
+-- Bags mod
+if minetest.get_modpath("bags") then
+lucky_block:add_blocks({
+	{"dro", {"bags:small", "bags:medium", "bags:large", "bags:trolley"}, 1},
+})
+end
+
+-- Bonemeal mod
+if minetest.get_modpath("bonemeal") then
+lucky_block:add_blocks({
+	{"dro", {"bonemeal:mulch", "bonemeal:bonemeal", "bonemeal:fertiliser"}, 8},
 })
 end

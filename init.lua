@@ -3,18 +3,25 @@ lucky_block = {}
 lucky_schems = {}
 lucky_block.seed = PseudoRandom(os.time())
 
+
 -- example custom function (punches player with 5 damage)
 local function punchy(pos, player)
+
 	player:punch(player, 1.0, {
 		full_punch_interval = 1.0,
 		damage_groups = {fleshy = 5}
 	}, nil)
+
 	minetest.chat_send_player(player:get_player_name(), "Stop hitting yourself!")
 end
 
+
 local function drop(pos, itemstack)
+
 	local obj = minetest.add_item(pos, itemstack:take_item(itemstack:get_count()))
+
 	if obj then
+
 		obj:setvelocity({
 			x = math.random(-10, 10) / 9,
 			y = 5,
@@ -23,15 +30,20 @@ local function drop(pos, itemstack)
 	end
 end
 
+
 -- custom function to drop player inventory and replace with dry shrubs
 local function bushy(pos, player)
-	local player_inv = player:get_inventory()
+
+	local player_inv = player:get_inventory() ; pos = player:getpos() or pos
+
 	for i = 1, player_inv:get_size("main") do
 		drop(pos, player_inv:get_stack("main", i))
 		player_inv:set_stack("main", i, "default:dry_shrub")
 	end
+
 	minetest.chat_send_player(player:get_player_name(), "Dry Shrub Takeover!")
 end
+
 
 -- default blocks
 local lucky_list = {
@@ -43,6 +55,7 @@ local lucky_list = {
 	{"exp", 2, true},
 }
 
+
 -- ability to add new blocks to list
 function lucky_block:add_blocks(list)
 
@@ -51,12 +64,14 @@ function lucky_block:add_blocks(list)
 	end
 end
 
+
 -- call to purge the block list
 function lucky_block:purge_block_list()
 	lucky_list = {
 		{"nod", "lucky_block:super_lucky_block", 0}
 	}
 end
+
 
 -- add schematics to global list
 function lucky_block:add_schematics(list)
@@ -66,9 +81,11 @@ function lucky_block:add_schematics(list)
 	end
 end
 
+
 -- import schematics and default blocks
 dofile(minetest.get_modpath("lucky_block") .. "/schems.lua")
 dofile(minetest.get_modpath("lucky_block") .. "/blocks.lua")
+
 
 -- for random colour selection
 local all_colours = {
@@ -85,18 +102,21 @@ local chest_stuff = {
 	{name = "default:pick_steel", max = 1}
 }
 
+
 -- call to purge the chest items list
 function lucky_block:purge_chest_items()
 	chest_stuff = {}
 end
 
--- ability to add chest items
+
+-- ability to add to chest items list
 function lucky_block:add_chest_items(list)
 
 	for s = 1, #list do
 		table.insert(chest_stuff, list[s])
 	end
 end
+
 
 -- particle effects
 function effect(pos, amount, texture, max_size)
@@ -117,6 +137,7 @@ function effect(pos, amount, texture, max_size)
 		texture = texture,
 	})
 end
+
 
 -- modified from TNT mod to deal entity damage only
 function entity_physics(pos, radius)
@@ -144,12 +165,13 @@ function entity_physics(pos, radius)
 			objs[n]:punch(objs[n], 1.0, {
 				full_punch_interval = 1.0,
 				damage_groups = {fleshy = damage},
-			}, nil)
+			}, pos) -- nil)
 
 		end
 
 	end
 end
+
 
 -- get node but use fallback for nil or unknown
 function node_ok(pos, fallback)
@@ -170,6 +192,7 @@ function node_ok(pos, fallback)
 
 	return minetest.registered_nodes[fallback]
 end
+
 
 -- set content id's
 local c_air = minetest.get_content_id("air")
@@ -238,6 +261,8 @@ function explosion(pos, radius, fire)
 	end
 end
 
+
+-- fill chest with random items from list
 function fill_chest(pos, items)
 
 	local stacks = items or {}
@@ -257,14 +282,15 @@ function fill_chest(pos, items)
 	end
 end
 
+
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ;  -- luck = 1
+	local luck = math.random(1, #lucky_list) ; -- luck = 6
 	local action = lucky_list[luck][1]
 	local schem
 
-	print ("luck ["..luck.." of "..#lucky_list.."]", action)
+--	print ("luck ["..luck.." of "..#lucky_list.."]", action)
 
 	-- place schematic
 	if action == "sch" then
@@ -279,14 +305,14 @@ local lucky_block = function(pos, digger)
 		local force = lucky_list[luck][4]
 
 		if switch == 1 then
-			pos = vector.round( digger:getpos() )
+			pos = vector.round(digger:getpos())
 		end
 
 		for i = 1, #lucky_schems do
 
 			if schem == lucky_schems[i][1] then
 
-				local p1 = vector.subtract(pos, lucky_schems[i][3]) 
+				local p1 = vector.subtract(pos, lucky_schems[i][3])
 
 				minetest.place_schematic(p1, lucky_schems[i][2], "", {}, force)
 
@@ -425,6 +451,7 @@ local lucky_block = function(pos, digger)
 			local obj = minetest.add_item(pos, item)
 
 			if obj then
+
 				obj:setvelocity({
 					x = math.random(-10, 10) / 9,
 					y = 5,
@@ -559,6 +586,7 @@ local lucky_block = function(pos, digger)
 	end
 end
 
+
 -- lucky block itself
 minetest.register_node('lucky_block:lucky_block', {
 	description = "Lucky Block",
@@ -593,6 +621,7 @@ minetest.register_craft({
 		{"default:gold_ingot", "default:gold_ingot", "default:gold_ingot"}
 	}
 })
+
 
 -- super lucky block
 minetest.register_node('lucky_block:super_lucky_block', {
@@ -637,6 +666,7 @@ minetest.register_node('lucky_block:super_lucky_block', {
 	end,
 })
 
+
 -- used to drop items inside a chest or container
 local drop_items = function(pos, invstring)
 
@@ -660,6 +690,7 @@ local drop_items = function(pos, invstring)
 
 end
 
+
 -- override chest node so it drops items on explode
 minetest.override_item("default:chest", {
 
@@ -674,6 +705,7 @@ minetest.override_item("default:chest", {
 	end,
 
 })
+
 
 minetest.after(0, function()
 	print ("[MOD] Lucky Blocks loaded (" .. #lucky_list .. " in total)")
