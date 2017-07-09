@@ -241,13 +241,13 @@ Explosion
 Now we start adding the bad lucky blocks that cause damage to the player by
 adding explosions.
 
-{"exp", radius, fire}
+{"exp", radius}
 
 e.g.
 
-Cause explosion with radius of 4 and fire enabled.
+Cause explosion with damage radius of 4.
 
-{"exp", 4, true}
+{"exp", 4}
 
 
 Lightning Strike

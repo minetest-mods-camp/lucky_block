@@ -52,7 +52,7 @@ local lucky_list = {
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},
 	{"lig"},
 	{"nod", "lucky_block:super_lucky_block", 0},
-	{"exp", 2, true},
+	{"exp", 2},
 }
 
 
@@ -119,28 +119,35 @@ end
 
 
 -- particle effects
-function effect(pos, amount, texture, max_size)
+local effect = function(pos, amount, texture, min_size, max_size, radius, gravity, glow)
+
+	radius = radius or 2
+	min_size = min_size or 0.5
+	max_size = max_size or 1
+	gravity = gravity or -10
+	glow = glow or 0
 
 	minetest.add_particlespawner({
 		amount = amount,
-		time = 0.5,
-		minpos = {x = pos.x - 1, y = pos.y - 1, z = pos.z - 1},
-		maxpos = {x = pos.x + 1, y = pos.y + 1, z = pos.z + 1},
-		minvel = {x = -5, y = -5, z = -5},
-		maxvel = {x = 5,  y = 5,  z = 5},
-		minacc = {x = -4, y = -4, z = -4},
-		maxacc = {x = 4, y = 4, z = 4},
-		minexptime = 1,
-		maxexptime = 3,
-		minsize = 0.5,
-		maxsize = (max_size or 1),
+		time = 0.25,
+		minpos = pos,
+		maxpos = pos,
+		minvel = {x = -radius, y = -radius, z = -radius},
+		maxvel = {x = radius, y = radius, z = radius},
+		minacc = {x = 0, y = gravity, z = 0},
+		maxacc = {x = 0, y = gravity, z = 0},
+		minexptime = 0.1,
+		maxexptime = 1,
+		minsize = min_size,
+		maxsize = max_size,
 		texture = texture,
+		glow = glow,
 	})
 end
 
 
 -- modified from TNT mod to deal entity damage only
-function entity_physics(pos, radius)
+local function entity_physics(pos, radius)
 
 	radius = radius * 2
 
@@ -174,96 +181,22 @@ end
 
 
 -- get node but use fallback for nil or unknown
-function node_ok(pos, fallback)
+local node_ok = function(pos, fallback)
 
 	fallback = fallback or "default:dirt"
 
 	local node = minetest.get_node_or_nil(pos)
 
-	if not node then
-		return minetest.registered_nodes[fallback]
-	end
-
-	local nodef = minetest.registered_nodes[node.name]
-
-	if nodef then
+	if node and minetest.registered_nodes[node.name] then
 		return node
 	end
 
-	return minetest.registered_nodes[fallback]
-end
-
-
--- set content id's
-local c_air = minetest.get_content_id("air")
-local c_ignore = minetest.get_content_id("ignore")
-local c_obsidian = minetest.get_content_id("default:obsidian")
-local c_brick = minetest.get_content_id("default:obsidianbrick")
-local c_chest = minetest.get_content_id("default:chest_locked")
-
--- explosion
-function explosion(pos, radius, fire)
-
-	-- play explosion sound
-	minetest.sound_play("tnt_explode", {
-		pos = pos,
-		gain = 1.0,
-		max_hear_distance = 16
-	})
-
-	-- if area protected then no blast damage
-	if minetest.is_protected(pos, "") then
-		return
-	end
-
-	local vm = VoxelManip()
-	local minp, maxp = vm:read_from_map(vector.subtract(pos, radius), vector.add(pos, radius))
-	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
-	local data = vm:get_data()
-	local p = {}
-	local pr = PseudoRandom(os.time())
-
-	for z = -radius, radius do
-	for y = -radius, radius do
-	local vi = a:index(pos.x + (-radius), pos.y + y, pos.z + z)
-	for x = -radius, radius do
-
-		p.x = pos.x + x
-		p.y = pos.y + y
-		p.z = pos.z + z
-
-		if (x * x) + (y * y) + (z * z) <= (radius * radius) + pr:next(-radius, radius)
-		and data[vi] ~= c_air
-		and data[vi] ~= c_ignore
-		and data[vi] ~= c_obsidian
-		and data[vi] ~= c_brick
-		and data[vi] ~= c_chest then
-
-			local n = node_ok(p).name
-			local on_blast = minetest.registered_nodes[n].on_blast
-
-			if on_blast then
-				return on_blast(p)
-			else
-				if fire and minetest.registered_nodes[n].groups.flammable then
-					minetest.set_node(p, {name = "fire:basic_flame"})
-				else
-					minetest.set_node(p, {name = "air"})
-				end
-
-				effect(p, 5, "tnt_smoke.png", 5)
-			end
-		end
-
-		vi = vi + 1
-	end
-	end
-	end
+	return {name = fallback}
 end
 
 
 -- fill chest with random items from list
-function fill_chest(pos, items)
+local function fill_chest(pos, items)
 
 	local stacks = items or {}
 	local inv = minetest.get_meta(pos):get_inventory()
@@ -340,7 +273,7 @@ local lucky_block = function(pos, digger)
 			nod = "default:goldblock"
 		end
 
-		effect(pos, 25, "tnt_smoke.png", 8)
+		effect(pos, 25, "tnt_smoke.png", 8, 8, 2, 1, 0)
 
 		minetest.set_node(pos, {name = nod})
 
@@ -406,10 +339,23 @@ local lucky_block = function(pos, digger)
 	elseif action == "exp" then
 
 		local rad = lucky_list[luck][2] or 2
-		local fire = lucky_list[luck][3]
+		local snd = lucky_list[luck][3] or "tnt_explode"
 
-		explosion(pos, rad, fire)
-		entity_physics(pos, rad)
+		if minetest.get_modpath("tnt") and tnt and tnt.boom then
+
+			tnt.boom(pos, {
+				radius = rad,
+				damage_radius = rad,
+				sound = snd,
+			})
+		else
+			minetest.sound_play(snd, {pos = pos, gain = 1.0,
+					max_hear_distance = 32})
+
+			entity_physics(pos, rad)
+
+			effect(pos, 32, "tnt_smoke.png", rad * 3, rad * 5, rad, 1, 0)
+		end
 
 	-- teleport
 	elseif action == "tel" then
@@ -421,9 +367,11 @@ local lucky_block = function(pos, digger)
 		pos.x = pos.y + lucky_block.seed:next(-y_range, y_range)
 		pos.x = pos.z + lucky_block.seed:next(-xz_range, xz_range)
 
-		effect(pos, 25, "tnt_smoke.png", 8)
+		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 		digger:setpos(pos, false)
+
+		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 		minetest.chat_send_player(digger:get_player_name(), "Random Teleport!")
 
@@ -653,7 +601,7 @@ minetest.register_node('lucky_block:super_lucky_block', {
 
 			minetest.set_node(pos, {name = "air"})
 
-			effect(pos, 25, "tnt_smoke.png", 8)
+			effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 			minetest.sound_play("fart1", {
 				pos = pos,
@@ -664,46 +612,6 @@ minetest.register_node('lucky_block:super_lucky_block', {
 			minetest.set_node(pos, {name = "lucky_block:lucky_block"})
 		end
 	end,
-})
-
-
--- used to drop items inside a chest or container
-local drop_items = function(pos, invstring)
-
-	local meta = minetest.get_meta(pos) ; if not meta then return end
-	local inv  = meta:get_inventory()
-
-	for i = 1, inv:get_size(invstring) do
-
-		local m_stack = inv:get_stack(invstring, i)
-		local obj = minetest.add_item(pos, m_stack)
-
-		if obj then
-
-			obj:setvelocity({
-				x = math.random(-10, 10) / 9,
-				y = 3,
-				z = math.random(-10, 10) / 9
-			})
-		end
-	end
-
-end
-
-
--- override chest node so it drops items on explode
-minetest.override_item("default:chest", {
-
-	on_blast = function(p)
-
-		minetest.after(0, function()
-
-			drop_items(p, "main")
-
-			minetest.set_node(p, {name = "air"})
-		end)
-	end,
-
 })
 
 

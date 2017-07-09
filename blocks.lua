@@ -29,7 +29,7 @@ lucky_block:add_blocks({
 	{"sch", "defpinetree", 0, false},
 	{"sch", "lavatrap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
-	{"exp", 2, true},
+	{"exp", 2},
 	{"nod", "default:diamondblock", 0},
 	{"nod", "default:steelblock", 0},
 	{"nod", "default:dirt", 0},
