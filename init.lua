@@ -216,10 +216,34 @@ local function fill_chest(pos, items)
 end
 
 
+-- explosion with protection check
+local function explode(pos, radius, sound)
+
+	sound = sound or "tnt_explode"
+
+	if minetest.get_modpath("tnt") and tnt and tnt.boom
+	and not minetest.is_protected(pos, "") then
+
+		tnt.boom(pos, {
+			radius = radius,
+			damage_radius = radius,
+			sound = sound,
+		})
+	else
+		minetest.sound_play(sound, {pos = pos, gain = 1.0,
+				max_hear_distance = 32})
+
+		entity_physics(pos, radius)
+
+		effect(pos, 32, "tnt_smoke.png", radius * 3, radius * 5, radius, 1, 0)
+	end
+end
+
+
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 6
+	local luck = math.random(1, #lucky_list) ; -- luck = 2
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -341,21 +365,7 @@ local lucky_block = function(pos, digger)
 		local rad = lucky_list[luck][2] or 2
 		local snd = lucky_list[luck][3] or "tnt_explode"
 
-		if minetest.get_modpath("tnt") and tnt and tnt.boom then
-
-			tnt.boom(pos, {
-				radius = rad,
-				damage_radius = rad,
-				sound = snd,
-			})
-		else
-			minetest.sound_play(snd, {pos = pos, gain = 1.0,
-					max_hear_distance = 32})
-
-			entity_physics(pos, rad)
-
-			effect(pos, 32, "tnt_smoke.png", rad * 3, rad * 5, rad, 1, 0)
-		end
+		explode(pos, rad, snd)
 
 	-- teleport
 	elseif action == "tel" then
@@ -511,8 +521,9 @@ local lucky_block = function(pos, digger)
 
 			if exp then
 
-				explosion(pos, 2)
-				entity_physics(pos, 2)
+				minetest.set_node(pos, {name = "air"})
+
+				explode(pos, 2)
 			else
 
 				minetest.set_node(pos, {name = "air"})
@@ -530,7 +541,7 @@ local lucky_block = function(pos, digger)
 
 		local func = lucky_list[luck][2]
 
-		func(pos, digger)
+		if func then func(pos, digger) end
 	end
 end
 

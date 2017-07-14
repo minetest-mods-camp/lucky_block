@@ -39,6 +39,7 @@ lucky_block:add_blocks({
 	{"dro", {"default:pick_steel"}, 1},
 	{"dro", {"default:shovel_steel"}, 1},
 	{"dro", {"default:coal_lump"}, 3},
+	{"tro", "default:mese", "tnt_blast", true},
 	{"sch", "acaciatree", 0, false},
 	{"dro", {"default:axe_steel"}, 1},
 	{"dro", {"default:sword_bronze"}, 1},
