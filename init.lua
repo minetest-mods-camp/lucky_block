@@ -243,7 +243,7 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 2
+	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
 	local schem
 
@@ -619,6 +619,12 @@ minetest.register_node('lucky_block:super_lucky_block', {
 				gain = 1.0,
 				max_hear_distance = 10
 			})
+
+			if math.random(1, 5) == 1 then
+				pos.y = pos.y + 0.5
+				minetest.add_item(pos, "default:goldblock 5")
+			end
+
 		else
 			minetest.set_node(pos, {name = "lucky_block:lucky_block"})
 		end

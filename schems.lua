@@ -13,6 +13,8 @@ local wat = {name = "default:water_source"}
 local whe = {name = "farming:wheat_8"}
 local cot = {name = "farming:cotton_8"}
 local obg = {name = "default:obsidian_glass"}
+local fir = {name = "fire:basic_flame"}
+local obs = {name = "default:obsidian"}
 
 local platform = {
 	size = {x = 5, y = 3, z = 5},
@@ -116,6 +118,40 @@ local water_trap = {
 	},
 }
 
+local fire_trap = {
+	size = {x = 3, y = 3, z = 3},
+	data = {
+		fir, fir, fir,
+		fir, fir, fir,
+		fir, fir, fir,
+
+		fir, fir, fir,
+		fir, fir, fir,
+		fir, fir, fir,
+
+		fir, fir, fir,
+		fir, fir, fir,
+		fir, fir, fir,
+	},
+}
+
+local obsidian_trap = {
+	size = {x = 3, y = 3, z = 3},
+	data = {
+		obs, obs, obs,
+		obs, obs, obs,
+		obs, obs, obs,
+
+		obs, air, obs,
+		obs, air, obs,
+		obs, lav, obs,
+
+		obs, obs, obs,
+		obs, obs, obs,
+		obs, obs, obs,
+	},
+}
+
 -- add schematics to list
 
 lucky_block:add_schematics({
@@ -124,4 +160,6 @@ lucky_block:add_schematics({
 	{"lavatrap", lava_trap, {x = 1, y = 5, z = 1}},
 	{"platform", platform, {x = 2, y = 1, z = 2}},
 	{"instafarm", insta_farm, {x = 2, y = 2, z = 1}},
+	{"firetrap", fire_trap, {x = 1, y = 0, z = 1}},
+	{"obsidiantrap", obsidian_trap, {x = 1, y = 0, z = 1}},
 })

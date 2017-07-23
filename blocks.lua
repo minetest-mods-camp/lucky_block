@@ -9,6 +9,9 @@ lucky_block:add_schematics({
 	{"acaciatree", dpath .. "acacia_tree_from_sapling.mts", {x = 4, y = 1, z = 4}},
 	{"aspentree", dpath .. "aspen_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
 	{"corals", dpath .. "corals.mts", {x = 2, y = 1, z = 2}},
+	{"largecactus", dpath .. "large_cactus.mts", {x = 2, y = 0, z = 0}},
+	{"defaultbush", dpath .. "bush.mts", {x = 1, y = 1, z = 1}},
+	{"acaciabush", dpath .. "acacia_bush.mts", {x = 1, y = 1, z = 1}},
 })
 
 -- Default blocks
@@ -25,11 +28,11 @@ lucky_block:add_blocks({
 		{name = "default:pick_diamond", max = 1},
 		{name = "default:coal_lump", max = 3}}},
 	{"sch", "sandtrap", 1, true},
-	{"nod", "flowers:rose", 0},
 	{"sch", "defpinetree", 0, false},
 	{"sch", "lavatrap", 1, true},
 	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
 	{"exp", 2},
+	{"sch", "acaciabush", 0, false},
 	{"nod", "default:diamondblock", 0},
 	{"nod", "default:steelblock", 0},
 	{"nod", "default:dirt", 0},
@@ -39,6 +42,7 @@ lucky_block:add_blocks({
 	{"dro", {"default:pick_steel"}, 1},
 	{"dro", {"default:shovel_steel"}, 1},
 	{"dro", {"default:coal_lump"}, 3},
+	{"sch", "defaultbush", 0, false},
 	{"tro", "default:mese", "tnt_blast", true},
 	{"sch", "acaciatree", 0, false},
 	{"dro", {"default:axe_steel"}, 1},
@@ -50,10 +54,12 @@ lucky_block:add_blocks({
 	{"sch", "aspentree", 0, false},
 	{"dro", {"default:shovel_bronze"}, 1},
 	{"nod", "default:gravel", 0},
+	{"sch", "largecactus", 0, false},
 	{"dro", {"default:axe_bronze"}, 1},
 	{"dro", {"default:bookshelf", "default:book", "default:paper"}, 5},
 	{"dro", {"default:fence_wood", "default:fence_acacia_wood", "default:fence_aspen_wood",
 		"default:fence_junglewood", "default:fence_pine_wood"}, 15},
+	{"sch", "obsidiantrap", 1, true},
 })
 
 -- default coral blocks
@@ -73,7 +79,17 @@ if minetest.registered_nodes["default:mese_post_light"] then
 	})
 end
 
--- doors mod
+-- Flowers mod
+if minetest.get_modpath("flowers") then
+	lucky_block:add_blocks({
+		{"nod", "flowers:rose", 0},
+		{"dro", {"flowers:mushroom_red", "flowers:mushroom_brown"}, 5},
+		{"dro", {"flowers:rose", "flowers:tulip", "flowers:dandelion_yellow",
+				"flowers:geranium", "flowers:viola", "flowers:dandelion_white"}, 12},
+	})
+end
+
+-- Doors mod
 if minetest.get_modpath("doors") then
 	lucky_block:add_blocks({
 		{"dro", {"doors:door_wood", "doors:door_steel", "doors:door_glass",
@@ -83,14 +99,31 @@ if minetest.get_modpath("doors") then
 	})
 end
 
--- screwdriver mod
+-- Screwdriver mod
 if minetest.get_modpath("screwdriver") then
+
+minetest.register_tool(":screwdriver:screwdriver_magenta", {
+	description = "Magenta Screwdriver 1500 (left-click to rotate face, right to rotates axis)",
+	inventory_image = "screwdriver.png^[colorize:#ff009970",
+
+	on_use = function(itemstack, user, pointed_thing)
+		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 1500)
+		return itemstack
+	end,
+
+	on_place = function(itemstack, user, pointed_thing)
+		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 1500)
+		return itemstack
+	end,
+})
+
 	lucky_block:add_blocks({
 		{"dro", {"screwdriver:screwdriver"}, 1},
+		{"dro", {"screwdriver:screwdriver_mithril"}, 1},
 	})
 end
 
--- vessels mod
+-- Vessels mod
 if minetest.get_modpath("vessels") then
 	lucky_block:add_blocks({
 		{"dro", {"vessels:shelf", "vessels:drinking_glass", "vessels:glass_bottle",
@@ -122,6 +155,22 @@ end
 if minetest.get_modpath("boats") then
 	lucky_block:add_blocks({
 		{"dro", {"boats:boat"}, 1},
+	})
+end
+
+-- Beds mod
+if minetest.get_modpath("beds") then
+	lucky_block:add_blocks({
+		{"dro", {"beds:bed", "beds:fancy_bed"}, 1},
+	})
+end
+
+-- Walls mod
+if minetest.get_modpath("walls") then
+	lucky_block:add_blocks({
+		{"dro", {"walls:cobble"}, 10},
+		{"dro", {"walls:mossycobble"}, 10},
+		{"dro", {"walls:desertcobble"}, 10},
 	})
 end
 
@@ -165,6 +214,7 @@ lucky_block:add_blocks({
 	{"dro", {"fire:flint_and_steel", "default:flint"}, 1},
 	{"nod", "fire:basic_flame", 1},
 	{"nod", "fire:permanent_flame", 1},
+	{"sch", "firetrap", 1, true},
 })
 end
 
@@ -236,6 +286,6 @@ end
 -- Bonemeal mod
 if minetest.get_modpath("bonemeal") then
 lucky_block:add_blocks({
-	{"dro", {"bonemeal:mulch", "bonemeal:bonemeal", "bonemeal:fertiliser"}, 8},
+	{"dro", {"bonemeal:mulch", "bonemeal:bonemeal", "bonemeal:fertiliser"}, 10},
 })
 end
