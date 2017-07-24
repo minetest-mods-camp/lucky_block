@@ -102,24 +102,26 @@ end
 -- Screwdriver mod
 if minetest.get_modpath("screwdriver") then
 
+if screwdriver and screwdriver.handler then
 minetest.register_tool(":screwdriver:screwdriver_magenta", {
-	description = "Magenta Screwdriver 1500 (left-click to rotate face, right to rotates axis)",
+	description = "Super Mega Magenta Ultra Screwdriver 2500\n(left-click to rotate face, right-click to rotates axis)",
 	inventory_image = "screwdriver.png^[colorize:#ff009970",
 
 	on_use = function(itemstack, user, pointed_thing)
-		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 1500)
+		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 2500)
 		return itemstack
 	end,
 
 	on_place = function(itemstack, user, pointed_thing)
-		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 1500)
+		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 2500)
 		return itemstack
 	end,
 })
+end
 
 	lucky_block:add_blocks({
 		{"dro", {"screwdriver:screwdriver"}, 1},
-		{"dro", {"screwdriver:screwdriver_mithril"}, 1},
+		{"dro", {"screwdriver:screwdriver_magenta"}, 1},
 	})
 end
 
