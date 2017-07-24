@@ -20,4 +20,4 @@ Changelog:
 - 0.5 - Explosions now have radius and fire setting, also added new blocks
 - 0.6 - Use TNT mod for explosions and if not active do entity damage only
 
-Lucky Blocks: 117 (depending on mods enabled)
+Lucky Blocks: 118 (depending on mods enabled)

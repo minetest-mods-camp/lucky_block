@@ -106,6 +106,7 @@ if screwdriver and screwdriver.handler then
 minetest.register_tool(":screwdriver:screwdriver_magenta", {
 	description = "Super Mega Magenta Ultra Screwdriver 2500\n(left-click to rotate face, right-click to rotates axis)",
 	inventory_image = "screwdriver.png^[colorize:#ff009970",
+	groups = {not_in_creative_inventory = 1},
 
 	on_use = function(itemstack, user, pointed_thing)
 		screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 2500)
@@ -291,3 +292,17 @@ lucky_block:add_blocks({
 	{"dro", {"bonemeal:mulch", "bonemeal:bonemeal", "bonemeal:fertiliser"}, 10},
 })
 end
+
+-- Special items
+minetest.register_node("lucky_block:void_mirror", {
+	description = "Void Mirror (Place to see through solid walls during daytime)",
+	drawtype = "normal",
+	tiles = {"default_obsidian_glass.png^[brighten"},
+	use_texture_alpha = true,
+	groups = {snappy = 3, not_in_creative_inventory = 1},
+	sounds = default.node_sound_glass_defaults(),
+})
+
+lucky_block:add_blocks({
+	{"dro", {"lucky_block:void_mirror"}, 1},
+})
