@@ -1,7 +1,6 @@
 
 lucky_block = {}
 lucky_schems = {}
-lucky_block.seed = PseudoRandom(os.time())
 
 
 -- example custom function (punches player with 5 damage)
@@ -180,21 +179,6 @@ local function entity_physics(pos, radius)
 end
 
 
--- get node but use fallback for nil or unknown
-local node_ok = function(pos, fallback)
-
-	fallback = fallback or "default:dirt"
-
-	local node = minetest.get_node_or_nil(pos)
-
-	if node and minetest.registered_nodes[node.name] then
-		return node
-	end
-
-	return {name = fallback}
-end
-
-
 -- fill chest with random items from list
 local function fill_chest(pos, items)
 
@@ -317,11 +301,14 @@ local lucky_block = function(pos, digger)
 
 		for i = 1, num do
 
-			pos2.x = pos.x + lucky_block.seed:next(-range, range)
+			pos2.x = pos.x + math.random(-range, range)
 			pos2.y = pos.y + 1
-			pos2.z = pos.z + lucky_block.seed:next(-range, range)
+			pos2.z = pos.z + math.random(-range, range)
 
-			if minetest.registered_nodes[node_ok(pos2).name].walkable == false then
+			local nod = minetest.get_node(pos2)
+			local def = minetest.registered_nodes[nod.name]
+
+			if def and def.walkable == false then
 
 				local entity = lucky_list[luck][2]
 
@@ -373,9 +360,9 @@ local lucky_block = function(pos, digger)
 		local xz_range = lucky_list[luck][2] or 10
 		local y_range = lucky_list[luck][3] or 5
 
-		pos.x = pos.x + lucky_block.seed:next(-xz_range, xz_range)
-		pos.x = pos.y + lucky_block.seed:next(-y_range, y_range)
-		pos.x = pos.z + lucky_block.seed:next(-xz_range, xz_range)
+		pos.x = pos.x + math.random(-xz_range, xz_range)
+		pos.x = pos.y + math.random(-y_range, y_range)
+		pos.x = pos.z + math.random(-xz_range, xz_range)
 
 		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
@@ -480,8 +467,8 @@ local lucky_block = function(pos, digger)
 			minetest.after(0.5 * s, function()
 
 				if spread then
-					pos2.x = pos.x + lucky_block.seed:next(-range, range)
-					pos2.z = pos.z + lucky_block.seed:next(-range, range)
+					pos2.x = pos.x + math.random(-range, range)
+					pos2.z = pos.z + math.random(-range, range)
 				end
 
 				local n = minetest.registered_nodes[nods[s]]
@@ -570,6 +557,8 @@ minetest.register_node('lucky_block:lucky_block', {
 		minetest.set_node(pos, {name = "air"})
 		lucky_block(pos, digger)
 	end,
+
+	on_blast = function() end,
 })
 
 minetest.register_craft({
@@ -622,13 +611,15 @@ minetest.register_node('lucky_block:super_lucky_block', {
 
 			if math.random(1, 5) == 1 then
 				pos.y = pos.y + 0.5
-				minetest.add_item(pos, "default:goldblock 5")
+				minetest.add_item(pos, "default:goldblock " .. math.random(1, 5))
 			end
 
 		else
 			minetest.set_node(pos, {name = "lucky_block:lucky_block"})
 		end
 	end,
+
+	on_blast = function() end,
 })
 
 
