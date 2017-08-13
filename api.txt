@@ -269,6 +269,25 @@ Strike player and place permanent flame
 	{"lig", "fire:permanent_flame"}
 
 
+Floor Placement
+---------------
+
+This feature places random blocks from the list provided to make a floor under
+the lucky block with a pause after each block.
+
+{"flo", width, {node_list}, offset},
+
+e.g.
+
+Place a three wide obsidian and gold block floor with offset of 1 to centre on
+lucky block
+
+	{"flo", 3, {"default:goldblock", "default:obsidian"}, 1}
+
+Have a woolen floor at 5 width with offset of 2 to keep it centred
+
+	{"flo", 5, {"wool:red", "wool:blue", "wool:white", "wool:orange"}, 2}
+
 Custom Function
 ---------------
 

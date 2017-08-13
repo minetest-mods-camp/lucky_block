@@ -523,6 +523,36 @@ local lucky_block = function(pos, digger)
 			end
 		end)
 
+	-- floor paint
+	elseif action == "flo" then
+
+		local size = lucky_list[luck][2] or 1
+		local nods = lucky_list[luck][3] or {"default:dirt"}
+		local offs = lucky_list[luck][4] or 0
+		local num = 1
+
+		for x = 0, size - 1 do
+			for z = 0, size - 1 do
+
+				minetest.after(0.5 * num, function()
+
+					minetest.set_node({
+						x = (pos.x + x) - offs,
+						y = pos.y - 1,
+						z = (pos.z + z) - offs
+					}, {name = nods[math.random(#nods)]})
+
+					minetest.sound_play("default_place_node", {
+						pos = pos,
+						gain = 1.0,
+						max_hear_distance = 10
+					})
+				end)
+
+				num = num + 1
+			end
+		end
+
 	-- custom function
 	elseif action == "cus" then
 

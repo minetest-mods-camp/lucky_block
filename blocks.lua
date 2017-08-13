@@ -266,6 +266,58 @@ end
 
 end -- END moreores
 
+-- Moreblocks mod
+if minetest.get_modpath("moreblocks") then
+local p = "moreblocks:"
+local lav = {name = "default:lava_source"}
+local air = {name = "air"}
+local trs = {name = p.."trap_stone"}
+local trg = {name = p.."trap_glow_glass"}
+local trapstone_trap = {
+	size = {x = 3, y = 6, z = 3},
+	data = {
+		lav, lav, lav, air, air, air, air, air, air,
+		air, air, air, air, air, air, trs, trs, trs,
+		lav, lav, lav, air, air, air, air, air, air,
+		air, air, air, air, trg, air, trs, air, trs,
+		lav, lav, lav, air, air, air, air, air, air,
+		air, air, air, air, air, air, trs, trs, trs,
+	},
+}
+
+lucky_block:add_schematics({
+	{"trapstonetrap", trapstone_trap, {x = 1, y = 6, z = 1}},
+})
+
+lucky_block:add_blocks({
+	{"dro", {p.."wood_tile", p.."wood_tile_flipped", p.."wood_tile_center",
+		p.."wood_tile_full", p.."wood_tile_up", p.."wood_tile_down",
+		p.."wood_tile_left", p.."wood_tile_right"}, 20},
+	{"dro", {p.."circle_stone_bricks"}, 20},
+	{"dro", {p.."grey_bricks"}, 20},
+	{"dro", {p.."stone_tile", p.."split_stone_tile", p.."split_stone_tile_alt"}, 20},
+	{"flo", 5, {"moreblocks:stone_tile", "moreblocks:split_stone_tile"}, 2},
+	{"dro", {p.."tar", p.."cobble_compressed"}, 10},
+	{"dro", {p.."cactus_brick", p.."cactus_checker"}, 10},
+	{"nod", {p.."empty_bookshelf"}, 0},
+	{"dro", {p.."coal_stone", p.."coal_checker", p.."coal_stone_bricks", p.."coal_glass"}, 20},
+	{"exp", 3},
+	{"dro", {p.."iron_stone", p.."iron_checker", p.."iron_stone_bricks", p.."iron_glass"}, 20},
+	{"dro", {p.."trap_stone", p.."trap_glass", p.."trap_glow_glass"}, 10},
+	{"sch", "trapstonetrap", 0, true},
+	{"dro", {p.."all_faces_tree", p.."all_faces_jungle_tree", p.."plankstone"}, 10},
+	{"fal", {p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree"}, 0},
+	{"dro", {p.."glow_glass", p.."super_glow_glass", p.."clean_glass"}, 10},
+	{"nod", "default:chest", 0, {
+		{name = p.."rope", max = 10},
+		{name = p.."sweeper", max = 1},
+		{name = p.."circular_saw", max = 1},
+		{name = p.."grey_bricks", max = 10},
+		{name = p.."tar", max = 3}}},
+	{"flo", 3, {"moreblocks:copperpatina"}, 1},
+})
+end
+
 -- Bows mod
 if minetest.get_modpath("bows") then
 lucky_block:add_blocks({
