@@ -3,6 +3,11 @@ lucky_block = {}
 lucky_schems = {}
 
 
+-- Load support for intllib.
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
+
 -- example custom function (punches player with 5 damage)
 local function punchy(pos, player)
 
@@ -11,7 +16,7 @@ local function punchy(pos, player)
 		damage_groups = {fleshy = 5}
 	}, nil)
 
-	minetest.chat_send_player(player:get_player_name(), "Stop hitting yourself!")
+	minetest.chat_send_player(player:get_player_name(), S("Stop hitting yourself!"))
 end
 
 
@@ -40,7 +45,7 @@ local function bushy(pos, player)
 		player_inv:set_stack("main", i, "default:dry_shrub")
 	end
 
-	minetest.chat_send_player(player:get_player_name(), "Dry Shrub Takeover!")
+	minetest.chat_send_player(player:get_player_name(), S("Dry shrub takeover!"))
 end
 
 
@@ -370,7 +375,7 @@ local lucky_block = function(pos, digger)
 
 		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
-		minetest.chat_send_player(digger:get_player_name(), "Random Teleport!")
+		minetest.chat_send_player(digger:get_player_name(), S("Random Teleport!"))
 
 	-- drop items
 	elseif action == "dro" then
@@ -565,7 +570,7 @@ end
 
 -- lucky block itself
 minetest.register_node('lucky_block:lucky_block', {
-	description = "Lucky Block",
+	description = S("Lucky Block"),
 	tiles = {{
 		name = "lucky_block_animated.png",
 		animation = {
@@ -603,7 +608,7 @@ minetest.register_craft({
 
 -- super lucky block
 minetest.register_node('lucky_block:super_lucky_block', {
-	description = "Super Lucky Block (use Pick)",
+	description = S("Super Lucky Block (use pick)"),
 	tiles = {{
 		name="lucky_block_super_animated.png",
 		animation = {
@@ -654,6 +659,6 @@ minetest.register_node('lucky_block:super_lucky_block', {
 
 
 minetest.after(0, function()
-	print ("[MOD] Lucky Blocks loaded (" .. #lucky_list .. " in total)")
+	print (S("[MOD] Lucky Blocks loaded (@1 in total)", #lucky_list))
 end)
 
