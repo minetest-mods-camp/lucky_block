@@ -176,7 +176,7 @@ local function entity_physics(pos, radius)
 			objs[n]:punch(objs[n], 1.0, {
 				full_punch_interval = 1.0,
 				damage_groups = {fleshy = damage},
-			}, pos) -- nil)
+			}, pos)
 
 		end
 
@@ -323,11 +323,10 @@ local lucky_block = function(pos, digger)
 					entity = "mobs:sheep" .. colour
 				end
 
-				local mob = minetest.add_entity(pos2, entity)
+				-- has entity been registered?
+				if minetest.registered_entities[entity] then
 
-				if mob and mob:get_luaentity() then
-
-					local ent = mob:get_luaentity()
+					local ent = minetest.add_entity(pos2, entity):get_luaentity()
 
 					if tame then
 						ent.tamed = true
@@ -345,7 +344,6 @@ local lucky_block = function(pos, digger)
 						})
 					end
 				else
-					mob:remove()
 					print ("[lucky_block] " .. entity .. " could not be spawned")
 				end
 			end
@@ -477,12 +475,12 @@ local lucky_block = function(pos, digger)
 				end
 
 				local n = minetest.registered_nodes[nods[s]]
-				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
 
-				if obj and n then
+				if n then
+
+					local obj = minetest.add_entity(pos2, "__builtin:falling_node")
+
 					obj:get_luaentity():set_node(n)
-				else
-					obj:remove()
 				end
 			end)
 		end
