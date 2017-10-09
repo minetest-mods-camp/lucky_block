@@ -38,7 +38,7 @@ end
 -- custom function to drop player inventory and replace with dry shrubs
 local function bushy(pos, player)
 
-	local player_inv = player:get_inventory() ; pos = player:getpos() or pos
+	local player_inv = player:get_inventory() ; pos = player:get_pos() or pos
 
 	for i = 1, player_inv:get_size("main") do
 		drop(pos, player_inv:get_stack("main", i))
@@ -160,7 +160,7 @@ local function entity_physics(pos, radius)
 
 	for n = 1, #objs do
 
-		obj_pos = objs[n]:getpos()
+		obj_pos = objs[n]:get_pos()
 
 		dist = vector.distance(pos, obj_pos)
 		if dist < 1 then dist = 1 end
@@ -251,7 +251,7 @@ local lucky_block = function(pos, digger)
 		local force = lucky_list[luck][4]
 
 		if switch == 1 then
-			pos = vector.round(digger:getpos())
+			pos = vector.round(digger:get_pos())
 		end
 
 		for i = 1, #lucky_schems do
@@ -278,7 +278,7 @@ local lucky_block = function(pos, digger)
 		local items = lucky_list[luck][4]
 
 		if switch == 1 then
-			pos = digger:getpos()
+			pos = digger:get_pos()
 		end
 
 		if not minetest.registered_nodes[nod] then
@@ -418,7 +418,7 @@ local lucky_block = function(pos, digger)
 			nod = "fire:basic_flame"
 		end
 
-		pos = digger:getpos()
+		pos = digger:get_pos()
 
 		if nod then
 			minetest.set_node(pos, {name = nod})
@@ -452,7 +452,7 @@ local lucky_block = function(pos, digger)
 		local range = lucky_list[luck][5] or 5
 
 		if switch == 1 then
-			pos = digger:getpos()
+			pos = digger:get_pos()
 		end
 
 		if spread then
