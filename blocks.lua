@@ -429,7 +429,7 @@ lucky_block:add_blocks({
 	{"dro", {"bonemeal:mulch"}, 10},
 	{"dro", {"bonemeal:bonemeal"}, 10},
 	{"dro", {"bonemeal:fertiliser"}, 10},
-	{"dro", {"default:dirt", 20},
+	{"dro", {"default:dirt"}, 20},
 })
 end
 
