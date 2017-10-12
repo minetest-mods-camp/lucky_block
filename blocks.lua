@@ -35,42 +35,49 @@ lucky_block:add_blocks({
 	{"sch", "sandtrap", 1, true},
 	{"sch", "defpinetree", 0, false},
 	{"sch", "lavatrap", 1, true},
-	{"dro", {"default:mese_crystal_fragment", "default:mese_crystal"}, 10},
+	{"dro", {"default:mese_crystal_fragment"}, 15},
+	{"dro", {"default:mese_crystal"}, 10},
+	{"dro", {"default:mese"}, 1},
 	{"exp", 2},
 	{"sch", "acaciabush", 0, false},
 	{"nod", "default:diamondblock", 0},
 	{"nod", "default:steelblock", 0},
 	{"nod", "default:dirt", 0},
 	{"dro", {"dye:"}, 10, true},
-	{"dro", {"default:sword_steel"}, 1},
+	{"dro", {"default:sword_steel"}},
 	{"sch", "jungletree", 0, false},
-	{"dro", {"default:pick_steel"}, 1},
-	{"dro", {"default:shovel_steel"}, 1},
+	{"dro", {"default:pick_steel"}},
+	{"dro", {"default:shovel_steel"}},
 	{"dro", {"default:coal_lump"}, 3},
 	{"sch", "defaultbush", 0, false},
 	{"tro", "default:mese", "tnt_blast", true},
 	{"sch", "acaciatree", 0, false},
-	{"dro", {"default:axe_steel"}, 1},
-	{"dro", {"default:sword_bronze"}, 1},
+	{"dro", {"default:axe_steel"}},
+	{"dro", {"default:sword_bronze"}},
 	{"exp", 3},
 	{"sch", "platform", 1, true},
 	{"nod", "default:wood", 0},
-	{"dro", {"default:pick_bronze"}, 1},
+	{"dro", {"default:pick_bronze"}},
 	{"sch", "aspentree", 0, false},
-	{"dro", {"default:shovel_bronze"}, 1},
+	{"dro", {"default:shovel_bronze"}},
 	{"nod", "default:gravel", 0},
 	{"sch", "largecactus", 0, false},
-	{"dro", {"default:axe_bronze"}, 1},
+	{"dro", {"default:axe_bronze"}},
 	{"dro", {"default:bookshelf", "default:book", "default:paper"}, 5},
-	{"dro", {"default:fence_wood", "default:fence_acacia_wood", "default:fence_aspen_wood",
-		"default:fence_junglewood", "default:fence_pine_wood"}, 15},
+	{"dro", {"default:fence_wood"}, 10},
+	{"dro", {"default:fence_acacia_wood"}, 10},
+	{"dro", {"default:fence_aspen_wood"}, 10},
+	{"dro", {"default:fence_junglewood"}, 10},
+	{"dro", {"default:fence_pine_wood"}, 10},
 	{"sch", "obsidiantrap", 1, true},
 })
 
 -- default coral blocks
 if minetest.registered_nodes["default:coral_brown"] then
 	lucky_block:add_blocks({
-		{"dro", {"default:coral_brown", "default:coral_orange", "default:coral_skeleton"}, 5},
+		{"dro", {"default:coral_brown"}, 5},
+		{"dro", {"default:coral_orange"}, 5},
+		{"dro", {"default:coral_skeleton"}, 5},
 		{"sch", "corals", 0, true},
 	})
 end
@@ -78,9 +85,13 @@ end
 -- default mese post light or sands
 if minetest.registered_nodes["default:mese_post_light"] then
 	lucky_block:add_blocks({
-		{"dro", {"default:mese_post_light", "default:fence_wood"}, 5},
+		{"dro", {"default:mese_post_light"}, 5},
+		{"dro", {"default:fence_wood"}, 5},
 		{"nod", "default:mese_post_light"},
-		{"dro", {"default:silver_sand", "default:sand", "default:desert_sand"}, 25},
+		{"dro", {"default:silver_sand"}, 20},
+		{"dro", {"default:sand"}, 20},
+		{"dro", {"default:desert_sand"}, 20},
+		{"dro", {"default:gravel"}, 15},
 	})
 end
 
@@ -88,7 +99,8 @@ end
 if minetest.get_modpath("flowers") then
 	lucky_block:add_blocks({
 		{"nod", "flowers:rose", 0},
-		{"dro", {"flowers:mushroom_red", "flowers:mushroom_brown"}, 5},
+		{"dro", {"flowers:mushroom_red"}, 5},
+		{"dro", {"flowers:mushroom_brown"}, 5},
 		{"dro", {"flowers:rose", "flowers:tulip", "flowers:dandelion_yellow",
 				"flowers:geranium", "flowers:viola", "flowers:dandelion_white"}, 12},
 	})
@@ -97,10 +109,17 @@ end
 -- Doors mod
 if minetest.get_modpath("doors") then
 	lucky_block:add_blocks({
-		{"dro", {"doors:door_wood", "doors:door_steel", "doors:door_glass",
-			"doors:door_obsidian_glass", "doors:trapdoor", "doors:trapdoor_steel"}, 1},
-		{"dro", {"doors:gate_acacia_wood_closed", "doors:gate_aspen_wood_closed", "doors:gate_wood_closed",
-			"doors:gate_pine_wood_closed", "doors:gate_junglewood_closed"}, 5},
+		{"dro", {"doors:door_wood"}},
+		{"dro", {"doors:door_steel"}},
+		{"dro", {"doors:door_glass"}},
+		{"dro", {"doors:door_obsidian_glass"}},
+		{"dro", {"doors:trapdoor"}},
+		{"dro", {"doors:trapdoor_steel"}},
+		{"dro", {"doors:gate_acacia_wood_closed"}},
+		{"dro", {"doors:gate_aspen_wood_closed"}},
+		{"dro", {"doors:gate_wood_closed"}},
+		{"dro", {"doors:gate_pine_wood_closed"}},
+		{"dro", {"doors:gate_junglewood_closed"}},
 	})
 end
 
@@ -126,8 +145,8 @@ minetest.register_tool(":screwdriver:screwdriver_magenta", {
 end
 
 	lucky_block:add_blocks({
-		{"dro", {"screwdriver:screwdriver"}, 1},
-		{"dro", {"screwdriver:screwdriver_magenta"}, 1},
+		{"dro", {"screwdriver:screwdriver"}},
+		{"dro", {"screwdriver:screwdriver_magenta"}},
 	})
 end
 
@@ -136,6 +155,9 @@ if minetest.get_modpath("vessels") then
 	lucky_block:add_blocks({
 		{"dro", {"vessels:shelf", "vessels:drinking_glass", "vessels:glass_bottle",
 			"vessels:steel_bottle", "vessels:glass_fragments"}, 5},
+		{"nod", "vessels:drinking_glass", 0},
+		{"nod", "vessels:glass_bottle", 0},
+		{"nod", "vessels:steel_bottle", 0},
 	})
 end
 
@@ -156,20 +178,36 @@ if minetest.get_modpath("homedecor") then
 		{"nod", "homedecor:table", 0},
 		{"nod", "homedecor:chair", 0},
 		{"nod", "homedecor:table_lamp_off", 0},
+		{"dro", {"homedecor:plastic_sheeting", "homedecor:plastic_base"}, 15},
+		{"dro", {"homedecor:roof_tile_terracotta"}, 20},
+		{"dro", {"homedecor:shutter_oak"}, 5},
+		{"dro", {"homedecor:shutter_black"}, 5},
+		{"dro", {"homedecor:shutter_dark_grey"}, 5},
+		{"dro", {"homedecor:shutter_grey"}, 5},
+		{"dro", {"homedecor:shutter_white"}, 5},
+		{"dro", {"homedecor:shutter_mahogany"}, 5},
+		{"dro", {"homedecor:shutter_yellow"}, 5},
+		{"dro", {"homedecor:shutter_forest_green"}, 5},
+		{"dro", {"homedecor:shutter_light_blue"}, 5},
+		{"dro", {"homedecor:shutter_violet"}, 5},
+		{"dro", {"homedecor:table_legs_wrought_iron", "homedecor:utility_table_legs"}, 5},
+		{"dro", {"homedecor:pole_wrought_iron"}, 10},
+		{"dro", {"homedecor:fence_picket_white"}, 20},
 	})
 end
 
 -- Boats mod
 if minetest.get_modpath("boats") then
 	lucky_block:add_blocks({
-		{"dro", {"boats:boat"}, 1},
+		{"dro", {"boats:boat"}},
 	})
 end
 
 -- Beds mod
 if minetest.get_modpath("beds") then
 	lucky_block:add_blocks({
-		{"dro", {"beds:bed", "beds:fancy_bed"}, 1},
+		{"dro", {"beds:bed"}},
+		{"dro", {"beds:fancy_bed"}},
 	})
 end
 
@@ -186,7 +224,7 @@ end
 if minetest.get_modpath("carts")
 or minetest.get_modpath("boost_cart") then
 	lucky_block:add_blocks({
-		{"dro", {"boats:boat"}, 1},
+		{"dro", {"carts:cart"}},
 		{"dro", {"default:rail"}, 10},
 		{"dro", {"carts:powerrail"}, 5},
 	})
@@ -195,11 +233,28 @@ end
 -- 3D Armor mod
 if minetest.get_modpath("3d_armor") then
 lucky_block:add_blocks({
-	{"dro", {"3d_armor:boots_wood", "3d_armor:leggings_wood", "3d_armor:chestplate_wood", "3d_armor:helmet_wood"}, 1},
-	{"dro", {"3d_armor:boots_steel", "3d_armor:leggings_steel", "3d_armor:chestplate_steel", "3d_armor:helmet_steel"}, 1},
-	{"dro", {"3d_armor:boots_gold", "3d_armor:leggings_gold", "3d_armor:chestplate_gold", "3d_armor:helmet_gold"}, 1},
-	{"dro", {"3d_armor:boots_cactus", "3d_armor:leggings_cactus", "3d_armor:chestplate_cactus", "3d_armor:helmet_cactus"}, 1},
-	{"dro", {"3d_armor:boots_bronze", "3d_armor:leggings_bronze", "3d_armor:chestplate_bronze", "3d_armor:helmet_bronze"}, 1},
+	{"dro", {"3d_armor:boots_wood"}},
+	{"dro", {"3d_armor:leggings_wood"}},
+	{"dro", {"3d_armor:chestplate_wood"}},
+	{"dro", {"3d_armor:helmet_wood"}},
+	{"tel"},
+	{"dro", {"3d_armor:boots_steel"}},
+	{"dro", {"3d_armor:leggings_steel"}},
+	{"dro", {"3d_armor:chestplate_steel"}},
+	{"dro", {"3d_armor:helmet_steel"}},
+	{"dro", {"3d_armor:boots_gold"}},
+	{"dro", {"3d_armor:leggings_gold"}},
+	{"dro", {"3d_armor:chestplate_gold"}},
+	{"exp"},
+	{"dro", {"3d_armor:helmet_gold"}},
+	{"dro", {"3d_armor:boots_cactus"}},
+	{"dro", {"3d_armor:leggings_cactus"}},
+	{"dro", {"3d_armor:chestplate_cactus"}},
+	{"dro", {"3d_armor:helmet_cactus"}},
+	{"dro", {"3d_armor:boots_bronze"}},
+	{"dro", {"3d_armor:leggings_bronze"}},
+	{"dro", {"3d_armor:chestplate_bronze"}},
+	{"dro", {"3d_armor:helmet_bronze"}},
 	{"lig"},
 })
 end
@@ -207,11 +262,11 @@ end
 -- 3D Armor's Shields mod
 if minetest.get_modpath("shields") then
 lucky_block:add_blocks({
-	{"dro", {"shields:shield_wood"}, 1},
-	{"dro", {"shields:shield_steel"}, 1},
-	{"dro", {"shields:shield_gold"}, 1},
-	{"dro", {"shields:shield_cactus"}, 1},
-	{"dro", {"shields:shield_bronze"}, 1},
+	{"dro", {"shields:shield_wood"}},
+	{"dro", {"shields:shield_steel"}},
+	{"dro", {"shields:shield_gold"}},
+	{"dro", {"shields:shield_cactus"}},
+	{"dro", {"shields:shield_bronze"}},
 	{"exp", 2},
 })
 end
@@ -219,7 +274,8 @@ end
 -- Fire mod
 if minetest.get_modpath("fire") then
 lucky_block:add_blocks({
-	{"dro", {"fire:flint_and_steel", "default:flint"}, 1},
+	{"dro", {"fire:flint_and_steel"}},
+	{"dro", {"default:flint"}, 5},
 	{"nod", "fire:basic_flame", 1},
 	{"nod", "fire:permanent_flame", 1},
 	{"sch", "firetrap", 1, true},
@@ -240,32 +296,33 @@ if minetest.get_modpath("moreores") then
 lucky_block:add_blocks({
 	{"nod", "moreores:tin_block", 0},
 	{"nod", "moreores:silver_block", 0},
-	{"fal", {"default:sand", "default:sand", "default:sand", "default:sand", "default:sand", "default:sand", "moreores:mithril_block"}, 0},
-	{"dro", {"moreores:pick_silver"}, 1},
-	{"dro", {"moreores:pick_mithril"}, 1},
+	{"fal", {"default:sand", "default:sand", "default:sand", "default:sand",
+			"default:sand", "default:sand", "moreores:mithril_block"}, 0},
+	{"dro", {"moreores:pick_silver"}},
+	{"dro", {"moreores:pick_mithril"}},
 	{"tro", "moreores:silver_block"},
-	{"dro", {"moreores:shovel_silver"}, 1},
-	{"dro", {"moreores:shovel_mithril"}, 1},
-	{"dro", {"moreores:axe_silver"}, 1},
-	{"dro", {"moreores:axe_mithril"}, 1},
+	{"dro", {"moreores:shovel_silver"}},
+	{"dro", {"moreores:shovel_mithril"}},
+	{"dro", {"moreores:axe_silver"}},
+	{"dro", {"moreores:axe_mithril"}},
 	{"tro", "moreores:mithril_block"},
-	{"dro", {"moreores:hoe_silver"}, 1},
-	{"dro", {"moreores:hoe_mithril"}, 1},
+	{"dro", {"moreores:hoe_silver"}},
+	{"dro", {"moreores:hoe_mithril"}},
 	{"lig"},
 })
 
 if minetest.get_modpath("3d_armor") then
 lucky_block:add_blocks({
-	{"dro", {"3d_armor:helmet_mithril"}, 1},
-	{"dro", {"3d_armor:chestplate_mithril"}, 1},
-	{"dro", {"3d_armor:leggings_mithril"}, 1},
-	{"dro", {"3d_armor:boots_mithril"}, 1},
+	{"dro", {"3d_armor:helmet_mithril"}},
+	{"dro", {"3d_armor:chestplate_mithril"}},
+	{"dro", {"3d_armor:leggings_mithril"}},
+	{"dro", {"3d_armor:boots_mithril"}},
 })
 end
 
 if minetest.get_modpath("shields") then
 lucky_block:add_blocks({
-	{"dro", {"shields:shield_mithril"}, 1},
+	{"dro", {"shields:shield_mithril"}},
 })
 end
 
@@ -295,24 +352,44 @@ lucky_block:add_schematics({
 })
 
 lucky_block:add_blocks({
-	{"dro", {p.."wood_tile", p.."wood_tile_flipped", p.."wood_tile_center",
-		p.."wood_tile_full", p.."wood_tile_up", p.."wood_tile_down",
-		p.."wood_tile_left", p.."wood_tile_right"}, 20},
+	{"dro", {p.."wood_tile"}, 10},
+	{"dro", {p.."wood_tile_flipped"}, 10},
+	{"dro", {p.."wood_tile_center"}, 10},
+	{"dro", {p.."wood_tile_full"}, 10},
+	{"dro", {p.."wood_tile_up"}, 10},
+	{"dro", {p.."wood_tile_down"}, 10},
+	{"dro", {p.."wood_tile_left"}, 10},
+	{"dro", {p.."wood_tile_right"}, 10},
 	{"dro", {p.."circle_stone_bricks"}, 20},
 	{"dro", {p.."grey_bricks"}, 20},
-	{"dro", {p.."stone_tile", p.."split_stone_tile", p.."split_stone_tile_alt"}, 20},
+	{"dro", {p.."stone_tile"}, 10},
+	{"dro", {p.."split_stone_tile"}, 10},
+	{"dro", {p.."split_stone_tile_alt"}, 10},
 	{"flo", 5, {"moreblocks:stone_tile", "moreblocks:split_stone_tile"}, 2},
 	{"dro", {p.."tar", p.."cobble_compressed"}, 10},
-	{"dro", {p.."cactus_brick", p.."cactus_checker"}, 10},
+	{"dro", {p.."cactus_brick"}, 10},
+	{"dro", {p.."cactus_checker"}, 10},
 	{"nod", {p.."empty_bookshelf"}, 0},
-	{"dro", {p.."coal_stone", p.."coal_checker", p.."coal_stone_bricks", p.."coal_glass"}, 20},
+	{"dro", {p.."coal_stone"}, 10},
+	{"dro", {p.."coal_checker"}, 10},
+	{"dro", {p.."coal_stone_bricks"}, 10},
+	{"dro", {p.."coal_glass"}, 10},
 	{"exp", 3},
-	{"dro", {p.."iron_stone", p.."iron_checker", p.."iron_stone_bricks", p.."iron_glass"}, 20},
-	{"dro", {p.."trap_stone", p.."trap_glass", p.."trap_glow_glass"}, 10},
+	{"dro", {p.."iron_stone"}, 10},
+	{"dro", {p.."iron_checker"}, 10},
+	{"dro", {p.."iron_stone_bricks"}, 10},
+	{"dro", {p.."iron_glass"}, 10},
+	{"dro", {p.."trap_stone"}, 10},
+	{"dro", {p.."trap_glass"}, 10},
+	{"dro", {p.."trap_glow_glass"}, 10},
 	{"sch", "trapstonetrap", 0, true},
-	{"dro", {p.."all_faces_tree", p.."all_faces_jungle_tree", p.."plankstone"}, 10},
+	{"dro", {p.."all_faces_tree"}, 10},
+	{"dro", {p.."all_faces_jungle_tree"}, 10},
+	{"dro", {p.."plankstone"}, 10},
 	{"fal", {p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree"}, 0},
-	{"dro", {p.."glow_glass", p.."super_glow_glass", p.."clean_glass"}, 10},
+	{"dro", {p.."glow_glass"}, 10},
+	{"dro", {p.."super_glow_glass"}, 10},
+	{"dro", {p.."clean_glass"}, 10},
 	{"nod", "default:chest", 0, {
 		{name = p.."rope", max = 10},
 		{name = p.."sweeper", max = 1},
@@ -326,9 +403,9 @@ end
 -- Bows mod
 if minetest.get_modpath("bows") then
 lucky_block:add_blocks({
-	{"dro", {"bows:bow_wood"}, 1},
-	{"dro", {"bows:bow_steel"}, 1},
-	{"dro", {"bows:bow_bronze"}, 1},
+	{"dro", {"bows:bow_wood"}},
+	{"dro", {"bows:bow_steel"}},
+	{"dro", {"bows:bow_bronze"}},
 	{"dro", {"bows:arrow"}, 5},
 	{"dro", {"bows:arrow_steel"}, 5},
 	{"dro", {"bows:arrow_mese"}, 5},
@@ -339,14 +416,20 @@ end
 -- Bags mod
 if minetest.get_modpath("bags") then
 lucky_block:add_blocks({
-	{"dro", {"bags:small", "bags:medium", "bags:large", "bags:trolley"}, 1},
+	{"dro", {"bags:small"}},
+	{"dro", {"bags:medium"}},
+	{"dro", {"bags:large"}},
+	{"dro", {"bags:trolley"}},
 })
 end
 
 -- Bonemeal mod
 if minetest.get_modpath("bonemeal") then
 lucky_block:add_blocks({
-	{"dro", {"bonemeal:mulch", "bonemeal:bonemeal", "bonemeal:fertiliser"}, 10},
+	{"dro", {"bonemeal:mulch"}, 10},
+	{"dro", {"bonemeal:bonemeal"}, 10},
+	{"dro", {"bonemeal:fertiliser"}, 10},
+	{"dro", {"default:dirt", 20},
 })
 end
 
@@ -361,5 +444,5 @@ minetest.register_node("lucky_block:void_mirror", {
 })
 
 lucky_block:add_blocks({
-	{"dro", {"lucky_block:void_mirror"}, 1},
+	{"dro", {"lucky_block:void_mirror"}},
 })

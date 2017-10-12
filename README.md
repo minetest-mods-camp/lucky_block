@@ -21,4 +21,4 @@ Changelog:
 - 0.6 - Use TNT mod for explosions and if not active do entity damage only
 - 0.7 - Added new floor feature and moreblocks support
 
-Lucky Blocks: 136 (depending on mods enabled)
+Lucky Blocks: 210 (depending on mods enabled)
