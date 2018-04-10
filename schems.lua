@@ -169,6 +169,7 @@ lucky_block:add_schematics({
 minetest.register_node("lucky_block:well_block", {
 	description = "Well Block",
 	tiles = {"default_glass.png"},
+	light_source = 5,
 	groups = {not_in_creative_inventory = 1},
 })
 
