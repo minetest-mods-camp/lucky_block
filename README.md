@@ -20,5 +20,6 @@ Changelog:
 - 0.5 - Explosions now have radius and fire setting, also added new blocks
 - 0.6 - Use TNT mod for explosions and if not active do entity damage only
 - 0.7 - Added new floor feature and moreblocks support
+- 0.8 - Added wishing well with random block drops
 
-Lucky Blocks: 210 (depending on mods enabled)
+Lucky Blocks: 211 (depending on mods enabled)

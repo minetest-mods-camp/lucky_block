@@ -51,6 +51,7 @@ end
 
 -- default blocks
 local lucky_list = {
+	{"sch", "wishingwell", 0, true},
 	{"cus", bushy},
 	{"cus", punchy},
 	{"fal", {"default:wood", "default:gravel", "default:sand", "default:desert_sand", "default:stone", "default:dirt", "default:goldblock"}, 0},

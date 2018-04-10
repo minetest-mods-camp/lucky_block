@@ -163,3 +163,85 @@ lucky_block:add_schematics({
 	{"firetrap", fire_trap, {x = 1, y = 0, z = 1}},
 	{"obsidiantrap", obsidian_trap, {x = 1, y = 0, z = 1}},
 })
+
+-- wishing well
+
+minetest.register_node("lucky_block:well_block", {
+	description = "Well Block",
+	tiles = {"default_glass.png"},
+	groups = {not_in_creative_inventory = 1},
+})
+
+local path = minetest.get_modpath("lucky_block") .. "/schematics/"
+
+lucky_block:add_schematics({
+	{"wishingwell", path .. "lb_wishing_well.mts", {x = 1, y = 1, z = 1}},
+})
+
+minetest.register_abm({
+
+	label = "Lucky Block Wishing Well Block",
+	nodenames = {"lucky_block:well_block"},
+	interval = 4.0,
+	chance = 1,
+	catch_up = false,
+
+	action = function(pos, node, active_object_count, active_object_count_wider)
+
+		for _,object in pairs(minetest.get_objects_inside_radius(pos, 1.2)) do
+
+			if object and object:is_player() then
+
+				minetest.swap_node(pos, {name = "default:glass"})
+
+				minetest.sound_play("default_tool_breaks", {
+					pos = pos,
+					gain = 1.0,
+					max_hear_distance = 10
+				})
+
+				local blocks = {
+					{"default:coalblock", 5},
+					{"default:goldblock", 5},
+					{"default:brick", 8},
+					{"default:diamondblock", 4},
+					{"default:mese", 5},
+					{"default:snowblock", 7},
+				}
+				local tot = #blocks
+
+				if minetest.registered_nodes["tnt:tnt_burning"] then
+					tot = tot + 1
+					blocks[tot] = {"tnt:tnt_burning", 8}
+					tot = tot + 1
+					blocks[tot] = {"tnt:tnt_burning", 8}
+				end
+
+				if minetest.registered_nodes["ethereal:crystal_block"] then
+					tot = tot + 1
+					blocks[tot] = {"ethereal:crystal_block", 5}
+				end
+
+				if minetest.registered_nodes["bones:bones"] then
+					tot = tot + 1
+					blocks[tot] = {"bones:bones", 5}
+				end
+
+				local b_no = math.random(#blocks)
+
+				for n = 1, blocks[b_no][2] do
+
+					local xx = math.random(-7, 7)
+					local zz = math.random(-7, 7)
+					local p2 = {x = pos.x + xx, y = pos.y + 7, z = pos.z + zz}
+					local nod = minetest.registered_nodes[blocks[b_no][1]]
+					local obj = minetest.add_entity(p2, "__builtin:falling_node")
+
+					obj:get_luaentity():set_node(nod)
+				end
+
+				break
+			end
+		end
+	end,
+})
