@@ -183,7 +183,7 @@ minetest.register_abm({
 
 	label = "Lucky Block Wishing Well Block",
 	nodenames = {"lucky_block:well_block"},
-	interval = 4.0,
+	interval = 2.0,
 	chance = 1,
 	catch_up = false,
 
@@ -202,18 +202,32 @@ minetest.register_abm({
 				})
 
 				local blocks = {
+					{"default:ice", 7},
+					{"default:bronzeblock", 5},
 					{"default:coalblock", 5},
+					{"default:sand", 7},
 					{"default:goldblock", 5},
+					{"default:cactus", 7},
+					{"default:cobble", 7},
 					{"default:brick", 8},
+					{"default:desert_sand", 7},
+					{"default:obsidian", 7},
 					{"default:diamondblock", 4},
+					{"default:dirt", 7},
+					{"default:clay", 7},
+					{"default:copperblock", 5},
 					{"default:mese", 5},
+					{"default:silver_sand", 7},
 					{"default:snowblock", 7},
+					{"default:mossycobble", 7},
 				}
 				local tot = #blocks
 
 				if minetest.registered_nodes["tnt:tnt_burning"] then
 					tot = tot + 1
 					blocks[tot] = {"tnt:tnt_burning", 8}
+					tot = tot + 1
+					blocks[tot] = {"tnt:tnt_burning", 4}
 					tot = tot + 1
 					blocks[tot] = {"tnt:tnt_burning", 8}
 				end
