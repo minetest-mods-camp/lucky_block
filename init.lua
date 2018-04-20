@@ -151,6 +151,25 @@ local effect = function(pos, amount, texture, min_size, max_size, radius, gravit
 end
 
 
+-- temp entity for mob damage
+minetest.register_entity("lucky_block:temp", {
+	physical = true,
+	collisionbox = {0, 0, 0, 0, 0, 0},
+	visual_size = {x = 0, y = 0},
+	visual = "sprite",
+	textures = {"tnt_smoke.png"},
+
+	on_step = function(self, dtime)
+
+		self.timer = (self.timer or 0) + dtime
+
+		if self.timer > 0.5 then
+			self.object:remove()
+		end
+	end
+})
+
+
 -- modified from TNT mod to deal entity damage only
 local function entity_physics(pos, radius)
 
@@ -158,6 +177,9 @@ local function entity_physics(pos, radius)
 
 	local objs = minetest.get_objects_inside_radius(pos, radius)
 	local obj_pos, dist
+
+	-- add temp entity to cause damage
+	local tmp_ent = minetest.add_entity(pos, "lucky_block:temp")
 
 	for n = 1, #objs do
 
@@ -174,13 +196,12 @@ local function entity_physics(pos, radius)
 
 		else --if ent.health then
 
-			objs[n]:punch(objs[n], 1.0, {
+			--objs[n]:punch(objs[n], 1.0, {
+			objs[n]:punch(tmp_ent, 1.0, {
 				full_punch_interval = 1.0,
 				damage_groups = {fleshy = damage},
 			}, pos)
-
 		end
-
 	end
 end
 
@@ -232,6 +253,9 @@ end
 
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
+
+	math.randomseed(os.time()) -- make sure it's really random
+	math.random()
 
 	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
