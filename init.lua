@@ -20,6 +20,27 @@ local function punchy(pos, player)
 end
 
 
+-- pint sized player
+local function pint(pos, player)
+
+	player:set_properties({visual_size = {x = 0.5, y = 0.5}})
+
+	minetest.chat_send_player(player:get_player_name(), S("Pint Sized Player!"))
+
+	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
+
+	minetest.after (180, function(player, pos) -- 3 minutes
+
+		if player and player:is_player() then
+
+			player:set_properties({visual_size = {x = 1.0, y = 1.0}})
+
+			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
+		end
+	end, player)
+end
+
+
 local function drop(pos, itemstack)
 
 	local obj = minetest.add_item(pos, itemstack:take_item(itemstack:get_count()))
@@ -51,6 +72,7 @@ end
 
 -- default blocks
 local lucky_list = {
+	{"cus", pint},
 	{"sch", "wishingwell", 0, true},
 	{"cus", bushy},
 	{"cus", punchy},
