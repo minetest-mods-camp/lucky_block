@@ -7,6 +7,8 @@ lucky_schems = {}
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
+-- a wee bit of colour
+local green = minetest.get_color_escape_sequence("#1eff00")
 
 -- example custom function (punches player with 5 damage)
 local function punchy(pos, player)
@@ -16,7 +18,8 @@ local function punchy(pos, player)
 		damage_groups = {fleshy = 5}
 	}, nil)
 
-	minetest.chat_send_player(player:get_player_name(), S("Stop hitting yourself!"))
+	minetest.chat_send_player(player:get_player_name(),
+		green .. S("Stop hitting yourself!"))
 end
 
 
@@ -25,7 +28,8 @@ local function pint(pos, player)
 
 	player:set_properties({visual_size = {x = 0.5, y = 0.5}})
 
-	minetest.chat_send_player(player:get_player_name(), S("Pint Sized Player!"))
+	minetest.chat_send_player(player:get_player_name(),
+		green .. S("Pint Sized Player!"))
 
 	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
 
@@ -66,7 +70,8 @@ local function bushy(pos, player)
 		player_inv:set_stack("main", i, "default:dry_shrub")
 	end
 
-	minetest.chat_send_player(player:get_player_name(), S("Dry shrub takeover!"))
+	minetest.chat_send_player(player:get_player_name(),
+		green .. S("Dry shrub takeover!"))
 end
 
 
@@ -277,7 +282,6 @@ end
 local lucky_block = function(pos, digger)
 
 	math.randomseed(os.time()) -- make sure it's really random
-	math.random()
 
 	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
@@ -314,7 +318,7 @@ local lucky_block = function(pos, digger)
 		end
 
 		if switch == 1 then
-			digger:setpos(pos, false)
+			digger:set_pos(pos, false)
 		end
 
 	-- place node (if chest then fill chest)
@@ -416,11 +420,12 @@ local lucky_block = function(pos, digger)
 
 		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
-		digger:setpos(pos, false)
+		digger:set_pos(pos, false)
 
 		effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
-		minetest.chat_send_player(digger:get_player_name(), S("Random Teleport!"))
+		minetest.chat_send_player(digger:get_player_name(),
+			green .. S("Random Teleport!"))
 
 	-- drop items
 	elseif action == "dro" then
@@ -447,7 +452,7 @@ local lucky_block = function(pos, digger)
 
 			if obj then
 
-				obj:setvelocity({
+				obj:set_velocity({
 					x = math.random(-10, 10) / 9,
 					y = 5,
 					z = math.random(-10, 10) / 9,
