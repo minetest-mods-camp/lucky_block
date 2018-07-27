@@ -637,6 +637,7 @@ minetest.register_node('lucky_block:lucky_block', {
 	paramtype = "light",
 	light_source = 3,
 	groups = {oddly_breakable_by_hand = 3},
+	drop = {},
 	sounds = default.node_sound_wood_defaults(),
 
 	on_dig = function(pos, node, digger)
@@ -674,6 +675,7 @@ minetest.register_node('lucky_block:super_lucky_block', {
 	is_ground_content = false,
 	paramtype = "light",
 	groups = {cracky = 1, level = 2},
+	drop = {},
 	sounds = default.node_sound_stone_defaults(),
 
 	on_construct = function(pos)
