@@ -281,7 +281,8 @@ end
 -- this is what happens when you dig a lucky block
 local lucky_block = function(pos, digger)
 
-	math.randomseed(os.time()) -- make sure it's really random
+	-- make sure it's really random
+	math.randomseed(os.time() + minetest.get_timeofday())
 
 	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
