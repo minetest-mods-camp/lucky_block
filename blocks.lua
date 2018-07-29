@@ -400,19 +400,6 @@ lucky_block:add_blocks({
 })
 end
 
--- Bows mod
-if minetest.get_modpath("bows") then
-lucky_block:add_blocks({
-	{"dro", {"bows:bow_wood"}},
-	{"dro", {"bows:bow_steel"}},
-	{"dro", {"bows:bow_bronze"}},
-	{"dro", {"bows:arrow"}, 5},
-	{"dro", {"bows:arrow_steel"}, 5},
-	{"dro", {"bows:arrow_mese"}, 5},
-	{"dro", {"bows:arrow_diamond"}, 5},
-})
-end
-
 -- Bags mod
 if minetest.get_modpath("bags") then
 lucky_block:add_blocks({
