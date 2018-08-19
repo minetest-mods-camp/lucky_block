@@ -433,3 +433,38 @@ minetest.register_node("lucky_block:void_mirror", {
 lucky_block:add_blocks({
 	{"dro", {"lucky_block:void_mirror"}},
 })
+
+-- Troll
+local green = minetest.get_color_escape_sequence("#1eff00")
+
+local function fake_diamonds(pos, player)
+
+	for n = 1, 25 do
+
+	minetest.add_particle({
+		time = 15,
+		pos = {
+			x = pos.x + math.random(-20, 20) / 10,
+			y = pos.y,
+			z = pos.z + math.random(-20, 20) / 10,
+		},
+		velocity = {x = 0, y = 2, z = 0},
+		acceleration = {x = 0, y = -10, z = 0},
+		expirationtime = 4,
+		maxsize = 4,
+		texture = "default_diamond.png",
+		glow = 2,
+		size = 5,
+		collisiondetection = true,
+		vertical = true,
+	})
+
+	end
+
+	minetest.chat_send_player(player:get_player_name(),
+			green .. S("Wow! So many faux diamonds!"))
+end
+
+lucky_block:add_blocks({
+	{"cus", fake_diamonds},
+})
