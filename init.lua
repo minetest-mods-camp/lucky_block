@@ -18,6 +18,8 @@ local function punchy(pos, player)
 		damage_groups = {fleshy = 5}
 	}, nil)
 
+	minetest.sound_play("player_damage", {pos = pos, gain = 1.0})
+
 	minetest.chat_send_player(player:get_player_name(),
 		green .. S("Stop hitting yourself!"))
 end
@@ -495,7 +497,9 @@ local lucky_block = function(pos, digger)
 			gain = 1.0,
 			max_hear_distance = 25
 		})
-	
+
+		minetest.set_node(pos, {name = "fire:permanent_flame"})
+
 	-- falling nodes
 	elseif action == "fal" then
 
