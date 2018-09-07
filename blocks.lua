@@ -46,6 +46,7 @@ lucky_block:add_blocks({
 	{"dro", {"dye:"}, 10, true},
 	{"dro", {"default:sword_steel"}},
 	{"sch", "jungletree", 0, false},
+	{"sch", "sandtrap", 1, true, {{"default:sand", "default:silver_sand"}} },
 	{"dro", {"default:pick_steel"}},
 	{"dro", {"default:shovel_steel"}},
 	{"dro", {"default:coal_lump"}, 3},
@@ -61,6 +62,7 @@ lucky_block:add_blocks({
 	{"sch", "aspentree", 0, false},
 	{"dro", {"default:shovel_bronze"}},
 	{"nod", "default:gravel", 0},
+	{"sch", "sandtrap", 1, true, {{"default:sand", "default:gravel"}} },
 	{"sch", "largecactus", 0, false},
 	{"dro", {"default:axe_bronze"}},
 	{"dro", {"default:bookshelf", "default:book", "default:paper"}, 5},
@@ -70,6 +72,7 @@ lucky_block:add_blocks({
 	{"dro", {"default:fence_junglewood"}, 10},
 	{"dro", {"default:fence_pine_wood"}, 10},
 	{"sch", "obsidiantrap", 1, true},
+	{"sch", "sandtrap", 1, true, {{"default:sand", "default:desert_sand"}} },
 })
 
 -- default coral blocks
@@ -282,12 +285,24 @@ lucky_block:add_blocks({
 })
 end
 
+-- Caverealms
+if minetest.get_modpath("caverealms") then
+lucky_block:add_blocks({
+	{"sch", "sandtrap", 1, true, {{"default:sand", "caverealms:coal_dust"}} },
+	{"sch", "obsidiantrap", 1, true, {{"default:obsidian", "caverealms:glow_obsidian_brick_2"}} },
+	{"flo", 5, {"caverealms:stone_with_moss"}, 2},
+	{"flo", 5, {"caverealms:stone_with_lichen"}, 2},
+	{"flo", 5, {"caverealms:stone_with_algae"}, 2},
+})
+end
+
 -- TNT mod
 if minetest.get_modpath("tnt") then
 local p = "tnt:tnt_burning"
 lucky_block:add_blocks({
-	{"dro", {"tnt:gunpowder"}, 5, true},
+	{"dro", {"tnt:gunpowder"}, 5},
 	{"fal", {p, p, p, p, p}, 1, true, 4},
+	{"nod", "tnt:tnt_burning", 0},
 })
 end
 
@@ -353,13 +368,9 @@ lucky_block:add_schematics({
 
 lucky_block:add_blocks({
 	{"dro", {p.."wood_tile"}, 10},
-	{"dro", {p.."wood_tile_flipped"}, 10},
 	{"dro", {p.."wood_tile_center"}, 10},
 	{"dro", {p.."wood_tile_full"}, 10},
-	{"dro", {p.."wood_tile_up"}, 10},
-	{"dro", {p.."wood_tile_down"}, 10},
-	{"dro", {p.."wood_tile_left"}, 10},
-	{"dro", {p.."wood_tile_right"}, 10},
+	{"dro", {p.."wood_tile_offset"}, 10},
 	{"dro", {p.."circle_stone_bricks"}, 20},
 	{"dro", {p.."grey_bricks"}, 20},
 	{"dro", {p.."stone_tile"}, 10},
@@ -379,12 +390,21 @@ lucky_block:add_blocks({
 	{"dro", {p.."iron_checker"}, 10},
 	{"dro", {p.."iron_stone_bricks"}, 10},
 	{"dro", {p.."iron_glass"}, 10},
+	{"dro", {p.."trap_obsidian"}, 10},
+	{"dro", {p.."trap_sandstone"}, 10},
+	{"dro", {p.."trap_desert_stone"}, 10},
 	{"dro", {p.."trap_stone"}, 10},
 	{"dro", {p.."trap_glass"}, 10},
 	{"dro", {p.."trap_glow_glass"}, 10},
+	{"dro", {p.."trap_obsidian_glass"}, 10},
+	{"lig"},
 	{"sch", "trapstonetrap", 0, true},
 	{"dro", {p.."all_faces_tree"}, 10},
 	{"dro", {p.."all_faces_jungle_tree"}, 10},
+	{"dro", {p.."all_faces_pine_tree"}, 10},
+	{"dro", {p.."all_faces_acacia_tree"}, 10},
+	{"dro", {p.."all_faces_aspen_tree"}, 10},
+	{"flo", 3, {p.."all_faces_acacia_tree"}, 1},
 	{"dro", {p.."plankstone"}, 10},
 	{"fal", {p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree", p.."all_faces_tree"}, 0},
 	{"dro", {p.."glow_glass"}, 10},
@@ -419,6 +439,30 @@ lucky_block:add_blocks({
 	{"dro", {"default:dirt"}, 20},
 })
 end
+
+-- Additional Wishing Well Styles
+lucky_block:add_blocks({
+	{"sch", "wishingwell", 0, true, {
+		{"default:stonebrick", "default:silver_sandstone_brick"},
+		{"stairs:slab_stonebrick", "stairs:slab_silver_sandstone_brick"},
+		{"default:fence_wood", "default:fence_aspen_wood"}
+	} },
+	{"sch", "wishingwell", 0, true, {
+		{"default:stonebrick", "default:sandstonebrick"},
+		{"stairs:slab_stonebrick", "stairs:slab_sandstonebrick"},
+		{"default:fence_wood", "default:fence_junglewood"}
+	} },
+	{"sch", "wishingwell", 0, true, {
+		{"default:stonebrick", "default:desert_stonebrick"},
+		{"stairs:slab_stonebrick", "stairs:slab_desert_stonebrick"},
+		{"default:fence_wood", "default:fence_acacia_wood"}
+	} },
+	{"sch", "wishingwell", 0, true, {
+		{"default:stonebrick", "default:desert_sandstone_brick"},
+		{"stairs:slab_stonebrick", "stairs:slab_desert_sandstone_brick"},
+		{"default:fence_wood", "default:fence_pine_wood"}
+	} },
+})
 
 -- Special items
 minetest.register_node("lucky_block:void_mirror", {

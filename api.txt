@@ -137,7 +137,7 @@ random colours can be used also.
 
 e.g.
 
-Drop 5x torches
+Drop 5x torches as itemstack
 	{"dro", {"default:torch"}, 5}
 
 Drop 10x randomly coloured wool (colour name added to end of item string)
@@ -153,7 +153,7 @@ Place Schematic
 This command lets you place a pre-added schematic file or definition in place
 of the lucky block or at the player position.
 
-{"sch", "schematic name", position, force placement}
+{"sch", "schematic name", position, force placement, replacements}
 
 e.g.
 
@@ -162,6 +162,9 @@ Place lucky platform at player position and force placement
 
 Place apple tree where lucky block use to be
 	{"sch", "appletree", 0, false}
+
+Place apple tree where lucky block use to be and change wood into stone
+	{"sch", "appletree", 0, false, {{"default:wood", "default:stone"}} }
 
 
 Spawn Entity or Mob
@@ -287,6 +290,7 @@ lucky block
 Have a woolen floor at 5 width with offset of 2 to keep it centred
 
 	{"flo", 5, {"wool:red", "wool:blue", "wool:white", "wool:orange"}, 2}
+
 
 Custom Function
 ---------------

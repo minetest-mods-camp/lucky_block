@@ -10,6 +10,7 @@ local S, NS = dofile(MP.."/intllib.lua")
 -- a wee bit of colour
 local green = minetest.get_color_escape_sequence("#1eff00")
 
+
 -- example custom function (punches player with 5 damage)
 local function punchy(pos, player)
 
@@ -47,28 +48,24 @@ local function pint(pos, player)
 end
 
 
-local function drop(pos, itemstack)
-
-	local obj = minetest.add_item(pos, itemstack:take_item(itemstack:get_count()))
-
-	if obj then
-
-		obj:setvelocity({
-			x = math.random(-10, 10) / 9,
-			y = 5,
-			z = math.random(-10, 10) / 9,
-		})
-	end
-end
-
-
 -- custom function to drop player inventory and replace with dry shrubs
 local function bushy(pos, player)
 
 	local player_inv = player:get_inventory() ; pos = player:get_pos() or pos
 
 	for i = 1, player_inv:get_size("main") do
-		drop(pos, player_inv:get_stack("main", i))
+
+		local obj = minetest.add_item(pos, player_inv:get_stack("main", i))
+
+		if obj then
+
+			obj:setvelocity({
+				x = math.random(-10, 10) / 9,
+				y = 5,
+				z = math.random(-10, 10) / 9,
+			})
+		end
+
 		player_inv:set_stack("main", i, "default:dry_shrub")
 	end
 
@@ -225,7 +222,6 @@ local function entity_physics(pos, radius)
 
 		else --if ent.health then
 
-			--objs[n]:punch(objs[n], 1.0, {
 			objs[n]:punch(tmp_ent, 1.0, {
 				full_punch_interval = 1.0,
 				damage_groups = {fleshy = damage},
@@ -288,7 +284,7 @@ local lucky_block = function(pos, digger)
 
 	local luck = math.random(1, #lucky_list) ; -- luck = 1
 	local action = lucky_list[luck][1]
-	local schem
+	--local schem
 
 --	print ("luck ["..luck.." of "..#lucky_list.."]", action)
 
@@ -303,6 +299,7 @@ local lucky_block = function(pos, digger)
 		local schem = lucky_list[luck][2]
 		local switch = lucky_list[luck][3] or 0
 		local force = lucky_list[luck][4]
+		local reps = lucky_list[luck][5] or {}
 
 		if switch == 1 then
 			pos = vector.round(digger:get_pos())
@@ -314,7 +311,7 @@ local lucky_block = function(pos, digger)
 
 				local p1 = vector.subtract(pos, lucky_schems[i][3])
 
-				minetest.place_schematic(p1, lucky_schems[i][2], "", {}, force)
+				minetest.place_schematic(p1, lucky_schems[i][2], "", reps, force)
 
 				break
 			end
@@ -437,18 +434,40 @@ local lucky_block = function(pos, digger)
 		local colours = lucky_list[luck][4]
 		local items = #lucky_list[luck][2]
 
-		for i = 1, num do
+		-- drop multiple different items or colours
+		if items > 1 or colours then
 
-			local item = lucky_list[luck][2][math.random(1, items)]
+			for i = 1, num do
 
-			if colours then
-				item = item .. all_colours[math.random(#all_colours)]
+				local item = lucky_list[luck][2][math.random(1, items)]
+
+				if colours then
+					item = item .. all_colours[math.random(#all_colours)]
+				end
+
+				if not minetest.registered_items[item] then
+					item = "default:coal_lump"
+				end
+
+				local obj = minetest.add_item(pos, item)
+
+				if obj then
+
+					obj:set_velocity({
+						x = math.random(-10, 10) / 9,
+						y = 5,
+						z = math.random(-10, 10) / 9,
+					})
+				end
 			end
 
-			if not minetest.registered_nodes[item]
-			and not minetest.registered_craftitems[item]
-			and not minetest.registered_tools[item] then
-				item = "default:coal_lump"
+		else -- drop single item in a stack
+
+			local item = lucky_list[luck][2][1]
+			if not minetest.registered_items[item] then
+				item = ItemStack("default:coal_lump " .. tonumber(num))
+			else
+				item = ItemStack(item .. " " .. tonumber(num))
 			end
 
 			local obj = minetest.add_item(pos, item)
@@ -466,10 +485,9 @@ local lucky_block = function(pos, digger)
 	-- lightning strike
 	elseif action == "lig" then
 
-		local nod = lucky_list[luck][2]
+		local nod = lucky_list[luck][2] or "fire:basic_flame"
 
-		if nod and not minetest.registered_nodes[nod] then
-			print (nod)
+		if not minetest.registered_nodes[nod] then
 			nod = "fire:basic_flame"
 		end
 
@@ -497,8 +515,6 @@ local lucky_block = function(pos, digger)
 			gain = 1.0,
 			max_hear_distance = 25
 		})
-
-		minetest.set_node(pos, {name = "fire:permanent_flame"})
 
 	-- falling nodes
 	elseif action == "fal" then
