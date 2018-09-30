@@ -171,6 +171,8 @@ minetest.register_node("lucky_block:well_block", {
 	tiles = {"default_glass.png"},
 	light_source = 5,
 	groups = {not_in_creative_inventory = 1},
+	on_blast = function() end,
+	drop = {},
 })
 
 local path = minetest.get_modpath("lucky_block") .. "/schematics/"
