@@ -23,4 +23,4 @@ Changelog:
 - 0.8 - Added wishing well with random block drops
 - 0.9 - Tweak item drops, add replacements to schematics, tidy wishing well code
 
-Lucky Blocks: 225 (depending on mods enabled)
+Lucky Blocks: 232 (depending on mods enabled)
