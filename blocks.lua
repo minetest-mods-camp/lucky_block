@@ -115,6 +115,32 @@ if minetest.registered_nodes["default:coral_brown"] then
 	})
 end
 
+-- extra doors mod
+if minetest.get_modpath("extra_doors") then
+	lucky_block:add_blocks({
+		{"dro", {"default:steel_rod"}, 10},
+		{"dro", {"extra_doors:door_woodpanel1"}, 1},
+		{"dro", {"extra_doors:door_woodglass1"}, 1},
+		{"dro", {"extra_doors:door_woodglass2"}, 1},
+		{"dro", {"extra_doors:door_door_japanese"}, 1},
+		{"dro", {"extra_doors:door_door_french"}, 1},
+		{"dro", {"extra_doors:door_door_cottage1"}, 1},
+		{"dro", {"extra_doors:door_door_cottage2"}, 1},
+		{"dro", {"extra_doors:door_door_barn1"}, 1},
+		{"lig"},
+		{"dro", {"extra_doors:door_door_barn2"}, 1},
+		{"dro", {"extra_doors:door_door_castle1"}, 1},
+		{"dro", {"extra_doors:door_door_castle2"}, 1},
+		{"dro", {"extra_doors:door_door_mansion1"}, 1},
+		{"dro", {"extra_doors:door_door_mansion2"}, 1},
+		{"dro", {"extra_doors:door_door_dungeon1"}, 1},
+		{"dro", {"extra_doors:door_door_dungeon2"}, 1},
+		{"dro", {"extra_doors:door_door_steelpanel1"}, 1},
+		{"dro", {"extra_doors:door_door_steelglass1"}, 1},
+		{"dro", {"extra_doors:door_door_steelglass2"}, 1},
+	})
+end
+
 -- default mese post light or sands
 if minetest.registered_nodes["default:mese_post_light"] then
 	lucky_block:add_blocks({
