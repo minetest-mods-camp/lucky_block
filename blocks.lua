@@ -23,8 +23,8 @@ lucky_block:add_schematics({
 lucky_block:add_blocks({
 	{"lig"},
 	{"fal", {"default:wood", "default:gravel", "default:sand",
-			"default:desert_sand", "default:stone", "default:dirt",
-			"default:goldblock"}, 0},
+		"default:desert_sand", "default:stone", "default:dirt",
+		"default:goldblock"}, 0},
 	{"sch", "watertrap", 1, true},
 	{"tel"},
 	{"dro", {"default:apple"}, 10},
@@ -576,7 +576,13 @@ end
 
 -- Bags mod
 if minetest.get_modpath("bags") then
+minetest.register_craftitem(":bags:spar", {
+	description = "Spar Bag",
+	inventory_image = "bags_spar.png",
+	groups = {bagslots = 2, flammable = 2},
+})
 lucky_block:add_blocks({
+	{"dro", {"bags:spar"}},
 	{"dro", {"bags:small"}},
 	{"dro", {"bags:medium"}},
 	{"dro", {"bags:large"}},

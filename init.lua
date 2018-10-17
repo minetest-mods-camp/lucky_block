@@ -7,9 +7,6 @@ lucky_schems = {}
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP .. "/intllib.lua")
 
--- a wee bit of colour
-local green = minetest.get_color_escape_sequence("#1eff00")
-
 
 -- default blocks
 local lucky_list = {
@@ -350,7 +347,7 @@ local lb_teleport = function(pos, digger, def)
 	effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 	minetest.chat_send_player(digger:get_player_name(),
-		green .. S("Random Teleport!"))
+		minetest.get_color_escape_sequence("#1eff00") .. S("Random Teleport!"))
 end
 
 
