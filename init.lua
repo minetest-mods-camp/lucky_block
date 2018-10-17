@@ -11,81 +11,9 @@ local S, NS = dofile(MP .. "/intllib.lua")
 local green = minetest.get_color_escape_sequence("#1eff00")
 
 
--- example custom function (punches player with 5 damage)
-local function punchy(pos, player)
-
-	player:punch(player, 1.0, {
-		full_punch_interval = 1.0,
-		damage_groups = {fleshy = 5}
-	}, nil)
-
-	minetest.sound_play("player_damage", {pos = pos, gain = 1.0})
-
-	minetest.chat_send_player(player:get_player_name(),
-		green .. S("Stop hitting yourself!"))
-end
-
-
--- pint sized player
-local function pint(pos, player)
-
-	player:set_properties({visual_size = {x = 0.5, y = 0.5}})
-
-	minetest.chat_send_player(player:get_player_name(),
-		green .. S("Pint Sized Player!"))
-
-	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
-
-	minetest.after (180, function(player, pos) -- 3 minutes
-
-		if player and player:is_player() then
-
-			player:set_properties({visual_size = {x = 1.0, y = 1.0}})
-
-			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
-		end
-	end, player)
-end
-
-
--- custom function to drop player inventory and replace with dry shrubs
-local function bushy(pos, player)
-
-	local player_inv = player:get_inventory() ; pos = player:get_pos() or pos
-
-	for i = 1, player_inv:get_size("main") do
-
-		local obj = minetest.add_item(pos, player_inv:get_stack("main", i))
-
-		if obj then
-
-			obj:setvelocity({
-				x = math.random(-10, 10) / 9,
-				y = 5,
-				z = math.random(-10, 10) / 9,
-			})
-		end
-
-		player_inv:set_stack("main", i, "default:dry_shrub")
-	end
-
-	minetest.chat_send_player(player:get_player_name(),
-		green .. S("Dry shrub takeover!"))
-end
-
-
 -- default blocks
 local lucky_list = {
-	{"cus", pint},
-	{"sch", "wishingwell", 0, true},
-	{"cus", bushy},
-	{"cus", punchy},
-	{"fal", {"default:wood", "default:gravel", "default:sand",
-			"default:desert_sand", "default:stone", "default:dirt",
-			"default:goldblock"}, 0},
-	{"lig"},
 	{"nod", "lucky_block:super_lucky_block", 0},
-	{"exp", 2},
 }
 
 
@@ -243,14 +171,17 @@ local function fill_chest(pos, items)
 
 		local stuff = chest_stuff[math.random(1, #chest_stuff)]
 
-		table.insert(stacks, {
-			name = stuff.name, count = math.random(1, stuff.max)})
+		table.insert(stacks, {name = stuff.name, max = stuff.max})
 	end
 
 	for s = 1, #stacks do
 
 		if not inv:contains_item("main", stacks[s]) then
-			inv:set_stack("main", math.random(1, 32), stacks[s])
+
+			inv:set_stack("main", math.random(1, 32), {
+				name = stacks[s].name,
+				count = math.random(1, stacks[s].max)
+			})
 		end
 	end
 end
