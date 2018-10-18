@@ -88,6 +88,38 @@ if minetest.get_modpath("ethereal") then
 end
 
 
+Open Lucky Block
+----------------
+
+lucky_block:open(pos, digger, blocks_list)
+
+This is the function called when the default lucky block has been dug, it will
+use the default blocks list or use a custom one when supplied so that modders
+can add their own lucky block sets.
+
+e.g.
+
+local my_blocks = {
+	{"nod", "default:wood"},
+	{"dro", {"default:tree", "default:jungletree"}, 5},
+	{"exp"},
+}
+
+minetest.register_node('mymod:my_lucky_block', {
+	description = "My Lucky Block",
+	tiles = {"mymod_lucky_block.png"},
+	paramtype = "light",
+	groups = {oddly_breakable_by_hand = 3},
+	drop = {},
+	sounds = default.node_sound_wood_defaults(),
+
+	on_dig = function(pos, node, digger)
+		minetest.remove_node(pos) -- remove lucky block
+		lucky_block:open(pos, digger, my_blocks) -- use custom blocks list
+	end,
+})
+
+
 Lucky Block Commands
 ====================
 

@@ -560,70 +560,73 @@ end
 
 
 -- this is what happens when you dig a lucky block
-local lucky_block = function(pos, digger)
+function lucky_block:open(pos, digger, blocks_list)
+
+	-- check for custom blocks list or use default
+	blocks_list = blocks_list or lucky_list
 
 	-- make sure it's really random
 	math.randomseed(minetest.get_timeofday() + pos.x + pos.z) -- os.time()
 
-	local luck = math.random(1, #lucky_list) ; -- luck = 1
-	local action = lucky_list[luck][1]
+	local luck = math.random(1, #blocks_list) ; -- luck = 1
+	local action = blocks_list[luck][1]
 
---	print ("luck ["..luck.." of "..#lucky_list.."]", action)
+--	print ("luck ["..luck.." of "..#blocks_list.."]", action)
 
 	-- place schematic
 	if action == "sch" then
 
-		lb_schematic(pos, digger, lucky_list[luck])
+		lb_schematic(pos, digger, blocks_list[luck])
 
 	-- place node (if chest then fill chest)
 	elseif action == "nod" then
 
-		lb_node(pos, digger, lucky_list[luck])
+		lb_node(pos, digger, blocks_list[luck])
 
 	-- place entity
 	elseif action == "spw" then
 
-		lb_spawn(pos, digger, lucky_list[luck])
+		lb_spawn(pos, digger, blocks_list[luck])
 
 	-- explosion
 	elseif action == "exp" then
 
-		lb_explode(pos, lucky_list[luck])
+		lb_explode(pos, blocks_list[luck])
 
 	-- teleport
 	elseif action == "tel" then
 
-		lb_teleport(pos, digger, lucky_list[luck])
+		lb_teleport(pos, digger, blocks_list[luck])
 
 	-- drop items
 	elseif action == "dro" then
 
-		lb_drop(pos, digger, lucky_list[luck])
+		lb_drop(pos, digger, blocks_list[luck])
 
 	-- lightning strike
 	elseif action == "lig" then
 
-		lb_lightning(pos, digger, lucky_list[luck])
+		lb_lightning(pos, digger, blocks_list[luck])
 
 	-- falling nodes
 	elseif action == "fal" then
 
-		lb_falling(pos, digger, lucky_list[luck])
+		lb_falling(pos, digger, blocks_list[luck])
 
 	-- troll block, disappears or explodes after 2 seconds
 	elseif action == "tro" then
 
-		lb_troll(pos, lucky_list[luck])
+		lb_troll(pos, blocks_list[luck])
 
 	-- floor paint
 	elseif action == "flo" then
 
-		lb_floor(pos, lucky_list[luck])
+		lb_floor(pos, blocks_list[luck])
 
 	-- custom function
 	elseif action == "cus" then
 
-		local func = lucky_list[luck][2]
+		local func = blocks_list[luck][2]
 
 		if func then func(pos, digger) end
 	end
@@ -653,7 +656,7 @@ minetest.register_node('lucky_block:lucky_block', {
 
 	on_dig = function(pos, node, digger)
 		minetest.set_node(pos, {name = "air"})
-		lucky_block(pos, digger)
+		lucky_block:open(pos, digger)
 	end,
 
 	on_blast = function() end,

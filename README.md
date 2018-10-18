@@ -22,5 +22,6 @@ Changelog:
 - 0.7 - Added new floor feature and moreblocks support
 - 0.8 - Added wishing well with random block drops
 - 0.9 - Tweak item drops, add replacements to schematics, tidy wishing well code
+- 1.0 - Added ability for custom lucky blocks to use their own block list
 
 Lucky Blocks: 253 (depending on mods enabled)
