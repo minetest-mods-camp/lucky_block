@@ -286,7 +286,14 @@ local lb_spawn = function(pos, digger, def)
 
 		if nodef and nodef.walkable == false then
 
-			local entity = def[2]
+			local entity
+
+			-- select between random or single entity
+			if type(def[2]) == "table" then
+				entity = def[2][math.random(1, #def[2])]
+			else
+				entity = def[2]
+			end
 
 			-- coloured sheep
 			if entity == "mobs:sheep" then

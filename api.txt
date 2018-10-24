@@ -204,12 +204,12 @@ Spawn Entity or Mob
 
 This command allows you to place a monster, animal or other entity.
 
-{"spw", "entity name", how many to spawn, tamed, owned, range, nametag}
+{"spw", {"entity name"}, how many to spawn, tamed, owned, range, nametag}
 
 e.g.
 
-Spawn 2x Dirt Monsters over a radius of 10 blocks
-	{"spw", "mobs:dirt_monster", 2, nil, nil, 10}
+Spawn 2x Dirt or Stone Monsters over a radius of 10 blocks
+	{"spw", {"mobs:dirt_monster", "mobs:stone_monster"}, 2, nil, nil, 10}
 
 Spawn 5x randomly coloured sheep (random colour only works with Mobs Redo sheep)
 	{"spw", "mobs:sheep", 5}
