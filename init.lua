@@ -657,7 +657,7 @@ minetest.register_node('lucky_block:lucky_block', {
 	is_ground_content = false,
 	paramtype = "light",
 	light_source = 3,
-	groups = {oddly_breakable_by_hand = 3},
+	groups = {oddly_breakable_by_hand = 3, unbreakable = 1},
 	drop = {},
 	sounds = default.node_sound_wood_defaults(),
 
@@ -695,7 +695,7 @@ minetest.register_node('lucky_block:super_lucky_block', {
 	sunlight_propagates = false,
 	is_ground_content = false,
 	paramtype = "light",
-	groups = {cracky = 1, level = 2},
+	groups = {cracky = 1, level = 2, unbreakable = 1},
 	drop = {},
 	sounds = default.node_sound_stone_defaults(),
 
