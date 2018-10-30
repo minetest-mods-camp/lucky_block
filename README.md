@@ -25,4 +25,4 @@ Changelog:
 - 1.0 - Added ability for custom lucky blocks to use their own block list
 - 1.1 - Spawning mobs can now select randomly from a table or single string
 
-Lucky Blocks: 253 (depending on mods enabled)
+Lucky Blocks: 259 (depending on mods enabled)

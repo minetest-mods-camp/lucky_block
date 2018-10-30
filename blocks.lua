@@ -127,6 +127,7 @@ lucky_block:add_blocks({
 		{name = "default:sandstone", max = 20},
 		{name = "default:gravel", max = 20},
 	}},
+	{"dro", {"default:obsidian"}, 14},
 })
 
 local green = minetest.get_color_escape_sequence("#1eff00")
@@ -145,7 +146,7 @@ local function punchy(pos, player)
 		green .. S("Stop hitting yourself!"))
 end
 
--- custom function (pint sized player)
+-- custom function (pint sized player) and potion with recipe
 local function pint(pos, player)
 
 	player:set_properties({visual_size = {x = 0.5, y = 0.5}})
@@ -235,7 +236,10 @@ lucky_block:add_blocks({
 -- wool mod
 if minetest.get_modpath("wool") then
 	lucky_block:add_blocks({
+		{"sch", "sandtrap", 1, true, {{"default:sand", "wool:red"}} },
 		{"dro", {"wool:"}, 10, true},
+		{"sch", "sandtrap", 1, true, {{"default:sand", "wool:green"}} },
+		{"dro", {"wool:white"}, 10},
 	})
 end
 
@@ -348,6 +352,8 @@ if minetest.get_modpath("farming") then
 		{"dro", {"farming:bread"}, 5},
 		{"sch", "instafarm", 0, true},
 		{"nod", "default:water_source", 1},
+		{"nod", "farming:straw", 1},
+		{"dro", {"farming:straw"}, 8},
 	})
 end
 
