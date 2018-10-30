@@ -166,6 +166,38 @@ local function pint(pos, player)
 	end, player)
 end
 
+minetest.register_craftitem("lucky_block:pint_sized_potion", {
+	description = S("Pint Sized Potion (DRINK ME)"),
+	inventory_image = "lucky_pint_sized_potion.png",
+	on_use = function(itemstack, user, pointed_thing)
+
+		itemstack:take_item()
+
+		local pos = user:get_pos()
+		local inv = user:get_inventory()
+		local item = "vessels:glass_bottle"
+
+		if inv:room_for_item("main", {name = item}) then
+			inv:add_item("main", item)
+		else
+			minetest.add_item(pos, {name = item})
+		end
+
+		pint(pos, user)
+
+		return itemstack
+	end,
+})
+
+minetest.register_craft({
+	output = "lucky_block:pint_sized_potion",
+	recipe = {
+		{"default:bush_sapling", "flowers:tulip", "default:acacia_bush_sapling"},
+		{"dye:blue", "default:apple", "dye:cyan"},
+		{"", "vessels:glass_bottle", ""},
+	}
+})
+
 -- custom function (drop player inventory and replace with dry shrubs)
 local function bushy(pos, player)
 
@@ -197,6 +229,7 @@ lucky_block:add_blocks({
 	{"cus", pint},
 	{"cus", bushy},
 	{"cus", punchy},
+	{"dro", {"lucky_block:pint_sized_potion"}, 1},
 })
 
 -- wool mod
