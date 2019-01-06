@@ -352,7 +352,7 @@ if minetest.get_modpath("farming") then
 		{"dro", {"farming:bread"}, 5},
 		{"sch", "instafarm", 0, true},
 		{"nod", "default:water_source", 1},
-		{"nod", "farming:straw", 1},
+		{"nod", "farming:straw", 0},
 		{"dro", {"farming:straw"}, 8},
 	})
 end
