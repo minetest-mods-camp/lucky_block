@@ -573,7 +573,7 @@ function lucky_block:open(pos, digger, blocks_list)
 	blocks_list = blocks_list or lucky_list
 
 	-- make sure it's really random
-	math.randomseed(minetest.get_timeofday() + pos.x + pos.z) -- os.time()
+	math.randomseed(minetest.get_timeofday() + pos.x + pos.z - os.time())
 
 	local luck = math.random(1, #blocks_list) ; -- luck = 1
 	local action = blocks_list[luck][1]
