@@ -188,6 +188,7 @@ minetest.register_craftitem("lucky_block:pint_sized_potion", {
 
 		return itemstack
 	end,
+	groups = {vessel = 1},
 })
 
 minetest.register_craft({
