@@ -641,7 +641,7 @@ end
 
 
 -- lucky block itself
-minetest.register_node('lucky_block:lucky_block', {
+minetest.register_node("lucky_block:lucky_block", {
 	description = S("Lucky Block"),
 	tiles = {{
 		name = "lucky_block_animated.png",
@@ -680,7 +680,7 @@ minetest.register_craft({
 
 
 -- super lucky block
-minetest.register_node('lucky_block:super_lucky_block', {
+minetest.register_node("lucky_block:super_lucky_block", {
 	description = S("Super Lucky Block (use pick)"),
 	tiles = {{
 		name = "lucky_block_super_animated.png",
