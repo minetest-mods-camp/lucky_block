@@ -55,9 +55,10 @@ local all_colours = {
 local chest_stuff = {
 	{name = "default:apple", max = 3},
 	{name = "default:steel_ingot", max = 2},
-	{name = "default:gold_ingot", max = 2},
-	{name = "default:diamond", max = 1},
-	{name = "default:pick_steel", max = 1}
+	{name = "default:gold_ingot", max = 2, chance = 2},
+	{name = "default:diamond", max = 1, chance = 2},
+	{name = "default:pick_steel", max = 1, chance = 2},
+	{name = "default:mese_fragment", max = 3, chance = 3},
 }
 
 
@@ -175,10 +176,14 @@ local function fill_chest(pos, items)
 
 		if not inv:contains_item("main", stacks[s]) then
 
-			inv:set_stack("main", math.random(1, 32), {
-				name = stacks[s].name,
-				count = math.random(1, stacks[s].max)
-			})
+			if not stacks[s].chance
+			or math.random(1, stacks[s].chance) == 1 then
+
+				inv:set_stack("main", math.random(1, 32), {
+					name = stacks[s].name,
+					count = math.random(1, stacks[s].max)
+				})
+			end
 		end
 	end
 end
@@ -425,7 +430,10 @@ local lb_lightning = function(pos, digger, def)
 
 	pos = digger:get_pos()
 
-	if nod then
+	local bnod = minetest.get_node_or_nil(pos)
+	local bref = bnod and minetest.registered_items[bnod.name]
+
+	if bref and bref.buildable_to then
 		minetest.set_node(pos, {name = nod})
 	end
 
@@ -575,7 +583,7 @@ function lucky_block:open(pos, digger, blocks_list)
 	-- make sure it's really random
 	math.randomseed(minetest.get_timeofday() + pos.x + pos.z - os.time())
 
-	local luck = math.random(1, #blocks_list) ; -- luck = 1
+	local luck = math.random(1, #blocks_list) ; --luck = 1
 	local action = blocks_list[luck][1]
 
 --	print ("luck ["..luck.." of "..#blocks_list.."]", action)
