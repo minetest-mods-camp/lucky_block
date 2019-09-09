@@ -56,9 +56,9 @@ local chest_stuff = {
 	{name = "default:apple", max = 3},
 	{name = "default:steel_ingot", max = 2},
 	{name = "default:gold_ingot", max = 2, chance = 2},
-	{name = "default:diamond", max = 1, chance = 2},
+	{name = "default:diamond", max = 1, chance = 3},
 	{name = "default:pick_steel", max = 1, chance = 2},
-	{name = "default:mese_fragment", max = 3, chance = 3},
+	{name = "default:mese_crystal_fragment", max = 3, chance = 3},
 }
 
 
