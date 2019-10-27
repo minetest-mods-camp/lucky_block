@@ -292,7 +292,7 @@ minetest.register_tool("lucky_block:lightning_staff", {
 			max_hear_distance = 25
 		})
 
-		itemstack:add_wear(65535 / 100) -- 100 uses
+		itemstack:add_wear(65535 / 50) -- 50 uses
 
 		return itemstack
 	end,
