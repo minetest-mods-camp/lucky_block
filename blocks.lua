@@ -234,6 +234,9 @@ minetest.register_tool("lucky_block:lightning_staff", {
 	range = 10,
 	groups = {not_in_creative_inventory = 1},
 
+drops = "",
+on_drop = function(itemstack, user, pointed_thing) end,
+
 	on_use = function(itemstack, user, pointed_thing)
 
 		local pos = user:get_pos()
