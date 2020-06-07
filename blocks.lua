@@ -234,9 +234,6 @@ minetest.register_tool("lucky_block:lightning_staff", {
 	range = 10,
 	groups = {not_in_creative_inventory = 1},
 
-drops = "",
-on_drop = function(itemstack, user, pointed_thing) end,
-
 	on_use = function(itemstack, user, pointed_thing)
 
 		local pos = user:get_pos()
@@ -272,20 +269,31 @@ on_drop = function(itemstack, user, pointed_thing) end,
 			local damage = math.floor((4 / dist) * radius)
 			local ent = objs[n]:get_luaentity()
 
-			objs[n]:punch(tmp_ent, 1.0, {
-				full_punch_interval = 1.0,
-				damage_groups = {fleshy = damage},
-			}, pos)
+			-- if you blast yourself then delay hurt for bones mod if dead
+			if objs[n] == user then
+
+				minetest.after(0.1, function()
+					objs[n]:punch(tmp_ent, 1.0, {
+						full_punch_interval = 1.0,
+						damage_groups = {fleshy = damage},
+					}, pos)
+				end)
+			else
+				objs[n]:punch(tmp_ent, 1.0, {
+					full_punch_interval = 1.0,
+					damage_groups = {fleshy = damage},
+				}, pos)
+			end
 		end
 
 		minetest.add_particle({
-			pos = pos,
+			pos = {x = pos.x, y = pos.y + 4, z = pos.z},
 			velocity = {x = 0, y = 0, z = 0},
 			acceleration = {x = 0, y = 0, z = 0},
 			expirationtime = 1.0,
 			collisiondetection = false,
 			texture = "lucky_lightning.png",
-			size = math.random(100, 150),
+			size = 100,
 			glow = 15,
 		})
 
