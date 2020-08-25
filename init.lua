@@ -5,7 +5,8 @@ lucky_schems = {}
 
 -- Load support for intllib.
 local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP .. "/intllib.lua")
+local S = minetest.get_translator and minetest.get_translator("lucky_block") or
+		dofile(MP .. "/intllib.lua")
 
 
 -- default blocks
