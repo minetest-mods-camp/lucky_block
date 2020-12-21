@@ -275,13 +275,13 @@ minetest.register_tool("lucky_block:lightning_staff", {
 				minetest.after(0.1, function()
 					objs[n]:punch(tmp_ent, 1.0, {
 						full_punch_interval = 1.0,
-						damage_groups = {fleshy = damage},
+						damage_groups = {fleshy = damage, fire = 1},
 					}, pos)
 				end)
 			else
 				objs[n]:punch(tmp_ent, 1.0, {
 					full_punch_interval = 1.0,
-					damage_groups = {fleshy = damage},
+					damage_groups = {fleshy = damage, fire = 1},
 				}, pos)
 			end
 		end
