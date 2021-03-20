@@ -13,11 +13,14 @@ lucky_block:add_schematics({
 	{"defpinetree", dpath .. "pine_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
 	{"acaciatree", dpath .. "acacia_tree_from_sapling.mts", {x = 4, y = 1, z = 4}},
 	{"aspentree", dpath .. "aspen_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
-	{"corals", dpath .. "corals.mts", {x = 2, y = 1, z = 2}},
+--	{"corals", dpath .. "corals.mts", {x = 2, y = 1, z = 2}},
 	{"largecactus", dpath .. "large_cactus.mts", {x = 2, y = 0, z = 0}},
 	{"defaultbush", dpath .. "bush.mts", {x = 1, y = 1, z = 1}},
 	{"acaciabush", dpath .. "acacia_bush.mts", {x = 1, y = 1, z = 1}},
+
+	{"corals", MP .. "/schematics/corals.mts", {x = 2, y = 1, z = 2}},
 })
+
 
 -- Default blocks
 lucky_block:add_blocks({
