@@ -180,9 +180,9 @@ local function fill_chest(pos, items)
 			if not stacks[s].chance
 			or math.random(1, stacks[s].chance) == 1 then
 
-				inv:set_stack("main", math.random(1, 32), {
+				inv:set_stack("main", math.random(32), {
 					name = stacks[s].name,
-					count = math.random(1, stacks[s].max)
+					count = math.random(stacks[s].max)
 				})
 			end
 		end
@@ -296,7 +296,7 @@ local lb_spawn = function(pos, digger, def)
 
 			-- select between random or single entity
 			if type(def[2]) == "table" then
-				entity = def[2][math.random(1, #def[2])]
+				entity = def[2][math.random(#def[2])]
 			else
 				entity = def[2]
 			end
@@ -375,7 +375,7 @@ local lb_drop = function(pos, digger, def)
 
 		for i = 1, num do
 
-			local item = def[2][math.random(1, items)]
+			local item = def[2][math.random(items)]
 
 			if colours then
 				item = item .. all_colours[math.random(#all_colours)]
@@ -493,9 +493,12 @@ local lb_falling = function(pos, digger, def)
 
 			if n then
 
-				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
+				local ent = minetest.add_entity(
+						pos2, "__builtin:falling_node"):get_luaentity()
 
-				obj:get_luaentity():set_node(n)
+				if ent then
+					ent:set_node(n)
+				end
 			end
 		end)
 	end
@@ -584,7 +587,7 @@ function lucky_block:open(pos, digger, blocks_list)
 	-- make sure it's really random
 	math.randomseed(minetest.get_timeofday() + pos.x + pos.z - os.time())
 
-	local luck = math.random(1, #blocks_list) ; --luck = 1
+	local luck = math.random(#blocks_list) ; --luck = 1
 	local action = blocks_list[luck][1]
 
 --	print ("luck ["..luck.." of "..#blocks_list.."]", action)
@@ -717,7 +720,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 
 	on_dig = function(pos)
 
-		if math.random(1, 10) < 8 then
+		if math.random(10) < 8 then
 
 			minetest.set_node(pos, {name = "air"})
 
@@ -729,9 +732,9 @@ minetest.register_node("lucky_block:super_lucky_block", {
 				max_hear_distance = 10
 			})
 
-			if math.random(1, 5) == 1 then
+			if math.random(5) == 1 then
 				pos.y = pos.y + 0.5
-				minetest.add_item(pos, "default:goldblock " .. math.random(1, 5))
+				minetest.add_item(pos, "default:goldblock " .. math.random(5))
 			end
 
 		else
