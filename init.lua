@@ -350,8 +350,8 @@ local lb_teleport = function(pos, digger, def)
 	local y_range = def[3] or 5
 
 	pos.x = pos.x + math.random(-xz_range, xz_range)
-	pos.x = pos.y + math.random(-y_range, y_range)
-	pos.x = pos.z + math.random(-xz_range, xz_range)
+	pos.y = pos.y + math.random(-y_range, y_range)
+	pos.z = pos.z + math.random(-xz_range, xz_range)
 
 	effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
