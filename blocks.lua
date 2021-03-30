@@ -152,7 +152,12 @@ end
 -- custom function (pint sized player) and potion with recipe
 local function pint(pos, player)
 
-	player:set_properties({visual_size = {x = 0.5, y = 0.5}})
+	player:set_properties({
+		visual_size = {x = 0.5, y = 0.5},
+		collisionbox = {-0.15, 0.0, -0.15, 0.15, .85, 0.15},
+		eye_height = 0.73,
+		stepheight = 0.3
+	})
 
 	minetest.chat_send_player(player:get_player_name(),
 		green .. S("Pint Sized Player!"))
@@ -163,7 +168,12 @@ local function pint(pos, player)
 
 		if player and player:is_player() then
 
-			player:set_properties({visual_size = {x = 1.0, y = 1.0}})
+			player:set_properties({
+				visual_size = {x = 1.0, y = 1.0},
+				collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+				eye_height = 1.47,
+				stepheight = 0.6
+			})
 
 			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
 		end
