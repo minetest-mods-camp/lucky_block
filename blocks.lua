@@ -226,7 +226,7 @@ local function bushy(pos, player)
 
 		if obj then
 
-			obj:setvelocity({
+			obj:set_velocity({
 				x = math.random(-10, 10) / 9,
 				y = 5,
 				z = math.random(-10, 10) / 9,
@@ -256,7 +256,7 @@ minetest.register_tool("lucky_block:lightning_staff", {
 			pos = pointed_thing.above
 		end
 
-		local bnod = minetest.get_node_or_nil(pos)
+		local bnod = pos and minetest.get_node_or_nil(pos)
 		local bref = bnod and minetest.registered_items[bnod.name]
 
 		if bref and bref.buildable_to == true then
