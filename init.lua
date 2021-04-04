@@ -110,6 +110,7 @@ minetest.register_entity("lucky_block:temp", {
 	visual_size = {x = 0, y = 0},
 	visual = "sprite",
 	textures = {"tnt_smoke.png"},
+	_is_arrow = true,
 
 	on_step = function(self, dtime)
 
