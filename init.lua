@@ -11,7 +11,7 @@ local S = minetest.get_translator and minetest.get_translator("lucky_block") or
 
 -- default blocks
 local lucky_list = {
-	{"nod", "lucky_block:super_lucky_block", 0},
+	{"nod", "lucky_block:super_lucky_block", 0}
 }
 
 
