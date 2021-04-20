@@ -8,7 +8,7 @@ local S, NS = dofile(MP .. "/intllib.lua")
 local dpath = minetest.get_modpath("default") .. "/schematics/"
 
 lucky_block:add_schematics({
-	{"appletree", dpath .. "apple_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
+	{"appletree", dpath .. "apple_tree_from_sapling.mts", {x = 3, y = 1, z = 3}},
 	{"jungletree", dpath .. "jungle_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
 	{"defpinetree", dpath .. "pine_tree_from_sapling.mts", {x = 2, y = 1, z = 2}},
 	{"acaciatree", dpath .. "acacia_tree_from_sapling.mts", {x = 4, y = 1, z = 4}},
