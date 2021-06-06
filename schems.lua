@@ -271,8 +271,8 @@ minetest.register_abm({
 				minetest.sound_play("default_tool_breaks", {
 					pos = pos,
 					gain = 1.0,
-					max_hear_distance = 10
-				})
+					max_hear_distance = 5
+				}, true)
 
 				local b_no = math.random(#lucky_block.wellblocks)
 				local item = lucky_block.wellblocks[b_no][1]
@@ -289,12 +289,14 @@ minetest.register_abm({
 							z = pos.z + math.random(-7, 7)
 						}, "__builtin:falling_node")
 
-						obj:get_luaentity():set_node(nod)
+						if obj and obj:get_luaentity() then
+							obj:get_luaentity():set_node(nod)
+						end
 					end
 				end
 
 				break
 			end
 		end
-	end,
+	end
 })
