@@ -589,7 +589,7 @@ function lucky_block:open(pos, digger, blocks_list)
 	-- make sure it's really random
 	math.randomseed(minetest.get_timeofday() + pos.x + pos.z - os.time())
 
-	local luck = math.random(#blocks_list) ; --luck = 1
+	local luck = math.random(#blocks_list) ; -- luck = 1
 	local action = blocks_list[luck][1]
 
 --	print ("luck ["..luck.." of "..#blocks_list.."]", action)
@@ -648,8 +648,9 @@ function lucky_block:open(pos, digger, blocks_list)
 	elseif action == "cus" then
 
 		local func = blocks_list[luck][2]
+		local def = blocks_list[luck][3]
 
-		if func then func(pos, digger) end
+		if func then func(pos, digger, def) end
 	end
 end
 

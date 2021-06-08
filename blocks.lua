@@ -718,7 +718,7 @@ lucky_block:add_blocks({
 end
 
 -- Bags mod
-if minetest.get_modpath("bags") then
+if minetest.get_modpath("bags") or minetest.get_modpath("sfinv_bags") then
 minetest.register_craftitem(":bags:spar", {
 	description = "Spar Bag",
 	inventory_image = "bags_spar.png",
@@ -779,7 +779,7 @@ lucky_block:add_blocks({
 -- Troll
 local green = minetest.get_color_escape_sequence("#1eff00")
 
-local function fake_diamonds(pos, player)
+local function fake_items(pos, player, def)
 
 	for n = 1, 25 do
 
@@ -794,7 +794,7 @@ local function fake_diamonds(pos, player)
 		acceleration = {x = 0, y = -10, z = 0},
 		expirationtime = 4,
 		maxsize = 4,
-		texture = "default_diamond.png",
+		texture = def.tex,
 		glow = 2,
 		size = 5,
 		collisiondetection = true,
@@ -804,9 +804,11 @@ local function fake_diamonds(pos, player)
 	end
 
 	minetest.chat_send_player(player:get_player_name(),
-			green .. S("Wow! So many faux diamonds!"))
+			green .. S("Wow! So many faux " .. def.txt .. "!"))
 end
 
 lucky_block:add_blocks({
-	{"cus", fake_diamonds},
+	{"cus", fake_items, {tex = "default_diamond.png", txt = "diamonds"} },
+	{"cus", fake_items, {tex = "default_gold_ingot.png", txt = "ingots"} },
+	{"cus", fake_items, {tex = "default_mese_crystal.png", txt = "crystals"} },
 })

@@ -339,14 +339,14 @@ e.g.
 
 Punch player and deal 5 damage points (function first then line to add l.block)
 
-local function punchy(pos, player)
+local function punchy(pos, player, def)
 	player:punch(player, 1.0, {
 		full_punch_interval = 1.0,
-		damage_groups = {fleshy = 5}
+		damage_groups = {fleshy = def.damage}
 	}, nil)
 end
 
-	{"cus", punchy}
+	{"cus", punchy, {damage = 5} }
 
 
 Final Words
