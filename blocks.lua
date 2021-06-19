@@ -850,7 +850,7 @@ minetest.register_tool("lucky_block:pick_void", {
 		},
 		damage_groups = {fleshy = 5},
 	},
-	groups = {pickaxe = 1},
+	groups = {pickaxe = 1, not_in_creative_inventory = 1},
 	sound = {breaks = "default_tool_breaks"}
 })
 
