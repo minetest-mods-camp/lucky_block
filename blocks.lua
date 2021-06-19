@@ -812,3 +812,56 @@ lucky_block:add_blocks({
 	{"cus", fake_items, {tex = "default_gold_ingot.png", txt = "ingots"} },
 	{"cus", fake_items, {tex = "default_mese_crystal.png", txt = "crystals"} },
 })
+
+-- Void Pick
+local old_handle_node_drops = minetest.handle_node_drops
+
+function minetest.handle_node_drops(pos, drops, digger)
+
+	-- are we holding Crystal Shovel?
+	if not digger
+	or digger:get_wielded_item():get_name() ~= "lucky_block:pick_void" then
+		return old_handle_node_drops(pos, drops, digger)
+	end
+
+	local nn = minetest.get_node(pos).name
+
+	if minetest.get_item_group(nn, "cracky") == 0 then
+		return old_handle_node_drops(pos, drops, digger)
+	end
+
+	return old_handle_node_drops(pos, {ItemStack(nn)}, digger)
+end
+
+
+minetest.register_tool("lucky_block:pick_void", {
+	description = "Void pick",
+	inventory_image = "lucky_void_pick.png",
+	wield_image = "lucky_void_pick.png^[transformR90",
+	tool_capabilities = {
+		full_punch_interval = 1.2,
+		max_drop_level = 3,
+		groupcaps = {
+			cracky = {
+				times = {[1] = 2.4, [2] = 1.2, [3] = 0.60},
+				uses = 20,
+				maxlevel = 3
+			}
+		},
+		damage_groups = {fleshy = 5},
+	},
+	groups = {pickaxe = 1},
+	sound = {breaks = "default_tool_breaks"}
+})
+
+lucky_block:add_blocks({
+	{"nod", "default:chest", 0, {
+		{name = "lucky_block:pick_void", max = 1, chance = 7},
+		{name = "default:stone_with_coal", max = 5},
+		{name = "default:stone_with_iron", max = 5},
+		{name = "default:stone_with_copper", max = 5},
+		{name = "default:stone_with_mese", max = 5},
+		{name = "default:stone_with_gold", max = 5},
+		{name = "default:stone_with_diamond", max = 5},
+	}}
+})
