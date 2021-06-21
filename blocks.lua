@@ -835,7 +835,7 @@ end
 
 
 minetest.register_tool("lucky_block:pick_void", {
-	description = "Void pick",
+	description = "Void pick (Soft Touch)",
 	inventory_image = "lucky_void_pick.png",
 	wield_image = "lucky_void_pick.png^[transformR90",
 	tool_capabilities = {
