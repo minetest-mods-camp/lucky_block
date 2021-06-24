@@ -207,7 +207,7 @@ local function explode(pos, radius, sound)
 		})
 	else
 		minetest.sound_play(sound, {pos = pos, gain = 1.0,
-				max_hear_distance = 32})
+				max_hear_distance = 32}, true)
 
 		entity_physics(pos, radius)
 
@@ -457,7 +457,7 @@ local lb_lightning = function(pos, digger, def)
 		pos = pos,
 		gain = 1.0,
 		max_hear_distance = 25
-	})
+	}, true)
 end
 
 
@@ -521,7 +521,7 @@ local lb_troll = function(pos, def)
 			pos = pos,
 			gain = 1.0,
 			max_hear_distance = 10
-		})
+		}, true)
 	end
 
 	if not minetest.registered_nodes[nod] then
@@ -543,7 +543,7 @@ local lb_troll = function(pos, def)
 				pos = pos,
 				gain = 1.0,
 				max_hear_distance = 10
-			})
+			}, true)
 		end
 	end)
 end
@@ -571,7 +571,7 @@ local lb_floor = function(pos, def)
 					pos = pos,
 					gain = 1.0,
 					max_hear_distance = 10
-				})
+				}, true)
 			end)
 
 			num = num + 1
@@ -733,7 +733,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 				pos = pos,
 				gain = 1.0,
 				max_hear_distance = 10
-			})
+			}, true)
 
 			if math.random(5) == 1 then
 				pos.y = pos.y + 0.5
