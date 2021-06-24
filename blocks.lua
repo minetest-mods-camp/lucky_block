@@ -143,7 +143,7 @@ local function punchy(pos, player)
 		damage_groups = {fleshy = 5}
 	}, nil)
 
-	minetest.sound_play("player_damage", {pos = pos, gain = 1.0})
+	minetest.sound_play("player_damage", {pos = pos, gain = 1.0}, true)
 
 	minetest.chat_send_player(player:get_player_name(),
 		green .. S("Stop hitting yourself!"))
@@ -162,7 +162,7 @@ local function pint(pos, player)
 	minetest.chat_send_player(player:get_player_name(),
 		green .. S("Pint Sized Player!"))
 
-	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
+	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
 
 	minetest.after (180, function(player, pos) -- 3 minutes
 
@@ -175,7 +175,7 @@ local function pint(pos, player)
 				stepheight = 0.6
 			})
 
-			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0})
+			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
 		end
 	end, player)
 end
@@ -314,7 +314,7 @@ minetest.register_tool("lucky_block:lightning_staff", {
 			pos = pos,
 			gain = 1.0,
 			max_hear_distance = 25
-		})
+		}, true)
 
 		itemstack:add_wear(65535 / 50) -- 50 uses
 
