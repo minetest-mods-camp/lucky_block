@@ -256,6 +256,8 @@ minetest.register_tool("lucky_block:lightning_staff", {
 			pos = pointed_thing.above
 		end
 
+if not pos then return end
+
 		local bnod = pos and minetest.get_node_or_nil(pos)
 		local bref = bnod and minetest.registered_items[bnod.name]
 
