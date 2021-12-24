@@ -309,28 +309,38 @@ local lb_spawn = function(pos, digger, def)
 				entity = "mobs:sheep" .. colour
 			end
 
+			if entity == "mobs_animal:sheep" then
+				local colour = "_" .. all_colours[math.random(#all_colours)]
+				entity = "mobs_animal:sheep" .. colour
+			end
+
 			-- has entity been registered?
 			if minetest.registered_entities[entity] then
 
-				local ent = minetest.add_entity(pos2, entity):get_luaentity()
+				local obj = minetest.add_entity(pos2, entity)
 
-				if tame then
-					ent.tamed = true
-				end
+				if obj then
 
-				if own then
-					ent.owner = digger:get_player_name()
-				end
+					local ent = obj:get_luaentity()
 
-				if name then
-					ent.nametag = name
-					ent.object:set_properties({
-						nametag = name,
-						nametag_color = "#FFFF00"
-					})
+					if tame then
+						ent.tamed = true
+					end
+
+					if own then
+						ent.owner = digger:get_player_name()
+					end
+
+					if name then
+						ent.nametag = name
+						ent.object:set_properties({
+							nametag = name,
+							nametag_color = "#FFFF00"
+						})
+					end
+				else
+					print ("[lucky_block] " .. entity .. " could not be spawned")
 				end
-			else
-				print ("[lucky_block] " .. entity .. " could not be spawned")
 			end
 		end
 	end
@@ -495,11 +505,15 @@ local lb_falling = function(pos, digger, def)
 
 			if n then
 
-				local ent = minetest.add_entity(
-						pos2, "__builtin:falling_node"):get_luaentity()
+				local obj = minetest.add_entity(pos2, "__builtin:falling_node")
 
-				if ent then
-					ent:set_node(n)
+				if obj then
+
+					local ent = obj:get_luaentity()
+
+					if ent then
+						ent:set_node(n)
+					end
 				end
 			end
 		end)

@@ -735,6 +735,84 @@ lucky_block:add_blocks({
 })
 end
 
+-- Nether Mod
+if minetest.get_modpath("nether") then
+
+	local p = "nether:"
+
+	-- add well blocks
+	lucky_block.wellblocks[#lucky_block.wellblocks + 1] = {p.."glowstone", 4}
+	lucky_block.wellblocks[#lucky_block.wellblocks + 1] = {p.."glowstone_deep", 4}
+
+	-- add lucky blocks
+	lucky_block:add_blocks({
+		{"flo", 3, {"nether:rack", "nether:brick", "nether:brick_cracked"}, 1},
+		{"flo", 3, {"nether:rack_deep", "nether:brick_deep"}, 1},
+		{"flo", 3, {"nether:basalt", "nether:basalt_hewn", "nether:basalt_chiselled"}, 1},
+		{"nod", "nether:glowstone", 0},
+		{"nod", "nether:glowstone_deep", 0},
+		{"exp", 3},
+		{"fal", {p.."sand", p.."sand", p.."sand", p.."sand", p.."sand", p.."glowstone"}, 0},
+		{"nod", "nether:lava_crust", 1},
+		{"nod", "default:chest", 0, {
+			{name = p.."fence_nether_brick", max = 5},
+			{name = p.."rack_wall", max = 5},
+			{name = p.."rack", max = 5},
+			{name = p.."axe_nether", max = 1},
+			{name = p.."sword_nether", max = 1},
+			{name = p.."nether_lump", max = 3},
+
+		}},
+		{"exp", 2},
+		{"sch", "wishingwell", 0, true, {
+			{"default:stonebrick", p.."brick"},
+			{"stairs:slab_stonebrick", "stairs:slab_nether_brick"},
+			{"default:fence_wood", p.."fence_nether_brick"},
+			{"default:steelblock", p.."basalt_chiselled"},
+			{"default:water_source", "default:lava_source"},
+			{"default:glass", "default:obsidian_glass"}
+		}},
+		{"lig"},
+		{"sch", "platform", 1, true, {
+			{"default:sandstonebrick", p.."brick_deep"},
+			{"default:sandstone", p.."rack_deep"},
+			{"lucky_block:lucky_block", "lucky_block:super_lucky_block"}
+		}},
+		{"nod", "default:chest", 0, {
+			{name = p.."rack_deep_wall", max = 5},
+			{name = p.."rack_deep", max = 5},
+			{name = p.."pick_nether", max = 1},
+			{name = p.."shovel_nether", max = 1},
+			{name = p.."nether_lump", max = 3}
+		}},
+	})
+
+	if minetest.get_modpath("3d_armor") then
+
+		lucky_block:add_blocks({
+			{"dro", {"3d_armor:helmet_nether"}},
+			{"dro", {"3d_armor:chestplate_nether"}},
+			{"dro", {"3d_armor:leggings_nether"}},
+			{"dro", {"3d_armor:boots_nether"}}
+		})
+	end
+
+	if minetest.get_modpath("shields") then
+		lucky_block:add_blocks({
+			{"dro", {"shields:shield_nether"}}
+		})
+	end
+
+	if minetest.get_modpath("xpanes") and minetest.registered_nodes["nether:geode"] then
+		lucky_block:add_blocks({
+			{"dro", {"xpanes:nether_crystal_pane_flat"}, 5},
+			{"nod", "nether_geode", 0},
+			{"dro", {"nether_geode"}, 3}
+		})
+	end
+end
+
+
 -- Additional Wishing Well Styles
 lucky_block:add_blocks({
 	{"sch", "wishingwell", 0, true},
