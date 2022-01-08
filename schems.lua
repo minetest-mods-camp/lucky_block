@@ -164,19 +164,19 @@ local wishing_well = {
 	size = {x = 3, y = 5, z = 3},
 
 	data = {
-		stb,stb,stb,
+		stb,sbr,stb,
 		sbr,sbr,sbr,
 		fwd,air,fwd,
 		fwd,air,fwd,
 		slb,slb,slb,
 
-		stb,wbl,stb,
+		sbr,wbl,sbr,
 		sbr,wat,sbr,
 		air,air,air,
 		air,air,air,
 		slb,gla,slb,
 
-		stb,stb,stb,
+		stb,sbr,stb,
 		sbr,sbr,sbr,
 		fwd,air,fwd,
 		fwd,air,fwd,
@@ -211,25 +211,43 @@ minetest.register_node("lucky_block:well_block", {
 
 -- Global list containing well blocks that can be dropped
 lucky_block.wellblocks = {
-	{"default:ice", 7},
-	{"default:bronzeblock", 5},
-	{"default:coalblock", 5},
+	{"default:ice", 5},
+	{"default:bronzeblock", 2},
+	{"default:lava_source", 7},
+	{"default:coalblock", 4},
 	{"default:sand", 7},
-	{"default:goldblock", 5},
-	{"default:cactus", 7},
-	{"default:cobble", 7},
-	{"default:brick", 8},
+	{"default:goldblock", 2},
+	{"default:cactus", 5},
+	{"default:cobble", 5},
+	{"default:brick", 5},
+	{"fire:permanent_flame", 7},
 	{"default:desert_sand", 7},
-	{"default:obsidian", 7},
-	{"default:diamondblock", 4},
+	{"default:grass_5", 7},
+	{"default:obsidian", 4},
+	{"default:diamondblock", 2},
 	{"default:dirt", 7},
-	{"default:clay", 7},
-	{"default:copperblock", 5},
-	{"default:mese", 5},
+	{"default:clay", 5},
+	{"default:copperblock", 2},
+	{"default:mese", 2},
 	{"default:silver_sand", 7},
 	{"default:snowblock", 7},
-	{"default:mossycobble", 7},
+	{"default:mossycobble", 5},
 	{"default:lava_source", 5},
+	{"default:blueberry_bush_leaves_with_berries", 4},
+	{"default:coral_skeleton", 4},
+	{"default:coral_orange", 4},
+	{"default:coral_brown", 4},
+	{"default:gravel", 5},
+	{"default:permafrost_with_moss", 4},
+	{"default:stone_with_diamond", 4},
+	{"default:stone_with_gold", 4},
+	{"default:stone_with_copper", 4},
+	{"default:lava_source", 4},
+	{"default:stone_with_mese", 4},
+	{"default:stone_with_coal", 4},
+	{"default:stone_with_tin", 4},
+	{"default:stone_with_iron", 4},
+	{"fire:permanent_flame", 7}
 }
 
 local add_wblock = function(name, number)
@@ -245,11 +263,11 @@ if minetest.get_modpath("tnt") then
 end
 
 if minetest.get_modpath("ethereal") then
-	add_wblock("ethereal:crystal_block", 5)
+	add_wblock("ethereal:crystal_block", 2)
 end
 
 if minetest.get_modpath("bones") then
-	add_wblock("bones:bones", 5)
+	add_wblock("bones:bones", 4)
 end
 
 minetest.register_abm({
