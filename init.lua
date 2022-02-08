@@ -764,6 +764,6 @@ minetest.register_node("lucky_block:super_lucky_block", {
 
 
 minetest.after(0, function()
-	print (S("[MOD] Lucky Blocks loaded (@1 in total)", #lucky_list))
+	print("[MOD] Lucky Blocks loaded: ", #lucky_list)
 end)
 

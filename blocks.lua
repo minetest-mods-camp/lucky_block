@@ -847,7 +847,7 @@ minetest.register_node("lucky_block:void_mirror", {
 	description = S("Void Mirror (Place to see through solid walls during daytime)"),
 	drawtype = "normal",
 	tiles = {"default_obsidian_glass.png^[brighten"},
-	use_texture_alpha = true,
+	use_texture_alpha = "clip",
 	groups = {snappy = 3, not_in_creative_inventory = 1},
 	sounds = default.node_sound_glass_defaults(),
 })
