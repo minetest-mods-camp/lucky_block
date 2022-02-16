@@ -908,6 +908,7 @@ function minetest.handle_node_drops(pos, drops, digger)
 
 	if nn == "default:furnace_active"
 	or nn:find("xpanes:")
+	or nn:find("door")
 	or minetest.get_item_group(nn, "cracky") == 0 then
 		return old_handle_node_drops(pos, drops, digger)
 	end
