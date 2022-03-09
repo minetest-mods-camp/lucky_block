@@ -25,6 +25,6 @@ Changelog:
 - 1.0 - Added ability for custom lucky blocks to use their own block list
 - 1.1 - Spawning mobs can now select randomly from a table or single string
 - 1.2 - Code tidy and fixed wishing well replacements
-- 1.3 - Add lightning staff as rare drop, tidy code, lightning fire check
+- 1.3 - Add lightning staff as rare drop, tidy code, lightning fire check, moustache helmet
 
-Lucky Blocks: 260 (depending on mods enabled)
+Lucky Blocks: 261 (depending on mods enabled)
