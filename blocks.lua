@@ -213,6 +213,70 @@ minetest.register_craft({
 	}
 })
 
+-- custom function (slender player) and potion with recipe
+local function slender(pos, player)
+
+	player:set_properties({
+		visual_size = {x = 1.0, y = 1.5},
+		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7 + .85, 0.3},
+		eye_height = 1.47 + 0.73,
+		stepheight = 0.9
+	})
+
+	minetest.chat_send_player(player:get_player_name(),
+		green .. S("Slender Player!"))
+
+	minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
+
+	minetest.after (180, function(player, pos) -- 3 minutes
+
+		if player and player:is_player() then
+
+			player:set_properties({
+				visual_size = {x = 1.0, y = 1.0},
+				collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.7, 0.3},
+				eye_height = 1.47,
+				stepheight = 0.6
+			})
+
+			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
+		end
+	end, player)
+end
+
+minetest.register_craftitem("lucky_block:slender_player_potion", {
+	description = S("Slender Player Potion (DRINK ME)"),
+	inventory_image = "lucky_slender_potion.png",
+	on_use = function(itemstack, user, pointed_thing)
+
+		itemstack:take_item()
+
+		local pos = user:get_pos()
+		local inv = user:get_inventory()
+		local item = "vessels:glass_bottle"
+
+		if inv:room_for_item("main", {name = item}) then
+			inv:add_item("main", item)
+		else
+			minetest.add_item(pos, {name = item})
+		end
+
+		slender(pos, user)
+
+		return itemstack
+	end,
+	groups = {vessel = 1},
+})
+
+minetest.register_craft({
+	output = "lucky_block:slender_player_potion",
+	recipe = {
+		{"default:bush_sapling", "flowers:rose", "default:pine_bush_sapling"},
+		{"dye:red", "default:apple", "dye:orange"},
+		{"", "vessels:glass_bottle", ""},
+	}
+})
+
 -- custom function (drop player inventory and replace with dry shrubs)
 local function bushy(pos, player)
 
@@ -328,7 +392,9 @@ lucky_block:add_blocks({
 	{"cus", pint},
 	{"cus", bushy},
 	{"cus", punchy},
+	{"cus", slender},
 	{"dro", {"lucky_block:pint_sized_potion"}, 1},
+	{"dro", {"lucky_block:slender_player_potion"}, 1},
 	{"nod", "default:chest", 0, {
 		{name = "default:stick", max = 10},
 		{name = "default:acacia_bush_stem", max = 10},
