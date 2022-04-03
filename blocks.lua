@@ -590,19 +590,7 @@ end
 
 -- 3D Armor mod
 if minetest.get_modpath("3d_armor") then
---[[
-armor:register_armor("lucky_block:helmet_handlebar", {
-	description = "Handlebar Moustache",
-	inventory_image = "lucky_handlebar_helmet_inv.png",
-	groups = {
-		armor_head = 1, armor_heal = 12, armor_use = 200,
-		physics_speed = 0.2, physics_jump = 0.2
-	},
-	armor_groups = {fleshy = 10},
-	damage_groups = {cracky = 2, snappy = 2, choppy = 2, level = 2},
-	texture = "lucky_handlebar_helmet.png"
-})
-]]
+
 lucky_block:add_blocks({
 	{"dro", {"3d_armor:boots_wood"}},
 	{"dro", {"3d_armor:leggings_wood"}},
@@ -626,8 +614,7 @@ lucky_block:add_blocks({
 	{"dro", {"3d_armor:leggings_bronze"}},
 	{"dro", {"3d_armor:chestplate_bronze"}},
 	{"dro", {"3d_armor:helmet_bronze"}},
-	{"lig"},
---	{"dro", {"3d_armor:helmet_handlebar"}}
+	{"lig"}
 })
 end
 
