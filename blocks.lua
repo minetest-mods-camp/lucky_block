@@ -175,7 +175,8 @@ local function pint(pos, player)
 				stepheight = 0.6
 			})
 
-			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
+			minetest.sound_play("default_place_node",
+					{pos = player:get_pos(), gain = 1.0}, true)
 		end
 	end, player)
 end
@@ -239,7 +240,8 @@ local function slender(pos, player)
 				stepheight = 0.6
 			})
 
-			minetest.sound_play("default_place_node", {pos = pos, gain = 1.0}, true)
+			minetest.sound_play("default_place_node",
+					{pos = player:get_pos(), gain = 1.0}, true)
 		end
 	end, player)
 end
