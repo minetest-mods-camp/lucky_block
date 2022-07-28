@@ -501,7 +501,7 @@ local lb_falling = function(pos, digger, def)
 				pos2.z = pos.z + math.random(-range, range)
 			end
 
-			local n = minetest.registered_nodes[nods[s]]
+			local n = table.copy(minetest.registered_nodes[nods[s]])
 
 			if n then
 
@@ -512,6 +512,7 @@ local lb_falling = function(pos, digger, def)
 					local ent = obj:get_luaentity()
 
 					if ent then
+						n.param2 = 1 -- set default rotation
 						ent:set_node(n)
 					end
 				end
