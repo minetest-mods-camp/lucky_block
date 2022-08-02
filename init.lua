@@ -180,12 +180,13 @@ local function fill_chest(pos, items)
 
 			if not stacks[s].chance
 			or math.random(1, stacks[s].chance) == 1 then
-if minetest.registered_items[stacks[s].name] then
-				inv:set_stack("main", math.random(32), {
-					name = stacks[s].name,
-					count = math.random(stacks[s].max)
-				})
-end
+
+				if minetest.registered_items[stacks[s].name] then
+					inv:set_stack("main", math.random(32), {
+						name = stacks[s].name,
+						count = math.random(stacks[s].max)
+					})
+				end
 			end
 		end
 	end

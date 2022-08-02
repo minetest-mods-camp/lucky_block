@@ -26,5 +26,6 @@ Changelog:
 - 1.1 - Spawning mobs can now select randomly from a table or single string
 - 1.2 - Code tidy and fixed wishing well replacements
 - 1.3 - Add lightning staff as rare drop, tidy code, lightning fire check, slender potion
+- 1.4 - Bug fix falling nodes, add worm farm drops
 
 Lucky Blocks: 262 (depending on mods enabled)

@@ -881,6 +881,48 @@ if minetest.get_modpath("nether") then
 	end
 end
 
+-- worm farm mod
+if minetest.get_modpath("worm_farm") then
+
+	-- custom function (drop player inventory and replace with dry shrubs)
+	local function wormy(pos, player)
+
+		local player_inv = player:get_inventory()
+
+		pos = player:get_pos() or pos
+
+		for i = 1, player_inv:get_size("main") do
+
+			local obj = minetest.add_item(pos, player_inv:get_stack("main", i))
+
+			if obj then
+
+				obj:set_velocity({
+					x = math.random(-10, 10) / 9,
+					y = 5,
+					z = math.random(-10, 10) / 9,
+				})
+			end
+
+			player_inv:set_stack("main", i, "ethereal:worm")
+		end
+
+		minetest.chat_send_player(player:get_player_name(),
+			green .. S("Worm Attack!"))
+	end
+
+	lucky_block:add_blocks({
+		{"nod", "default:chest", 0, {
+			{name = "ethereal:worm", max = 5},
+			{name = "worm_farm:worm_tea", max = 5},
+			{name = "ethereal:worm", max = 5},
+			{name = "worm_farm:worm_farm", max = 1}
+		}},
+		{"cus", wormy},
+		{"dro", {"worm_farm:worm_farm"}, 1}
+	})
+end
+
 
 -- Additional Wishing Well Styles
 lucky_block:add_blocks({
