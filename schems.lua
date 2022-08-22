@@ -37,8 +37,8 @@ local platform = {
 
 		sst, sst, sst, sst, sst,
 		ssb, ssb, ssb, ssb, ssb,
-		ssb, ssb, ssb, ssb, ssb,
-	},
+		ssb, ssb, ssb, ssb, ssb
+	}
 }
 
 local insta_farm = {
@@ -54,8 +54,8 @@ local insta_farm = {
 
 		dir, dir, dir, dir, san,
 		sow, sow, sow, sow, sow,
-		whe, whe, whe, whe, whe,
-	},
+		whe, whe, whe, whe, whe
+	}
 }
 
 local lava_trap = {
@@ -80,8 +80,8 @@ local lava_trap = {
 		air, air, air,
 		air, air, air,
 		air, air, air,
-		air, air, air,
-	},
+		air, air, air
+	}
 }
 
 local sand_trap = {
@@ -97,8 +97,8 @@ local sand_trap = {
 
 		san, san, san,
 		san, san, san,
-		san, san, san,
-	},
+		san, san, san
+	}
 }
 
 local water_trap = {
@@ -114,8 +114,8 @@ local water_trap = {
 
 		obg, obg, obg,
 		obg, obg, obg,
-		obg, obg, obg,
-	},
+		obg, obg, obg
+	}
 }
 
 local fire_trap = {
@@ -131,8 +131,8 @@ local fire_trap = {
 
 		fir, fir, fir,
 		fir, fir, fir,
-		fir, fir, fir,
-	},
+		fir, fir, fir
+	}
 }
 
 local obsidian_trap = {
@@ -148,8 +148,8 @@ local obsidian_trap = {
 
 		obs, obs, obs,
 		obs, obs, obs,
-		obs, obs, obs,
-	},
+		obs, obs, obs
+	}
 }
 
 local stb = {name = "default:steelblock", param1 = 255}
@@ -160,9 +160,7 @@ local wbl = {name = "lucky_block:well_block", param1 = 255}
 local gla = {name = "default:glass", param1 = 255}
 
 local wishing_well = {
-
 	size = {x = 3, y = 5, z = 3},
-
 	data = {
 		stb,sbr,stb,
 		sbr,sbr,sbr,
@@ -180,8 +178,8 @@ local wishing_well = {
 		sbr,sbr,sbr,
 		fwd,air,fwd,
 		fwd,air,fwd,
-		slb,slb,slb,
-	},
+		slb,slb,slb
+	}
 }
 
 -- add schematics to list
@@ -194,7 +192,7 @@ lucky_block:add_schematics({
 	{"instafarm", insta_farm, {x = 2, y = 2, z = 1}},
 	{"firetrap", fire_trap, {x = 1, y = 0, z = 1}},
 	{"obsidiantrap", obsidian_trap, {x = 1, y = 0, z = 1}},
-	{"wishingwell", wishing_well, {x = 1, y = 1, z = 1}},
+	{"wishingwell", wishing_well, {x = 1, y = 1, z = 1}}
 })
 
 -- wishing well
@@ -205,7 +203,7 @@ minetest.register_node("lucky_block:well_block", {
 	light_source = 5,
 	groups = {not_in_creative_inventory = 1, unbreakable = 1},
 	on_blast = function() end,
-	drop = {},
+	drop = {}
 })
 
 
@@ -271,10 +269,9 @@ if minetest.get_modpath("bones") then
 end
 
 minetest.register_abm({
-
 	label = "Lucky Block Wishing Well Block",
 	nodenames = {"lucky_block:well_block"},
-	interval = 2.0,
+	interval = 2,
 	chance = 1,
 	catch_up = false,
 
@@ -287,17 +284,14 @@ minetest.register_abm({
 				minetest.swap_node(pos, {name = "default:glass"})
 
 				minetest.sound_play("default_tool_breaks", {
-					pos = pos,
-					gain = 1.0,
-					max_hear_distance = 5
-				}, true)
+					pos = pos, gain = 1.0, max_hear_distance = 5}, true)
 
 				local b_no = math.random(#lucky_block.wellblocks)
 				local item = lucky_block.wellblocks[b_no][1]
 
 				for n = 1, lucky_block.wellblocks[b_no][2] do
 
-					local nod = minetest.registered_nodes[item]
+					local nod = table.copy(minetest.registered_nodes[item])
 
 					if nod then
 
@@ -307,8 +301,14 @@ minetest.register_abm({
 							z = pos.z + math.random(-7, 7)
 						}, "__builtin:falling_node")
 
-						if obj and obj:get_luaentity() then
-							obj:get_luaentity():set_node(nod)
+						if obj then
+
+							local ent = obj:get_luaentity()
+
+							if ent then
+								nod.param2 = 1 -- set default rotation
+								ent:set_node(nod)
+							end
 						end
 					end
 				end
