@@ -27,5 +27,6 @@ Changelog:
 - 1.2 - Code tidy and fixed wishing well replacements
 - 1.3 - Add lightning staff as rare drop, tidy code, lightning fire check, slender potion
 - 1.4 - Bug fix falling nodes, add worm farm drops
+- 1.5 - Filled chests can now add tools with custom wear levels, code tidy and tweaks
 
-Lucky Blocks: 262 (depending on mods enabled)
+Lucky Blocks: 266 (depending on mods enabled)

@@ -150,11 +150,12 @@ Place a chest containing random items from default chest items list
 
 	{"nod", "default:chest", 0}
 
-Place chest as above only add up to 5 roses and a 1/5 chance of mese also
+Place chest with a 1/5 chance of adding roses, up to 10x dirt and a worn shovel
 
 	{"nod", "default:chest", 0, {
-		{name = "flowers:rose", max = 5},
-		{name = "default:mese", max = 1, chance = 5},
+		{name = "default:dirt", max = 10},
+		{name = "flowers:rose", max = 5, chance = 5},
+		{name = "default:shovel_wood", max = 1, min_wear = 20000, max_wear = 65535},
 	}}
 
 Place fire at player position
@@ -331,9 +332,10 @@ Custom Function
 ---------------
 
 This allows mod makers to use there own functions when opening lucky blocks and
-passes the block position and player opening it.
+passes the block position, the player opening it and a def table with anything
+else the function needs.
 
-{"cus", myfunction}
+{"cus", myfunction, def}
 
 e.g.
 

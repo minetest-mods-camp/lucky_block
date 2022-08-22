@@ -58,7 +58,7 @@ local chest_stuff = {
 	{name = "default:steel_ingot", max = 2},
 	{name = "default:gold_ingot", max = 2, chance = 2},
 	{name = "default:diamond", max = 1, chance = 3},
-	{name = "default:pick_steel", max = 1, chance = 2},
+	{name = "default:pick_steel", max = 1, chance = 2, min_wear = 20000, max_wear = 65536},
 	{name = "default:mese_crystal_fragment", max = 3, chance = 3},
 }
 
@@ -159,34 +159,35 @@ local function entity_physics(pos, radius)
 end
 
 
--- fill chest with random items from list
+-- function to fill chest at position
 local function fill_chest(pos, items)
 
-	local stacks = items or {}
-	local inv = minetest.get_meta(pos):get_inventory()
+	local stacks = items or chest_stuff
+	local meta = minetest.get_meta(pos)
+	local inv = meta and meta:get_inventory()
+	local size = inv and inv:get_size("main")
+	local stack
 
-	inv:set_size("main", 8 * 4)
+	if not inv then return end
 
-	for i = 0, 2, 1 do
+	-- loop through inventory
+	for _, def in ipairs(stacks) do
 
-		local stuff = chest_stuff[math.random(1, #chest_stuff)]
+		if math.random((def.chance or 1)) == 1 then
 
-		table.insert(stacks, {name = stuff.name, max = stuff.max})
-	end
+			-- only add if item existd
+			if minetest.registered_items[def.name] then
 
-	for s = 1, #stacks do
+				stack = ItemStack(def.name .. " " .. math.random((def.max or 1)))
 
-		if not inv:contains_item("main", stacks[s]) then
+				-- if wear levels found choose random wear between both values
+				if def.max_wear and def.min_wear then
 
-			if not stacks[s].chance
-			or math.random(1, stacks[s].chance) == 1 then
-
-				if minetest.registered_items[stacks[s].name] then
-					inv:set_stack("main", math.random(32), {
-						name = stacks[s].name,
-						count = math.random(stacks[s].max)
-					})
+					stack:set_wear(65535 - (math.random(def.max_wear, def.min_wear)))
 				end
+
+				-- set stack in random position
+				inv:set_stack("main", math.random(size), stack)
 			end
 		end
 	end
