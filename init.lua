@@ -26,6 +26,7 @@ end
 
 -- call to purge the block list
 function lucky_block:purge_block_list()
+
 	lucky_list = {
 		{"nod", "lucky_block:super_lucky_block", 0}
 	}
@@ -54,22 +55,23 @@ local all_colours = {
 
 -- default items in chests
 local chest_stuff = {
+	{name = "default:wood", max = 5},
 	{name = "default:apple", max = 3},
-	{name = "default:steel_ingot", max = 2},
-	{name = "default:gold_ingot", max = 2, chance = 2},
-	{name = "default:diamond", max = 1, chance = 3},
-	{name = "default:pick_steel", max = 1, chance = 2, min_wear = 20000, max_wear = 65536},
+	{name = "default:steel_ingot", max = 3},
+	{name = "default:gold_ingot", max = 3, chance = 2},
+	{name = "default:diamond", max = 2, chance = 3},
 	{name = "default:mese_crystal_fragment", max = 3, chance = 3},
+	{name = "default:pick_steel", max = 1, chance = 2, min_wear = 20000, max_wear = 65536}
 }
 
 
--- call to purge the chest items list
+-- call to purge the chest item list
 function lucky_block:purge_chest_items()
 	chest_stuff = {}
 end
 
 
--- ability to add to chest items list
+-- ability to add to chest item list
 function lucky_block:add_chest_items(list)
 
 	for s = 1, #list do
@@ -98,7 +100,7 @@ local effect = function(pos, amount, texture, min_size, max_size, radius, gravit
 		minsize = min_size or 0.5,
 		maxsize = max_size or 1.0,
 		texture = texture,
-		glow = glow or 0,
+		glow = glow
 	})
 end
 
@@ -145,16 +147,10 @@ local function entity_physics(pos, radius)
 		local damage = math.floor((4 / dist) * radius)
 		local ent = objs[n]:get_luaentity()
 
-		if objs[n]:is_player() then
-			objs[n]:set_hp(objs[n]:get_hp() - damage)
-
-		else --if ent.health then
-
-			objs[n]:punch(tmp_ent, 1.0, {
-				full_punch_interval = 1.0,
-				damage_groups = {fleshy = damage},
-			}, pos)
-		end
+		objs[n]:punch(tmp_ent, 1.0, {
+			full_punch_interval = 1.0,
+			damage_groups = {fleshy = damage}
+		}, pos)
 	end
 end
 
@@ -205,11 +201,11 @@ local function explode(pos, radius, sound)
 		tnt.boom(pos, {
 			radius = radius,
 			damage_radius = radius,
-			sound = sound,
+			sound = sound
 		})
 	else
-		minetest.sound_play(sound, {pos = pos, gain = 1.0,
-				max_hear_distance = 32}, true)
+		minetest.sound_play(sound, {
+			pos = pos, gain = 1.0, max_hear_distance = 32}, true)
 
 		entity_physics(pos, radius)
 
@@ -374,7 +370,7 @@ local lb_teleport = function(pos, digger, def)
 	effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 	minetest.chat_send_player(digger:get_player_name(),
-		minetest.get_color_escape_sequence("#1eff00") .. S("Random Teleport!"))
+			minetest.get_color_escape_sequence("#1eff00") .. S("Random Teleport!"))
 end
 
 
@@ -406,7 +402,7 @@ local lb_drop = function(pos, digger, def)
 				obj:set_velocity({
 					x = math.random(-10, 10) / 9,
 					y = 5,
-					z = math.random(-10, 10) / 9,
+					z = math.random(-10, 10) / 9
 				})
 			end
 		end
@@ -428,7 +424,7 @@ local lb_drop = function(pos, digger, def)
 			obj:set_velocity({
 				x = math.random(-10, 10) / 9,
 				y = 5,
-				z = math.random(-10, 10) / 9,
+				z = math.random(-10, 10) / 9
 			})
 		end
 	end
@@ -460,16 +456,13 @@ local lb_lightning = function(pos, digger, def)
 		collisiondetection = false,
 		texture = "lucky_lightning.png",
 		size = math.random(100, 150),
-		glow = 15,
+		glow = 15
 	})
 
 	entity_physics(pos, 2)
 
 	minetest.sound_play("lightning", {
-		pos = pos,
-		gain = 1.0,
-		max_hear_distance = 25
-	}, true)
+		pos = pos, gain = 1.0, max_hear_distance = 25}, true)
 end
 
 
@@ -535,10 +528,7 @@ local lb_troll = function(pos, def)
 	if snd then
 
 		minetest.sound_play(snd, {
-			pos = pos,
-			gain = 1.0,
-			max_hear_distance = 10
-		}, true)
+			pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 	end
 
 	if not minetest.registered_nodes[nod] then
@@ -557,10 +547,7 @@ local lb_troll = function(pos, def)
 			minetest.set_node(pos, {name = "air"})
 
 			minetest.sound_play("default_hard_footstep", {
-				pos = pos,
-				gain = 1.0,
-				max_hear_distance = 10
-			}, true)
+				pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 		end
 	end)
 end
@@ -585,10 +572,7 @@ local lb_floor = function(pos, def)
 				}, {name = nods[math.random(#nods)]})
 
 				minetest.sound_play("default_place_node", {
-					pos = pos,
-					gain = 1.0,
-					max_hear_distance = 10
-				}, true)
+					pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 			end)
 
 			num = num + 1
@@ -678,11 +662,8 @@ minetest.register_node("lucky_block:lucky_block", {
 	tiles = {{
 		name = "lucky_block_animated.png",
 		animation = {
-			type = "vertical_frames",
-			aspect_w = 16,
-			aspect_h = 16,
-			length = 1
-		},
+			type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 1
+		}
 	}},
 	inventory_image = minetest.inventorycube("lucky_block.png"),
 	sunlight_propagates = false,
@@ -694,11 +675,13 @@ minetest.register_node("lucky_block:lucky_block", {
 	sounds = default.node_sound_wood_defaults(),
 
 	on_dig = function(pos, node, digger)
+
 		minetest.set_node(pos, {name = "air"})
+
 		lucky_block:open(pos, digger)
 	end,
 
-	on_blast = function() end,
+	on_blast = function() end
 })
 
 minetest.register_craft({
@@ -717,11 +700,8 @@ minetest.register_node("lucky_block:super_lucky_block", {
 	tiles = {{
 		name = "lucky_block_super_animated.png",
 		animation = {
-			type = "vertical_frames",
-			aspect_w = 16,
-			aspect_h = 16,
-			length = 1
-		},
+			type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 1
+		}
 	}},
 	inventory_image = minetest.inventorycube("lucky_block_super.png"),
 	sunlight_propagates = false,
@@ -747,10 +727,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 			effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 			minetest.sound_play("fart1", {
-				pos = pos,
-				gain = 1.0,
-				max_hear_distance = 10
-			}, true)
+				pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 
 			if math.random(5) == 1 then
 				pos.y = pos.y + 0.5
@@ -762,11 +739,10 @@ minetest.register_node("lucky_block:super_lucky_block", {
 		end
 	end,
 
-	on_blast = function() end,
+	on_blast = function() end
 })
 
 
 minetest.after(0, function()
 	print("[MOD] Lucky Blocks loaded: ", #lucky_list)
 end)
-
