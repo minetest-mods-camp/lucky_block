@@ -704,12 +704,21 @@ minetest.register_node("lucky_block:lucky_block", {
 	_mcl_blast_resistance = 1200
 })
 
+
+local gitem = "default:gold_ingot"
+local citem = "default:chest"
+
+if mcl then
+	gitem = "mcl_core:gold_ingot"
+	citem = "mcl_chests:chest"
+end
+
 minetest.register_craft({
 	output = "lucky_block:lucky_block",
 	recipe = {
-		{"default:gold_ingot", "default:gold_ingot", "default:gold_ingot"},
-		{"default:gold_ingot", "default:chest", "default:gold_ingot"},
-		{"default:gold_ingot", "default:gold_ingot", "default:gold_ingot"}
+		{gitem, gitem, gitem},
+		{gitem, citem, gitem},
+		{gitem, gitem, gitem}
 	}
 })
 
