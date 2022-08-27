@@ -1,12 +1,60 @@
 
-lucky_block = {}
+-- mod check
+local def = minetest.get_modpath("default")
+local mcl = minetest.get_modpath("mcl_core")
+
+-- global
+lucky_block = {
+	mod_def = def,
+	mod_mcl = mcl,
+	snd_stone = def and default.node_sound_stone_defaults(),
+	snd_wood = def and default.node_sound_wood_defaults(),
+	snd_glass = def and default.node_sound_glass_defaults(),
+	snd_pop = "default_hard_footstep",
+	snd_pop2 = "default_place_node",
+	def_item = "default:coal_lump",
+	def_node = mcl and "mcl_core:dirt" or "default:dirt",
+	def_flame = mcl and "mcl_fire:fire" or "fire:basic_flame",
+	def_gold = mcl and "mcl_core:goldblock" or "default:goldblock",
+	def_glass = mcl and "mcl_core:glass" or "default:glass",
+	green = minetest.get_color_escape_sequence("#1eff00")
+}
+
 lucky_schems = {}
 
 
--- Load support for intllib.
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S = minetest.get_translator and minetest.get_translator("lucky_block") or
-		dofile(MP .. "/intllib.lua")
+-- quick sound setup
+if mcl then
+
+	lucky_block.snd_glass = mcl_sounds.node_sound_glass_defaults()
+	lucky_block.snd_wood = mcl_sounds.node_sound_wood_defaults()
+	lucky_block.snd_stone = mcl_sounds.node_sound_stone_defaults()
+end
+
+
+-- translation support
+local S
+if minetest.get_translator ~= nil then
+	S = minetest.get_translator("lucky_block") -- 5.x translation function
+else
+	if minetest.get_modpath("intllib") then
+		dofile(minetest.get_modpath("intllib") .. "/init.lua")
+		if intllib.make_gettext_pair then
+			gettext, ngettext = intllib.make_gettext_pair() -- new gettext method
+		else
+			gettext = intllib.Getter() -- old text file method
+		end
+		S = gettext
+	else -- boilerplate function
+		S = function(str, ...)
+			local args = {...}
+			return str:gsub("@%d+", function(match)
+				return args[tonumber(match:sub(2))]
+			end)
+		end
+	end
+end
+lucky_block.intllib = S
 
 
 -- default blocks
@@ -42,27 +90,22 @@ function lucky_block:add_schematics(list)
 end
 
 
--- import schematics and default blocks
-dofile(minetest.get_modpath("lucky_block") .. "/schems.lua")
-dofile(minetest.get_modpath("lucky_block") .. "/blocks.lua")
-
-
 -- for random colour selection
 local all_colours = {
 	"grey", "black", "red", "yellow", "green", "cyan", "blue", "magenta",
 	"orange", "violet", "brown", "pink", "dark_grey", "dark_green", "white"
 }
 
--- default items in chests
-local chest_stuff = {
-	{name = "default:wood", max = 5},
-	{name = "default:apple", max = 3},
-	{name = "default:steel_ingot", max = 3},
-	{name = "default:gold_ingot", max = 3, chance = 2},
-	{name = "default:diamond", max = 2, chance = 3},
-	{name = "default:mese_crystal_fragment", max = 3, chance = 3},
-	{name = "default:pick_steel", max = 1, chance = 2, min_wear = 20000, max_wear = 65536}
-}
+if lucky_block.mcl then
+	all_colours = {
+		"red", "blue", "cyan", "grey", "silver", "black", "yellow", "green", "magenta",
+		"orange", "purple", "brown", "pink", "lime", "light_blue", "white"
+	}
+end
+
+
+-- default chests items
+local chest_stuff = {}
 
 
 -- call to purge the chest item list
@@ -198,14 +241,9 @@ local function explode(pos, radius, sound)
 	if minetest.get_modpath("tnt") and tnt and tnt.boom
 	and not minetest.is_protected(pos, "") then
 
-		tnt.boom(pos, {
-			radius = radius,
-			damage_radius = radius,
-			sound = sound
-		})
+		tnt.boom(pos, {radius = radius, damage_radius = radius, sound = sound})
 	else
-		minetest.sound_play(sound, {
-			pos = pos, gain = 1.0, max_hear_distance = 32}, true)
+		minetest.sound_play(sound, {pos = pos, gain = 1.0, max_hear_distance = 32}, true)
 
 		entity_physics(pos, radius)
 
@@ -259,14 +297,15 @@ local lb_node = function(pos, digger, def)
 	end
 
 	if not minetest.registered_nodes[nod] then
-		nod = "default:goldblock"
+		nod = lucky_block.def_node
 	end
 
 	effect(pos, 25, "tnt_smoke.png", 8, 8, 2, 1, 0)
 
 	minetest.set_node(pos, {name = nod})
 
-	if nod == "default:chest" then
+	if nod == "default:chest"
+	or nod == "mcl_chests:chest_small" then
 		fill_chest(pos, items)
 	end
 end
@@ -370,7 +409,7 @@ local lb_teleport = function(pos, digger, def)
 	effect(pos, 25, "tnt_smoke.png", 8, 8, 1, -10, 0)
 
 	minetest.chat_send_player(digger:get_player_name(),
-			minetest.get_color_escape_sequence("#1eff00") .. S("Random Teleport!"))
+			lucky_block.green .. S("Random Teleport!"))
 end
 
 
@@ -392,7 +431,7 @@ local lb_drop = function(pos, digger, def)
 			end
 
 			if not minetest.registered_items[item] then
-				item = "default:coal_lump"
+				item = lucky_block.def_item
 			end
 
 			local obj = minetest.add_item(pos, item)
@@ -412,7 +451,7 @@ local lb_drop = function(pos, digger, def)
 		local item = def[2][1]
 
 		if not minetest.registered_items[item] then
-			item = ItemStack("default:coal_lump " .. tonumber(num))
+			item = ItemStack(lucky_block.def_item .. " " .. tonumber(num))
 		else
 			item = ItemStack(item .. " " .. tonumber(num))
 		end
@@ -436,7 +475,7 @@ local lb_lightning = function(pos, digger, def)
 	local nod = def[2]
 
 	if not minetest.registered_nodes[nod] then
-		nod = "fire:basic_flame"
+		nod = lucky_block.def_flame
 	end
 
 	pos = digger:get_pos()
@@ -523,16 +562,14 @@ local lb_troll = function(pos, def)
 	local snd = def[3]
 	local exp = def[4]
 
+	if not minetest.registered_nodes[nod] then
+		nod = lucky_block.def_gold
+	end
+
 	minetest.set_node(pos, {name = nod})
 
 	if snd then
-
-		minetest.sound_play(snd, {
-			pos = pos, gain = 1.0, max_hear_distance = 10}, true)
-	end
-
-	if not minetest.registered_nodes[nod] then
-		nod = "default:goldblock"
+		minetest.sound_play(snd, {pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 	end
 
 	minetest.after(2.0, function()
@@ -546,7 +583,7 @@ local lb_troll = function(pos, def)
 
 			minetest.set_node(pos, {name = "air"})
 
-			minetest.sound_play("default_hard_footstep", {
+			minetest.sound_play(lucky_block.snd_pop, {
 				pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 		end
 	end)
@@ -556,7 +593,7 @@ end
 local lb_floor = function(pos, def)
 
 	local size = def[2] or 1
-	local nods = def[3] or {"default:dirt"}
+	local nods = def[3] or {lucky_block.def_node}
 	local offs = def[4] or 0
 	local num = 1
 
@@ -565,13 +602,16 @@ local lb_floor = function(pos, def)
 
 			minetest.after(0.5 * num, function()
 
+				local nod = nods[math.random(#nods)]
+				local def = minetest.registered_nodes[nod]
+				local snd = def and def.sounds and def.sounds.place
+
 				minetest.set_node({
 					x = (pos.x + x) - offs,
 					y = pos.y - 1,
-					z = (pos.z + z) - offs
-				}, {name = nods[math.random(#nods)]})
+					z = (pos.z + z) - offs}, {name = nod})
 
-				minetest.sound_play("default_place_node", {
+				minetest.sound_play(snd, {
 					pos = pos, gain = 1.0, max_hear_distance = 10}, true)
 			end)
 
@@ -591,67 +631,44 @@ function lucky_block:open(pos, digger, blocks_list)
 	math.randomseed(minetest.get_timeofday() + pos.x + pos.z - os.time())
 
 	local luck = math.random(#blocks_list) ; -- luck = 1
-	local action = blocks_list[luck][1]
+	local result = blocks_list[luck]
+	local action = result[1]
 
 --	print ("luck ["..luck.." of "..#blocks_list.."]", action)
 
 	-- place schematic
-	if action == "sch" then
-
-		lb_schematic(pos, digger, blocks_list[luck])
+	if action == "sch" then lb_schematic(pos, digger, result)
 
 	-- place node (if chest then fill chest)
-	elseif action == "nod" then
-
-		lb_node(pos, digger, blocks_list[luck])
+	elseif action == "nod" then lb_node(pos, digger, result)
 
 	-- place entity
-	elseif action == "spw" then
-
-		lb_spawn(pos, digger, blocks_list[luck])
+	elseif action == "spw" then lb_spawn(pos, digger, result)
 
 	-- explosion
-	elseif action == "exp" then
-
-		lb_explode(pos, blocks_list[luck])
+	elseif action == "exp" then lb_explode(pos, result)
 
 	-- teleport
-	elseif action == "tel" then
-
-		lb_teleport(pos, digger, blocks_list[luck])
+	elseif action == "tel" then lb_teleport(pos, digger, result)
 
 	-- drop items
-	elseif action == "dro" then
-
-		lb_drop(pos, digger, blocks_list[luck])
+	elseif action == "dro" then lb_drop(pos, digger, result)
 
 	-- lightning strike
-	elseif action == "lig" then
-
-		lb_lightning(pos, digger, blocks_list[luck])
+	elseif action == "lig" then lb_lightning(pos, digger, result)
 
 	-- falling nodes
-	elseif action == "fal" then
-
-		lb_falling(pos, digger, blocks_list[luck])
+	elseif action == "fal" then lb_falling(pos, digger, result)
 
 	-- troll block, disappears or explodes after 2 seconds
-	elseif action == "tro" then
-
-		lb_troll(pos, blocks_list[luck])
+	elseif action == "tro" then lb_troll(pos, result)
 
 	-- floor paint
-	elseif action == "flo" then
-
-		lb_floor(pos, blocks_list[luck])
+	elseif action == "flo" then lb_floor(pos, result)
 
 	-- custom function
 	elseif action == "cus" then
-
-		local func = blocks_list[luck][2]
-		local def = blocks_list[luck][3]
-
-		if func then func(pos, digger, def) end
+		if result[2] then result[2](pos, digger, result[3]) end
 	end
 end
 
@@ -670,9 +687,9 @@ minetest.register_node("lucky_block:lucky_block", {
 	is_ground_content = false,
 	paramtype = "light",
 	light_source = 3,
-	groups = {oddly_breakable_by_hand = 3, unbreakable = 1},
+	groups = {handy = 2, oddly_breakable_by_hand = 3, unbreakable = 1},
 	drop = {},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = lucky_block.snd_wood,
 
 	on_dig = function(pos, node, digger)
 
@@ -681,7 +698,10 @@ minetest.register_node("lucky_block:lucky_block", {
 		lucky_block:open(pos, digger)
 	end,
 
-	on_blast = function() end
+	on_blast = function() end,
+
+	_mcl_hardness = 0.6,
+	_mcl_blast_resistance = 1200
 })
 
 minetest.register_craft({
@@ -707,9 +727,9 @@ minetest.register_node("lucky_block:super_lucky_block", {
 	sunlight_propagates = false,
 	is_ground_content = false,
 	paramtype = "light",
-	groups = {cracky = 1, level = 2, unbreakable = 1},
+	groups = {pickaxey = 5, cracky = 1, level = 2, unbreakable = 1, material_stone = 1},
 	drop = {},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = lucky_block.snd_stone,
 
 	on_construct = function(pos)
 
@@ -731,7 +751,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 
 			if math.random(5) == 1 then
 				pos.y = pos.y + 0.5
-				minetest.add_item(pos, "default:goldblock " .. math.random(5))
+				minetest.add_item(pos, lucky_block.def_gold .. " " .. math.random(5))
 			end
 
 		else
@@ -739,8 +759,33 @@ minetest.register_node("lucky_block:super_lucky_block", {
 		end
 	end,
 
-	on_blast = function() end
+	on_blast = function() end,
+
+	_mcl_hardness = 2,
+	_mcl_blast_resistance = 1200
 })
+
+
+local path = minetest.get_modpath("lucky_block")
+
+-- import schematics
+dofile(path .. "/schems.lua")
+
+-- wishing well & drops
+dofile(path .. "/wishing_well.lua")
+
+-- lucky block special items and blocks
+dofile(path .. "/blocks_lb.lua")
+
+-- if mineclone detected then load specific lucky blocks
+if mcl then
+	dofile(path .. "/blocks_mcl.lua")
+else
+	dofile(path .. "/blocks_def.lua")
+end
+
+-- 3rd party mod lucky blocks
+dofile(path .. "/blocks_mod.lua")
 
 
 minetest.after(0, function()

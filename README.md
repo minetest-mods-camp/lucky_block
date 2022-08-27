@@ -28,5 +28,6 @@ Changelog:
 - 1.3 - Add lightning staff as rare drop, tidy code, lightning fire check, slender potion
 - 1.4 - Bug fix falling nodes, add worm farm drops
 - 1.5 - Filled chests can now add tools with custom wear levels, code tidy and tweaks
+- 1.6 - Add support for mineclone2 game, tweak and tidy code, add new screenshot
 
 Lucky Blocks: 266 (depending on mods enabled)
