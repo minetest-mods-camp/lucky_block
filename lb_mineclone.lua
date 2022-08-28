@@ -1,5 +1,6 @@
 
 local S = lucky_block.intllib
+local tmp -- helper
 
 -- chest items
 lucky_block:add_chest_items({
@@ -57,7 +58,25 @@ lucky_block:add_blocks({
 
 -- mineclone lucky blocks
 lucky_block:add_blocks({
-	{"nod", {"mcl_chests_small:chest"}, 0},
+	{"nod", "mcl_chests_small:chest", 0, {
+		{name = "mcl_core:glass_red", max = 5},
+		{name = "mcl_core:glass_green", max = 5},
+		{name = "mcl_core:glass_blue", max = 5},
+		{name = "mcl_core:glass_light_blue", max = 5},
+		{name = "mcl_core:glass_black", max = 5},
+		{name = "mcl_core:glass_white", max = 5},
+		{name = "mcl_core:glass_brown", max = 5},
+		{name = "mcl_core:glass_yellow", max = 5},
+		{name = "mcl_core:glass_orange", max = 5},
+		{name = "mcl_core:glass_pink", max = 5},
+		{name = "mcl_core:glass_gray", max = 5},
+		{name = "mcl_core:glass_lime", max = 5},
+		{name = "mcl_core:glass_silver", max = 5},
+		{name = "mcl_core:glass_magenta", max = 5},
+		{name = "mcl_core:glass_purple", max = 5},
+		{name = "mcl_core:glass_cyan", max = 5},
+		{name = "mcl_core:glass_glass", max = 10}
+	}},
 	{"lig"},
 	{"fal", {
 		"mcl_core:wood", "mcl_core:gravel", "mcl_core:sand",
@@ -93,7 +112,7 @@ lucky_block:add_blocks({
 		"mcl_core:axe_iron", "mcl_core:pick_iron",
 		"mcl_core:shovel_iron", "mcl_core:sword_iron"
 	}},
-	{"exp"},
+	{"exp", 2},
 	{"dro", {"mcl_core:coal_lump"}, 3},
 	{"tro", "mcl_core:diamondblock", "tnt_explode", true},
 	{"exp", 3},
@@ -117,6 +136,7 @@ lucky_block:add_blocks({
 		{"default:obsidian", "mcl_core:obsidian"},
 		{"default:lava_source", "mcl_core:lava_source"}
 	}},
+	{"lig"},
 	{"nod", "mcl_chests:chest_small", 0, {
 		{name = "mcl_core:wood", max = 10},
 		{name = "mcl_core:acaciawood", max = 10},
@@ -140,6 +160,7 @@ lucky_block:add_blocks({
 		{name = "mcl_core:sandstone", max = 20},
 		{name = "mcl_core:gravel", max = 20},
 	}},
+	{"tel", 10, 5},
 	{"dro", {"mcl_core:obsidian"}, 14}
 })
 
@@ -153,6 +174,15 @@ lucky_block:add_blocks({
 		{"default:glass", "mcl_core:glass"}
 	}}
 })
+
+-- mcl_crafting_table
+if minetest.get_modpath("mcl_crafting_table") then
+
+	lucky_block:add_blocks({
+		{"nod", "mcl_crafting_table:crafting_table", 0},
+		{"dro", {"mcl_crafting_table:crafting_table"}, 1}
+	})
+end
 
 -- mcl_dye
 if minetest.get_modpath("mcl_dye") then
@@ -171,6 +201,7 @@ if minetest.get_modpath("mcl_buckets") then
 		{"dro", {"mcl_buckets:bucket_water"}},
 		{"dro", {"mcl_buckets:bucket_cod"}},
 		{"dro", {"mcl_buckets:bucket_salmon"}},
+		{"nod", "mcl_core:water_source", 1}
 	})
 end
 
@@ -197,7 +228,7 @@ end
 -- mcl_flowers
 if minetest.get_modpath("mcl_flowers") then
 
-	local tmp = "mcl_flowers:"
+	tmp = "mcl_flowers:"
 
 	lucky_block:add_blocks({
 		{"dro", {
@@ -229,6 +260,14 @@ if minetest.get_modpath("mcl_flowers") then
 	})
 end
 
+-- mcl_hoppers
+if minetest.get_modpath("mcl_hoppers") then
+
+	lucky_block:add_blocks({
+		{"dro", {"mcl_hoppers:hopper"}}
+	})
+end
+
 -- mcl_doors
 if minetest.get_modpath("mcl_doors") then
 
@@ -254,7 +293,7 @@ end
 -- mcl_fences
 if minetest.get_modpath("mcl_fences") then
 
-	local tmp = "mcl_fences:"
+	tmp = "mcl_fences:"
 
 	lucky_block:add_blocks({
 		{"dro", {
@@ -314,6 +353,7 @@ if minetest.get_modpath("mcl_farming") then
 		{"dro", {"mcl_farming:wheat_item"}, 10},
 		{"dro", {"mcl_farming:bread"}, 5},
 		{"dro", {"mcl_farming:cookie"}, 5},
+		{"exp", 2},
 		{"nod", "mcl_farming:hay_block"},
 		{"dro", {"mcl_farming:hay_block"}, 4},
 		{"nod", "mcl_core:water_source", 1},
@@ -323,6 +363,13 @@ if minetest.get_modpath("mcl_farming") then
 			{"default:water_source", "mcl_core:water_source"},
 			{"farming:wheat_8", "mcl_farming:wheat"},
 			{"farming:cotton_8", "mcl_farming:carrot"}
+		}},
+		{"sch", "instafarm", 0, true, {
+			{"farming:soil_wet", "mcl_farming:soil_wet"},
+			{"default:dirt", "mcl_core:dirt"},
+			{"default:water_source", "mcl_core:water_source"},
+			{"farming:wheat_8", "mcl_farming:potato"},
+			{"farming:cotton_8", "mcl_farming:beetroot"}
 		}},
 		{"nod", "mcl_chests:chest_small", 0, {
 			{name = "mcl_farming:beetroot_seeds", max = 10},
@@ -340,7 +387,8 @@ end
 if minetest.get_modpath("mcl_boats") then
 
 	lucky_block:add_blocks({
-		{"dro", {"mcl_boats:boat"}}
+		{"dro", {"mcl_boats:boat"}},
+		{"nod", "mcl_core:water_source", 0}
 	})
 end
 
@@ -370,7 +418,8 @@ if minetest.get_modpath("mcl_walls") then
 		{"dro", {"mcl_walls:endbricks"}, 10},
 		{"dro", {"mcl_walls:netherbrick"}, 10},
 		{"dro", {"mcl_walls:rednetherbrick"}, 10},
-		{"dro", {"mcl_walls:mudbrick"}, 10}
+		{"dro", {"mcl_walls:mudbrick"}, 10},
+		{"flo", 3, {"mcl_core:lava_source"}, 1}
 	})
 end
 
@@ -390,7 +439,7 @@ end
 -- mcl_armor
 if minetest.get_modpath("mcl_armor") then
 
-	local tmp = "mcl_armor:"
+	tmp = "mcl_armor:"
 
 	lucky_block:add_blocks({
 		{"dro", {
@@ -434,12 +483,11 @@ end
 -- mcl_tnt
 if minetest.get_modpath("mcl_tnt") then
 
-	local p = "mcl_tnt:tnt"
-
 	lucky_block:add_blocks({
 		{"dro", {"mcl_mobitems:gunpowder"}, 5},
-		{"fal", {p, p, p, p, p}, 1, true, 4},
-		{"nod", p, 0}
+		{"spw", {"mcl_tnt:tnt"}, 4, nil, nil, 2},
+		{"nod", "mcl_tnt:tnt", 0},
+		{"spw", {"mcl_tnt:tnt"}, 6, nil, nil, 5},
 	})
 end
 
@@ -448,16 +496,110 @@ if minetest.get_modpath("mobs_mc") then
 
 	lucky_block:add_blocks({
 		--{"spw", {"entity name"}, how many to spawn, tamed, owned, range, nametag}
-		{"spa", {"mobs_mc:bat"}, 3, nil, nil, 5, nil},
-		{"spa", {"mobs_mc:chicken"}, 4, nil, nil, 5, "Chicken Squad"},
-		{"spa", {"mobs_mc:creeper"}, 1, nil, nil, 3, "Mr. Boombastic"},
-		{"spa", {"mobs_mc:parrot"}, 4, nil, nil, 5, "Parrot Party"},
-		{"spa", {"mobs_mc:sheep"}, 1, true, true, 5, nil},
-		{"spa", {"mobs_mc:silverfish"}, 5, nil, nil, 5, nil},
-		{"spa", {"mobs_mc:spider"}, 3, nil, nil, 5, nil},
-		{"spa", {"mobs_mc:witch"}, 1, nil, nil, 3, "Ezmerelda"},
-		{"spa", {"mobs_mc:wolf"}, 2, nil, nil, 3, nil},
-		{"spa", {"mobs_mc:zombie"}, 3, nil, nil, 5, nil},
-		{"spa", {"mobs_mc:pig"}, 2, nil, nil, 5, nil}
+		{"spw", {"mobs_mc:bat"}, 3, nil, nil, 5, nil},
+		{"spw", {"mobs_mc:chicken"}, 4, nil, nil, 5, "Chicken Squad"},
+		{"spw", {"mobs_mc:creeper"}, 1, nil, nil, 3, "Mr. Boombastic"},
+		{"spw", {"mobs_mc:parrot"}, 4, nil, nil, 5, "Parrot Party"},
+		{"spw", {"mobs_mc:sheep"}, 1, true, true, 5, nil},
+		{"spw", {"mobs_mc:silverfish"}, 5, nil, nil, 5, nil},
+		{"spw", {"mobs_mc:spider"}, 3, nil, nil, 5, nil},
+		{"spw", {"mobs_mc:witch"}, 1, nil, nil, 3, "Ezmerelda"},
+		{"spw", {"mobs_mc:wolf"}, 2, nil, nil, 3, nil},
+		{"spw", {"mobs_mc:zombie"}, 3, nil, nil, 5, nil},
+		{"spw", {"mobs_mc:pig"}, 2, nil, nil, 5, nil}
+	})
+end
+
+-- mcl_mobitems
+if minetest.get_modpath("mcl_mobitems") then
+
+	tmp = "mcl_mobitems:"
+
+	lucky_block:add_blocks({
+		{"dro", {tmp.."rotten_flesh"}, 10},
+		{"dro", {tmp.."mutton", tmp.."cooked_mutton"}, 10},
+		{"dro", {tmp.."beef", tmp.."cooked_beef"}, 10},
+		{"dro", {tmp.."chicken", tmp.."cooked_chicken"}, 10},
+		{"dro", {tmp.."porkchop", tmp.."cooked_porkchop"}, 10},
+		{"dro", {tmp.."rabbit", tmp.."cooked_rabbit"}, 10},
+		{"dro", {tmp.."milk_bucket", tmp.."spider_eye"}, 10},
+		{"dro", {tmp.."bone", tmp.."string"}, 10},
+		{"exp", 4},
+		{"dro", {tmp.."blaze_rod", tmp.."blaze_powder"}, 4},
+		{"dro", {tmp.."magma_tear", tmp.."ghast_tear"}, 2},
+		{"dro", {tmp.."leather", tmp.."feather"}, 5},
+		{"dro", {tmp.."saddle"}},
+		{"dro", {tmp.."iron_horse_armor"}},
+		{"dro", {tmp.."gold_horse_armor"}},
+		{"dro", {tmp.."diamond_horse_armor"}}
+	})
+end
+
+-- mcl_potions
+if minetest.get_modpath("mcl_potions") then
+
+	tmp = "mcl_potions:"
+
+	lucky_block:add_blocks({
+		{"dro", {tmp.."awkward", tmp.."healing"}, 1},
+		{"dro", {tmp.."mundane", tmp.."night_vision"}, 1},
+		{"dro", {tmp.."slowness", tmp.."swiftness"}, 1},
+		{"dro", {tmp.."poison", tmp.."leaping"}, 1},
+		{"dro", {tmp.."invisibility", tmp.."regeneration"}, 1},
+		{"dro", {tmp.."water_breathing", tmp.."fire_resistance"}, 1}
+	})
+end
+
+-- mcl_torches
+if minetest.get_modpath("mcl_torches") then
+
+	lucky_block:add_blocks({
+		{"dro", {"mcl_torches:torch"}, 5},
+		{"nod", "mcl_torches:torch", 1}
+	})
+end
+
+-- mcl_cake
+if minetest.get_modpath("mcl_cake") then
+
+	lucky_block:add_blocks({
+		{"dro", {"mcl_cake:cake"}, 3},
+		{"nod", "mcl_cake:cake", 0},
+		{"nod", "mcl_cake:cake_1", 0},
+		{"nod", "mcl_cake:cake_2", 0},
+		{"nod", "mcl_cake:cake_3", 0},
+		{"nod", "mcl_cake:cake_4", 0},
+		{"nod", "mcl_cake:cake_5", 0},
+		{"nod", "mcl_cake:cake_6", 0},
+		{"lig"}
+	})
+end
+
+-- mcl_fishing
+if minetest.get_modpath("mcl_fishing") then
+
+	tmp = "mcl_fishing:"
+
+	lucky_block:add_blocks({
+		{"dro", {tmp.."fishing_rod"}, 1},
+		{"dro", {tmp.."salmon_raw", tmp.."salmon_cooked"}, 5},
+		{"dro", {tmp.."clownfish_raw", tmp.."pufferfish_raw"}, 5},
+	})
+end
+
+-- mcl_nether
+if minetest.get_modpath("mcl_nether") then
+
+	tmp = "mcl_nether:"
+
+	lucky_block:add_blocks({
+		{"flo", 3, {tmp.."glowstone"}, 1},
+		{"flo", 3, {tmp.."quartz_ore"}, 1},
+		{"flo", 3, {tmp.."netheriteblock"}, 1},
+		{"flo", 3, {tmp.."netherrack", tmp.."soul_sand"}, 1},
+		{"flo", 3, {tmp.."magma"}, 1},
+		{"flo", 5, {
+			tmp.."quartz_block", tmp.."quartz_chiseled", tmp.."quartz_smooth"
+		}, 2},
 	})
 end

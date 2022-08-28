@@ -700,18 +700,13 @@ minetest.register_node("lucky_block:lucky_block", {
 
 	on_blast = function() end,
 
-	_mcl_hardness = 0.6,
+	_mcl_hardness = 1,
 	_mcl_blast_resistance = 1200
 })
 
 
-local gitem = "default:gold_ingot"
-local citem = "default:chest"
-
-if mcl then
-	gitem = "mcl_core:gold_ingot"
-	citem = "mcl_chests:chest"
-end
+local gitem = mcl and "mcl_core:gold_ingot" or "default:gold_ingot"
+local citem = mcl and "mcl_chests:chest" or "default:chest"
 
 minetest.register_craft({
 	output = "lucky_block:lucky_block",
@@ -722,6 +717,14 @@ minetest.register_craft({
 	}
 })
 
+
+local grp = {cracky = 1, level = 2, unbreakable = 1}
+
+-- change super lucky block groups for mineclone
+if mcl then
+	grp.handy = 5
+	grp.level = nil
+end
 
 -- super lucky block
 minetest.register_node("lucky_block:super_lucky_block", {
@@ -736,7 +739,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 	sunlight_propagates = false,
 	is_ground_content = false,
 	paramtype = "light",
-	groups = {pickaxey = 5, cracky = 1, level = 2, unbreakable = 1, material_stone = 1},
+	groups = grp,
 	drop = {},
 	sounds = lucky_block.snd_stone,
 
@@ -770,7 +773,7 @@ minetest.register_node("lucky_block:super_lucky_block", {
 
 	on_blast = function() end,
 
-	_mcl_hardness = 2,
+	_mcl_hardness = 8,
 	_mcl_blast_resistance = 1200
 })
 
@@ -778,23 +781,23 @@ minetest.register_node("lucky_block:super_lucky_block", {
 local path = minetest.get_modpath("lucky_block")
 
 -- import schematics
-dofile(path .. "/schems.lua")
+dofile(path .. "/lb_schems.lua")
 
 -- wishing well & drops
-dofile(path .. "/wishing_well.lua")
+dofile(path .. "/lb_well.lua")
 
 -- lucky block special items and blocks
-dofile(path .. "/blocks_lb.lua")
+dofile(path .. "/lb_special.lua")
 
 -- if mineclone detected then load specific lucky blocks
 if mcl then
-	dofile(path .. "/blocks_mcl.lua")
+	dofile(path .. "/lb_mineclone.lua")
 else
-	dofile(path .. "/blocks_def.lua")
+	dofile(path .. "/lb_default.lua")
 end
 
 -- 3rd party mod lucky blocks
-dofile(path .. "/blocks_mod.lua")
+dofile(path .. "/lb_other.lua")
 
 
 minetest.after(0, function()
