@@ -17,6 +17,7 @@ local fwd = {name = "default:fence_wood", param1 = 255}
 local slb = {name = "stairs:slab_stonebrick", param1 = 255}
 local wbl = {name = "lucky_block:well_block", param1 = 255}
 local gla = {name = "default:glass", param1 = 255}
+local wat = {name = "default:water_source", param1 = 255}
 local air = {name = "air"}
 
 local wishing_well = {
