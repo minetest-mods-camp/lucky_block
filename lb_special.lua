@@ -329,7 +329,8 @@ if not lucky_block.mod_mcl then
 		if nn == "default:furnace_active"
 		or nn:find("xpanes:")
 		or nn:find("door")
-		or minetest.get_item_group(nn, "cracky") == 0 then
+		or minetest.get_item_group(nn, "cracky") == 0
+		or minetest.get_item_group(nn, "no_silktouch") == 1 then
 			return old_handle_node_drops(pos, drops, digger)
 		end
 
@@ -337,7 +338,7 @@ if not lucky_block.mod_mcl then
 	end
 
 	minetest.register_tool("lucky_block:pick_void", {
-		description = "Void pick (Soft Touch)",
+		description = "Void pick (Silk Touch)",
 		inventory_image = "lucky_void_pick.png",
 		wield_image = "lucky_void_pick.png^[transformR90",
 		tool_capabilities = {

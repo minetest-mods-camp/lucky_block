@@ -351,6 +351,14 @@ end
 	{"cus", punchy, {damage = 5} }
 
 
+Void Pick
+---------
+
+This is a special item that can be dropped and allows the user to dig cracky grouped
+blocks as they are e.g. stone with copper is picked up as stone with copper, not copper
+ore.  Adding {no_silktouch=1} group to a block prevents it from being dug in this way.
+
+
 Final Words
 ===========
 
