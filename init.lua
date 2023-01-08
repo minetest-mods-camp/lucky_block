@@ -535,7 +535,8 @@ local lb_falling = function(pos, digger, def)
 				pos2.z = pos.z + math.random(-range, range)
 			end
 
-			local n = nods[s] and table.copy(minetest.registered_nodes[nods[s]])
+			local node = nods[s] and minetest.registered_nodes[nods[s]]
+			local n = node and table.copy(minetest.registered_nodes[nods[s]])
 
 			if n then
 
@@ -550,6 +551,7 @@ local lb_falling = function(pos, digger, def)
 						ent:set_node(n)
 					end
 				end
+			else print("[MOD] Lucky Block - Falling Node Error, Not Found:", nods[s])
 			end
 		end)
 	end
