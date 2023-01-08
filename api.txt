@@ -138,7 +138,7 @@ Place Node
 This command will place a node in place of the lucky block or at the players
 standing position.
 
-{"nod", "node name", position, chest items}
+{"nod", "node name", position[0 for lb, 1 for player], chest items}
 
 e.g.
 
@@ -189,7 +189,7 @@ Place Schematic
 This command lets you place a pre-added schematic file or definition in place
 of the lucky block or at the player position.
 
-{"sch", "schematic name", position, force placement, replacements}
+{"sch", "schematic name", position[0 for lb, 1 for player], force placement, replacements}
 
 e.g.
 
@@ -227,7 +227,7 @@ Falling Blocks
 
 This command allows for a tower of blocks or blocks falling within a set area.
 
-{"fal", {"node list"}, position, spread, range}
+{"fal", {"node list"}, position[0 for lb, 1 for player], spread, range}
 
 e.g.
 
