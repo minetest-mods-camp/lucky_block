@@ -535,7 +535,7 @@ local lb_falling = function(pos, digger, def)
 				pos2.z = pos.z + math.random(-range, range)
 			end
 
-			local n = table.copy(minetest.registered_nodes[nods[s]])
+			local n = nods[s] and table.copy(minetest.registered_nodes[nods[s]])
 
 			if n then
 
@@ -693,9 +693,12 @@ minetest.register_node("lucky_block:lucky_block", {
 
 	on_dig = function(pos, node, digger)
 
-		minetest.set_node(pos, {name = "air"})
+		if digger and digger:is_player() then
 
-		lucky_block:open(pos, digger)
+			minetest.set_node(pos, {name = "air"})
+
+			lucky_block:open(pos, digger)
+		end
 	end,
 
 	on_blast = function() end,
