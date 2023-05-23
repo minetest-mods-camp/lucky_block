@@ -30,4 +30,4 @@ Changelog:
 - 1.5 - Filled chests can now add tools with custom wear levels, code tidy and tweaks
 - 1.6 - Add support for mineclone2 game, tweak and tidy code, add new screenshot
 
-Lucky Blocks: 266 (depending on mods enabled)
+Lucky Blocks: 268 (depending on mods enabled)

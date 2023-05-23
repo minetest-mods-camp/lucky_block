@@ -397,3 +397,57 @@ if lucky_block.mod_def then
 		}}
 	})
 end
+
+
+-- pova mod effects
+if minetest.get_modpath("pova") then
+
+	-- slowmo effect
+	local function slowmo(pos, player, def)
+
+		local name = player:get_player_name()
+
+		minetest.chat_send_player(name,
+				lucky_block.green .. S("You suddenly feel sluggish, take 30 seconds!"))
+
+		pova.add_override(name, "lb_sluggish", {speed = -0.9})
+		pova.do_override(player)
+
+		minetest.after(30, function(player)
+
+			local name = player:get_player_name()
+
+			if name then
+				pova.del_override(name, "lb_sluggish")
+				pova.do_override(player)
+			end
+		end, player)
+	end
+
+	-- high jump effect
+	local function highfly(pos, player, def)
+
+		local name = player:get_player_name()
+
+		minetest.chat_send_player(name,
+				lucky_block.green .. S("You suddenly feel lighter, wait 30 seconds!"))
+
+		pova.add_override(name, "lb_lighter", {jump = 4})
+		pova.do_override(player)
+
+		minetest.after(30, function(player)
+
+			local name = player:get_player_name()
+
+			if name then
+				pova.del_override(name, "lb_lighter")
+				pova.do_override(player)
+			end
+		end, player)
+	end
+
+	lucky_block:add_blocks({
+		{"cus", slowmo},
+		{"cus", highfly}
+	})
+end
